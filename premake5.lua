@@ -1,6 +1,7 @@
 workspace "TrainSim"
     configurations { "Debug", "Release" }
     language "C++"
+    cppdialect "C++17"
 
     location ("projects/" .. os.host() .. "/" .. _ACTION)
 
@@ -19,11 +20,13 @@ workspace "TrainSim"
 
     project "TrainSimEngine"
         kind "SharedLib"
-        targetdir "out/%{cfg.buildcfg}"
 
         includedirs {
             "src-engine",
-            "shared-include"
+            "shared-include",
+            "external/dxtcompress",
+            "external/glad/include",
+            "external/glm_include"
         }
 
         files {
@@ -31,12 +34,26 @@ workspace "TrainSim"
             "shared-include/**.hpp",
             "src-engine/**.h", 
             "src-engine/**.hpp", 
-            "src-engine/**.cpp" 
+            "src-engine/**.cpp",
+            "src-engine/**.c"
         }
 
+        links { "glfw3" }
+
+        filter { "architecture:x86" }
+            targetdir "out/x86/%{cfg.buildcfg}"
+            includedirs { "external/glfw-3.3.8.bin.WIN32/include" }
+            
+            libdirs { "external/glfw-3.3.8.bin.WIN32/lib-" .. string.gsub(_ACTION, "vs", "vc") }
+
+        filter { "architecture:x86_64" }
+            targetdir "out/x86_64/%{cfg.buildcfg}"
+            includedirs { "external/glfw-3.3.8.bin.WIN64/include" }
+
+            libdirs { "external/glfw-3.3.8.bin.WIN64/lib-" .. string.gsub(_ACTION, "vs", "vc") }
+            
     project "TrainSimGame"
         kind "ConsoleApp"
-        targetdir "out/%{cfg.buildcfg}"
 
         includedirs {
             "src-game",
@@ -51,4 +68,15 @@ workspace "TrainSim"
             "src-game/**.cpp" 
         }
 
-        links { "TrainSimEngine" }
+        links { "glfw3", "TrainSimEngine" }
+        runpathdirs { "./", "./bin" }
+
+        filter { "architecture:x86" }
+            targetdir "out/x86/%{cfg.buildcfg}"
+            includedirs { "external/glfw-3.3.8.bin.WIN32/include" }
+            libdirs { "external/glfw-3.3.8.bin.WIN32/lib-" .. string.gsub(_ACTION, "vs", "vc") }
+
+        filter { "architecture:x86_64" }
+            targetdir "out/x86_64/%{cfg.buildcfg}"
+            includedirs { "external/glfw-3.3.8.bin.WIN64/include" }
+            libdirs { "external/glfw-3.3.8.bin.WIN64/lib-" .. string.gsub(_ACTION, "vs", "vc") }
