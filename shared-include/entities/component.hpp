@@ -1,30 +1,56 @@
 #pragma once
+#include "global.hpp"
 #include "entity.hpp"
 #include "engine.hpp"
 
-#define DEFINE_COMPONENT_FUNCTIONS(name) \
-IComponent* CreateComponent_##name##() { return new name(); } \
+#define DEFINE_COMPONENT_FUNCTIONS(name, class_name) \
+IComponent* CreateComponent_##name##() { return new class_name(); } \
 void DeleteComponent_##name##(IComponent* component) { delete component; } \
+
+#define DEFINE_CCOMPONENT_FUNCTIONS(name) DEFINE_COMPONENT_FUNCTIONS(name, C##name)
+
+enum class IComponentStandarts : USHORT
+{
+    Unknown = 0,
+    Transform,
+    RenderComponent,
+};
+
+#define GET_COMPONENT_ID(enumid) (USHORT)enumid
 
 class ENGINE_EXPORT IComponent
 {
 public:
     virtual ~IComponent() = default;
 
-    virtual void Start() = 0;
-    virtual void Update() = 0;
-    virtual void LateUpdate() = 0;
-    virtual void OnDestroy() = 0;
+    virtual void Attached(IEntity* newEntity) {};
+    virtual void Detached(IEntity* prevEntity) {};
+
+    virtual void Start() {};
+    virtual void Update() {};
+    virtual void LateUpdate() {};
+    virtual void OnDestroy() {};
 
     IEntity* GetEntity();
+    void SetEntity(IEntity* entity);
+
+    USHORT GetID();
+    void SetID(USHORT id);
+    std::string& GetName();
 
 private:
+    USHORT id;
+
     IEntity* entity;
 };
 
 typedef IComponent* (*PROC_CreateComponent)(void);
 typedef void (*PROC_DeleteComponent)(IComponent*);
 
-
-//IComponent* CreateComponent();
-//void DeleteComponent(IComponent*);
+typedef struct IComponentInfo_t
+{
+    std::string name;
+    USHORT id;
+    PROC_CreateComponent createComponent;
+    PROC_DeleteComponent deleteComponent;
+} IComponentInfo;

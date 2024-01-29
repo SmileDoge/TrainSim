@@ -10,12 +10,25 @@ public:
     CEntity();
     ~CEntity() override;
 
-    virtual void AddComponent(std::string name, IComponent* component) ;
-    virtual void DeleteComponent(std::string name);
-    virtual IComponent* GetComponent(std::string name);
+    virtual IComponent* CreateComponent(const std::string& name);
+    virtual IComponent* CreateComponent(USHORT id);
+
+    virtual void AddComponent(IComponent* component);
+    virtual void DeleteComponent(IComponent* component);
+
+    virtual IComponent* GetComponentInternal(const std::string& name);
+    virtual IComponent* GetComponentInternal(USHORT id);
+
+    virtual ITransform* GetTransform();
+
+    virtual void Update();
+    virtual void LateUpdate();
 
     virtual std::string& GetName();
-    virtual void SetName(std::string name);
+    virtual void SetName(const std::string& name);
+
+    virtual bool GetEnabled() { return enabled; };
+    virtual void SetEnabled(bool enabled) { this->enabled = enabled; };
 
     virtual void SetParent(IEntity* parent);
 
@@ -27,10 +40,16 @@ public:
     virtual void RemoveChildren(IEntity* entity);
     
 private:
+    void DeleteComponentCore(IComponent* component);
+
+    ITransform* transform;
+
     IEntity* parent;
     std::vector<IEntity*> childrens;
 
     std::string name;
 
-    std::map<std::string, IComponent*> components;
+    std::map<USHORT, IComponent*> components;
+
+    bool enabled;
 };

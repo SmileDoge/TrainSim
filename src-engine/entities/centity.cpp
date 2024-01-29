@@ -1,19 +1,30 @@
 #include "centity.hpp"
 #include "entities/component.hpp"
+#include "modules/ccomponentfactory.hpp"
 
 #include <algorithm>
 
-#define PPCAT_NX(A, B) A ## B
-#define PPCAT(A, B) PPCAT_NX(A, B)
-
-CEntity::CEntity() : parent(NULL), components(), childrens(), name(PPCAT("CEntity_", __FILE__))
+CEntity::CEntity() : parent(NULL), components(), childrens(), name("CEntity"), enabled(true)
 {
-
+    transform = (ITransform*)CreateComponent("Transform");
 }
 
 CEntity::~CEntity()
 {
+    for (auto& [id, component] : components)
+        DeleteComponentCore(component);
+}
 
+void CEntity::Update()
+{
+    for (auto& [_, component] : components)
+        component->Update();
+}
+
+void CEntity::LateUpdate()
+{
+    for (auto& [_, component] : components)
+        component->LateUpdate();
 }
 
 void CEntity::AddChildren(IEntity* children)
@@ -23,7 +34,7 @@ void CEntity::AddChildren(IEntity* children)
 
 void CEntity::RemoveChildren(IEntity* children)
 {
-    childrens.erase(std::find(childrens.begin(), childrens.end(), children));
+    childrens.erase(std::remove(childrens.begin(), childrens.end(), children), childrens.end());
 }
 
 std::vector<IEntity*>& CEntity::GetChildrens()
@@ -60,7 +71,7 @@ IEntity* CEntity::GetParent()
     return parent;
 }
 
-void CEntity::SetName(std::string newName)
+void CEntity::SetName(const std::string& newName)
 {
     name = newName;
 }
@@ -70,41 +81,75 @@ std::string& CEntity::GetName()
     return name;
 }
 
-void CEntity::AddComponent(std::string name, IComponent* component)
+IComponent* CEntity::CreateComponent(USHORT id)
+{
+    IComponent* component = g_ComponentFactory->CreateComponent(id);
+
+    if (component == NULL) return NULL;
+
+    component->SetEntity(this);
+
+    component->Attached(this);
+
+    component->Start();
+
+    components[id] = component;
+
+    return component;
+}
+
+IComponent* CEntity::CreateComponent(const std::string& name)
+{
+    return CreateComponent(g_ComponentFactory->GetComponentID(name));
+}
+
+void CEntity::AddComponent(IComponent* component)
 {
     if (component == NULL) return;
 
-    if (components.find(name) != components.end())
-        DeleteComponent(name);
+    if (component->GetID() == 0) return;
 
-    components[name] = component;
+    if (component->GetEntity() != NULL) return;
+
+    component->SetEntity(this);
+
+    component->Attached(this);
 
     component->Start();
+
+    components[component->GetID()] = component;
 }
 
-void CEntity::DeleteComponent(std::string name)
+void CEntity::DeleteComponentCore(IComponent* component)
 {
-    IComponent* component = components[name];
+    component->Detached(this);
 
     component->OnDestroy();
-
-    components.erase(name);
 
     delete component;
 }
 
-IComponent* CEntity::GetComponent(std::string name)
+void CEntity::DeleteComponent(IComponent* component)
 {
-    if (components.find(name) == components.end())
-        return NULL;
+    components.erase(component->GetID());
 
-    return components[name];
+    DeleteComponentCore(component);
 }
 
+IComponent* CEntity::GetComponentInternal(const std::string& name)
+{
+    return GetComponentInternal(g_ComponentFactory->GetComponentID(name));
+}
 
-/*
+IComponent* CEntity::GetComponentInternal(USHORT id)
+{
+    if (components.find(id) == components.end())
+        return NULL;
 
-    virtual void AddComponent(char* name, IComponent* component) ;
-    virtual void RemoveComponent(char* name);
-    virtual IComponent* GetComponent(char* name);
-    */
+    return components[id];
+}
+
+ITransform* CEntity::GetTransform()
+{
+    return transform;
+}

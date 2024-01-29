@@ -5,11 +5,13 @@
 
 #include <string>
 #include <map>
+#include <chrono>
 
 #define ENGINE_BUILDED_DATE __DATE__
 #define ENGINE_BUILDED_TIME __TIME__
 #define ENGINE_BUILDED_CPP_VER __cplusplus
 
+#define ENGINE_VERSION "0.1.0"
 #define ENGINE_VERSION_MAJOR 0
 #define ENGINE_VERSION_MINOR 1
 #define ENGINE_VERSION_PATCH 0
@@ -20,22 +22,41 @@ public:
     CEngine();
     ~CEngine();
 
+    virtual TSResult Initialize();
+
+    virtual void SetGame(IGame* game);
+    virtual IGame* GetGame();
+
     virtual void Update();
 
-    virtual IModule* GetModule(std::string name);
-    virtual void AddModule(std::string name, IModule* module);
-    virtual void DeleteModule(std::string name);
+    virtual IModule* GetModuleInternal(const std::string& name);
+    virtual void AddModule(const std::string& name, IModule* module);
+    virtual void DeleteModule(const std::string& name);
 
     virtual IWorld* GetWorld();
 
     virtual void GetBuildInfo(char*& date, char*& time, long& cppVersion, char*& compiler);
+
+    virtual const char* GetEngineVersion() { return ENGINE_VERSION; };
     virtual void GetEngineVersion(short& major, short& minor, short& patch);
 
     virtual void RunLoop();
 
+    virtual void SetFPS(float fps);
+    virtual float GetFPS();
+
+    virtual float GetDeltaTime();
+    virtual double GetCurTime();
 private:
     std::map<std::string, IModule*> modules;
 
+    std::chrono::steady_clock::time_point start_engine_time;
+    std::chrono::steady_clock::time_point prev_frame_time;
+
+    float delta_time;
+    float target_frametime;
+
+    IGame* game;
     CWorld* world;
 };
 

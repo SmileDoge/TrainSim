@@ -1,5 +1,6 @@
 #include "cworld.hpp"
 #include "entities/centity.hpp"
+#include "modules/clogmodule.hpp"
 
 CWorld::CWorld() : entities()
 {
@@ -8,7 +9,24 @@ CWorld::CWorld() : entities()
 
 CWorld::~CWorld()
 {
+    for (auto& entity : entities)
+        delete ((CEntity*)entity);
+    
+    entities.clear();
+}
 
+void CWorld::UpdateEntities()
+{
+    for (auto& entity : entities)
+        if (entity->GetEnabled())
+            entity->Update();
+}
+
+void CWorld::LateUpdateEntities()
+{
+    for (auto& entity : entities)
+        if (entity->GetEnabled())
+            entity->LateUpdate();
 }
 
 IEntity* CWorld::CreateEntity()
@@ -22,11 +40,11 @@ IEntity* CWorld::CreateEntity()
 
 void CWorld::DeleteEntity(IEntity* entity)
 {
-    auto iter = std::find(entities.begin(), entities.end(), entity);
+    auto iter = std::remove(entities.begin(), entities.end(), entity);
     if (iter == entities.end())
         return;
 
-    entities.erase(iter);
+    entities.erase(iter, entities.end());
 
     entity->SetParent(NULL);
 
@@ -38,11 +56,11 @@ void CWorld::DeleteEntity(IEntity* entity)
 
 void CWorld::DeleteEntityWithChildrens(IEntity* entity)
 {
-    auto iter = std::find(entities.begin(), entities.end(), entity);
+    auto iter = std::remove(entities.begin(), entities.end(), entity);
     if (iter == entities.end())
         return;
 
-    entities.erase(iter);
+    entities.erase(iter, entities.end());
 
     entity->SetParent(NULL);
 

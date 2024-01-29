@@ -1,4 +1,3 @@
-premake5 --os=windows vs2019
-premake5 --os=macosx gmake2
-premake5 --os=linux gmake2
+@echo off
+premake5 vs2022
 pause

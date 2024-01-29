@@ -1,12 +1,26 @@
 #include "register_components.hpp"
-#include "modules/ccomponentfactory.hpp"
-#include "entities/components/examplecomponent.hpp"
 
-#define REGISTER_COMPONENT(name) g_ComponentFactory->RegisterComponent(#name, CreateComponent_##name, DeleteComponent_##name);
+#include "modules/ccomponentfactory.hpp"
+
+#include "entities/components/ctransform.hpp"
+#include "entities/components/crendercomponent.hpp"
+
+#define DEFINE_INFO() IComponentInfo info;
+
+#define REGISTER_COMPONENT(component) \
+info.name = #component; \
+info.createComponent = CreateComponent_##component; \
+info.deleteComponent = DeleteComponent_##component; \
+g_ComponentFactory->RegisterComponent(info); \
+
+
+DEFINE_CCOMPONENT_FUNCTIONS(Transform);
+DEFINE_CCOMPONENT_FUNCTIONS(RenderComponent);
 
 void RegisterComponents() // Register Standard Entity Components
 {
-	//g_ComponentFactory->RegisterComponent("ExampleComponent", CreateComponent_ExampleComponent, DeleteComponent_ExampleComponent);
-	// OR
-	REGISTER_COMPONENT(ExampleComponent)
+	DEFINE_INFO();
+
+	REGISTER_COMPONENT(Transform);
+	REGISTER_COMPONENT(RenderComponent);
 }

@@ -9,8 +9,12 @@ class IComponentFactory : public IModule
 public:
 	virtual ~IComponentFactory() = default;
 
-    virtual void RegisterComponent(std::string name, PROC_CreateComponent createComponent, PROC_DeleteComponent deleteComponent) = 0;
+    virtual void RegisterComponent(IComponentInfo info) = 0;
 
-    virtual IComponent* CreateComponent(std::string name) = 0;
+    virtual std::string& GetComponentName(USHORT id) = 0;
+    virtual USHORT GetComponentID(const std::string& name) = 0;
+
+    virtual IComponent* CreateComponent(const std::string& name) = 0;
+    virtual IComponent* CreateComponent(USHORT id) = 0;
     virtual void DeleteComponent(IComponent* component) = 0;
 };

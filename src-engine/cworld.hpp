@@ -13,6 +13,9 @@ public:
     virtual void DeleteEntityWithChildrens(IEntity* entity);
 
     virtual std::vector<IEntity*>& GetEntities();
+
+    void UpdateEntities();
+    void LateUpdateEntities();
 private:
     std::vector<IEntity*> entities;
 };

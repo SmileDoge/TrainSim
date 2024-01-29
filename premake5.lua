@@ -8,6 +8,8 @@ workspace "TrainSim"
     platforms {"x86_64", "x86"}
 
     startproject "TrainSimGame"
+    
+    defines { "_CRT_SECURE_NO_WARNINGS", "_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING" }
 
     filter {"configurations:Debug"}
         defines { "DEBUG", "_DEBUG" }
@@ -18,6 +20,7 @@ workspace "TrainSim"
         defines { "NDEBUG" }
         runtime "Release"
 
+
     project "TrainSimEngine"
         kind "SharedLib"
 
@@ -26,10 +29,14 @@ workspace "TrainSim"
             "shared-include",
             "external/dxtcompress",
             "external/glad/include",
-            "external/glm_include"
+            "external/glm-include",
+            "external/imgui-master",
+            "external/imgui-master/backends",
+            "external/ultralight/include",
         }
 
         files {
+            "external/imgui-master/cpp/**.cpp",
             "shared-include/**.h",
             "shared-include/**.hpp",
             "src-engine/**.h", 
@@ -44,23 +51,35 @@ workspace "TrainSim"
             targetdir "out/x86/%{cfg.buildcfg}"
             includedirs { "external/glfw-3.3.8.bin.WIN32/include" }
             
-            libdirs { "external/glfw-3.3.8.bin.WIN32/lib-" .. string.gsub(_ACTION, "vs", "vc") }
+            libdirs { 
+                "external/glfw-3.3.8.bin.WIN32/lib-" .. string.gsub(_ACTION, "vs", "vc")
+            }
 
         filter { "architecture:x86_64" }
             targetdir "out/x86_64/%{cfg.buildcfg}"
             includedirs { "external/glfw-3.3.8.bin.WIN64/include" }
 
-            libdirs { "external/glfw-3.3.8.bin.WIN64/lib-" .. string.gsub(_ACTION, "vs", "vc") }
+            links { "AppCore", "Ultralight", "UltralightCore", "WebCore" }
+
+            libdirs { 
+                "external/glfw-3.3.8.bin.WIN64/lib-" .. string.gsub(_ACTION, "vs", "vc"),
+                "external/ultralight/lib"
+            }
             
     project "TrainSimGame"
         kind "ConsoleApp"
 
         includedirs {
             "src-game",
-            "shared-include"
+            "shared-include",
+            "external/imgui-master",
+            "external/imgui-master/backends",
+            "external/ultralight/include",
+            "external/glm-include",
         }
 
         files {
+            "external/imgui-master/cpp/**.cpp",
             "shared-include/**.h",
             "shared-include/**.hpp",
             "src-game/**.h", 
@@ -69,14 +88,20 @@ workspace "TrainSim"
         }
 
         links { "glfw3", "TrainSimEngine" }
-        runpathdirs { "./", "./bin" }
 
         filter { "architecture:x86" }
             targetdir "out/x86/%{cfg.buildcfg}"
+            debugdir "out/x86/%{cfg.buildcfg}"
             includedirs { "external/glfw-3.3.8.bin.WIN32/include" }
             libdirs { "external/glfw-3.3.8.bin.WIN32/lib-" .. string.gsub(_ACTION, "vs", "vc") }
 
         filter { "architecture:x86_64" }
             targetdir "out/x86_64/%{cfg.buildcfg}"
+            debugdir "out/x86_64/%{cfg.buildcfg}"
             includedirs { "external/glfw-3.3.8.bin.WIN64/include" }
-            libdirs { "external/glfw-3.3.8.bin.WIN64/lib-" .. string.gsub(_ACTION, "vs", "vc") }
+            links { "AppCore", "Ultralight", "UltralightCore", "WebCore" }
+
+            libdirs { 
+                "external/glfw-3.3.8.bin.WIN64/lib-" .. string.gsub(_ACTION, "vs", "vc"),
+                "external/ultralight/lib"
+            }
