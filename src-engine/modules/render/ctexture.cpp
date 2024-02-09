@@ -65,6 +65,12 @@ int GetOpenGLInternalFormat(TexturePixelFormat format)
 		return GL_RGB;
 	case TEXTURE_FORMAT_RGBA5551:
 		return GL_RGBA;
+	case TEXTURE_FORMAT_BGR565:
+		return GL_RGB;
+	case TEXTURE_FORMAT_BGRA5551:
+		return GL_RGBA;
+	case TEXTURE_FORMAT_BGRA4444:
+		return GL_RGBA;
 	case TEXTURE_FORMAT_RED:
 		return GL_RED;
 	default:
@@ -88,6 +94,12 @@ int GetOpenGLFormat(TexturePixelFormat format)
 		return GL_RGB;
 	case TEXTURE_FORMAT_RGBA5551:
 		return GL_RGBA;
+	case TEXTURE_FORMAT_BGR565:
+		return GL_BGR;
+	case TEXTURE_FORMAT_BGRA5551:
+		return GL_BGRA;
+	case TEXTURE_FORMAT_BGRA4444:
+		return GL_BGRA;
 	case TEXTURE_FORMAT_RED:
 		return GL_RED;
 	default:
@@ -111,6 +123,12 @@ int GetOpenGLDataType(TexturePixelFormat format)
 		return GL_UNSIGNED_SHORT_5_6_5;
 	case TEXTURE_FORMAT_RGBA5551:
 		return GL_UNSIGNED_SHORT_5_5_5_1;
+	case TEXTURE_FORMAT_BGR565:
+		return GL_UNSIGNED_SHORT_5_6_5;
+	case TEXTURE_FORMAT_BGRA5551:
+		return GL_UNSIGNED_SHORT_5_5_5_1;
+	case TEXTURE_FORMAT_BGRA4444:
+		return GL_UNSIGNED_SHORT_4_4_4_4;
 	case TEXTURE_FORMAT_RED:
 		return GL_UNSIGNED_BYTE;
 	default:
@@ -142,7 +160,11 @@ void CTexture::SetData(int width, int height, TexturePixelFormat format, void* d
 	this->height = height;
 	this->format = format;
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GetOpenGLInternalFormat(format), width, height, 0, GetOpenGLFormat(format), GetOpenGLDataType(format), data);
+	int gl_int_format = GetOpenGLInternalFormat(format);
+	int gl_format = GetOpenGLFormat(format);
+	int gl_data = GetOpenGLDataType(format);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, gl_int_format, width, height, 0, gl_format, gl_data, data);
 }
 
 void CTexture::GenerateMipmap()
@@ -170,6 +192,8 @@ TexturePixelFormat CTexture::GetFormat()
 void CTexture::SetName(const std::string& name)
 {
 	this->name = name;
+
+	glBindTexture(GL_TEXTURE_2D, texture_handle);
 
 	if (g_Render->ExtensionCanLabel())
 		glObjectLabel(GL_TEXTURE, texture_handle, -1, name.c_str());

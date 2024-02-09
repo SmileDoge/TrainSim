@@ -26,7 +26,7 @@ void CComponentFactory::RegisterComponent(IComponentInfo info)
 
     info.id = components.size();
 
-    g_Log->LogWarn("component: %s, %d, create: %p, delete: %p", info.name.c_str(), info.id, info.createComponent, info.deleteComponent);
+    //g_Log->LogWarn("component: %s, %d, create: %p, delete: %p", info.name.c_str(), info.id, info.createComponent, info.deleteComponent);
 
     components[info.id] = info;
     mapped_names[info.name] = info.id;
@@ -64,6 +64,8 @@ IComponent* CComponentFactory::CreateComponent(USHORT id)
     IComponent* component = info.createComponent();
 
     component->SetID(id);
+
+    component->SetEnabled(true);
 
     return component;
 }

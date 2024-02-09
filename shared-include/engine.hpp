@@ -56,6 +56,7 @@ public:
 
     virtual float GetDeltaTime() = 0;
     virtual double GetCurTime() = 0;
+    virtual double GetSysTime() = 0;
 
     template<class T>
     T* GetModule();

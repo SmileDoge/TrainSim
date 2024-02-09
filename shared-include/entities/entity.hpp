@@ -13,8 +13,8 @@ class IEntity
 public:
 	virtual ~IEntity() = default;
 
-    virtual IComponent* CreateComponent(const std::string& name) = 0;
-    virtual IComponent* CreateComponent(USHORT id) = 0;
+    virtual IComponent* CreateComponentInternal(const std::string& name) = 0;
+    virtual IComponent* CreateComponentInternal(USHORT id) = 0;
 
     virtual void AddComponent(IComponent* component) = 0;
     virtual void DeleteComponent(IComponent* component) = 0;
@@ -44,6 +44,9 @@ public:
 
     template<class T>
     T* GetComponent();
+
+    template<class T>
+    T* CreateComponent();
 };
 
 #include <typeinfo>
@@ -56,6 +59,19 @@ T* IEntity::GetComponent()
 
     if (component == NULL)
         component = GetComponentInternal(name.substr(1));
+
+    return (T*)(void*)component;
+}
+
+template<class T>
+T* IEntity::CreateComponent()
+{
+    auto name = std::string(typeid(T).name()).substr(6);
+
+    IComponent* component = CreateComponentInternal(name);
+
+    if (component == NULL)
+        component = CreateComponentInternal(name.substr(1));
 
     return (T*)(void*)component;
 }

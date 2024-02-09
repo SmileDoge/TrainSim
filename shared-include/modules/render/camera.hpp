@@ -21,11 +21,22 @@ public:
 	virtual void SetRotation(glm::quat& rotation) = 0;
 	virtual glm::quat& GetRotation() = 0;
 
+	virtual void SetFront(glm::vec3& front) = 0;
+	virtual glm::vec3& GetFront() = 0;
+
+	virtual void SetUp(glm::vec3& up) = 0;
+	virtual glm::vec3& GetUp() = 0;
+
+	virtual glm::vec3& GetRight() = 0;
+
 	virtual void SetType(CameraType type) = 0;
 	virtual CameraType GetType() = 0;
 
 	virtual void SetFOV(float fov) = 0;
 	virtual float GetFOV() = 0;
+
+	virtual void SetAspect(float aspect) = 0;
+	virtual float GetAspect() = 0;
 
 	virtual void SetSize(float left, float right, float bottom, float top) = 0;
 	virtual void GetSize(float& left, float& right, float& bottom, float& top) = 0;

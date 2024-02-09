@@ -25,6 +25,8 @@ public:
 	virtual std::string& GetName();
 	virtual void SetName(const std::string& name);
 
+	virtual unsigned int GetID() { return texture_handle; };
+
 	int ref_count;
 
 private:

@@ -3,6 +3,8 @@
 #include "modules/ccomponentfactory.hpp"
 #include "modules/clogmodule.hpp"
 #include "modules/cpluginmanager.hpp"
+#include "modules/cfilesystem.hpp"
+#include "modules/cresourcemanager.hpp"
 #include <iostream>
 
 #include "register_components.hpp"
@@ -14,6 +16,8 @@
 #include "signal.h"
 #include "Psapi.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 CEngine::CEngine() : modules(), world(NULL), game(NULL)
 {
@@ -48,11 +52,11 @@ void GetModuleNameAndOffset(void* address)
 
 LONG SignalHandler(_EXCEPTION_POINTERS exception)
 {
-    g_Log->LogError("Unhandled expection!\n\tException code: %08X\n\tException Address: %p", exception.ExceptionRecord->ExceptionCode, exception.ExceptionRecord->ExceptionAddress);
+    g_Log->LogError("Unhandled exception!\n\tException code: %08X\n\tException Address: %p", exception.ExceptionRecord->ExceptionCode, exception.ExceptionRecord->ExceptionAddress);
     
     wchar_t buffer[1024];
 
-    swprintf(buffer, L"Unhandled expection! Check Console for more information\n\tException code: %08X\n\tException Address: %p", exception.ExceptionRecord->ExceptionCode, exception.ExceptionRecord->ExceptionAddress);
+    swprintf(buffer, L"Unhandled exception! Check Console for more information\n\tException code: %08X\n\tException Address: %p", exception.ExceptionRecord->ExceptionCode, exception.ExceptionRecord->ExceptionAddress);
 
     GetModuleNameAndOffset(exception.ExceptionRecord->ExceptionAddress);
 
@@ -84,17 +88,18 @@ TSResult CEngine::Initialize()
 
     SetUnhandledExceptionFilter((LPTOP_LEVEL_EXCEPTION_FILTER)SignalHandler);
 
+    AddModule("FileSystem", new CFileSystem());
     AddModule("PluginManager", new CPluginManager());
 
     world = new CWorld();
 
     AddModule("ComponentFactory", new CComponentFactory());
+    AddModule("ResourceManager", new CResourceManager());
 
     RegisterComponents();
 
     AddModule("RenderModule", new CRenderModule());
 
-    g_Log->LogDebug("CEngine Initaliazed!");
 
     IRenderModule* render = GetModule<IRenderModule>();
 
@@ -105,9 +110,13 @@ TSResult CEngine::Initialize()
     g_Log->LogDebug("Render Backend: %s", GetBackendName(render->GetBackend()));
     g_Log->LogDebug("Render Version: %d.%d", render_major, render_minor);
 
+    g_Log->LogDebug("Engine Initaliazed!");
+
     game->Start();
     game->RegisterComponents();
     game->PostStart();
+
+    g_Log->LogDebug("Game Initaliazed!");
 
     return TS_OK;
 }
@@ -121,7 +130,6 @@ CEngine::~CEngine()
 
     game->Shutdown();
     delete game;
-    g_Log->LogDebug("~CEngine");
 
     for (auto& [name, module] : modules)
         delete module;
@@ -131,14 +139,18 @@ CEngine::~CEngine()
 
 void CEngine::RunLoop()
 {
-    start_engine_time = std::chrono::high_resolution_clock::now();
-    prev_frame_time = std::chrono::high_resolution_clock::now();
+    //start_engine_time = std::chrono::high_resolution_clock::now();
+    //prev_frame_time = std::chrono::high_resolution_clock::now();
 
-    while (!glfwWindowShouldClose(g_Render->GetWindow()))
+    while (!glfwWindowShouldClose(g_Render->GetGLFWWindow()))
     {
-        auto current_time = std::chrono::high_resolution_clock::now();
+        //auto current_time = std::chrono::high_resolution_clock::now();
 
-        auto delta_time = std::chrono::duration_cast<std::chrono::microseconds>(current_time - prev_frame_time).count() / 1000000.0f;
+        //auto delta_time = std::chrono::duration_cast<std::chrono::microseconds>(current_time - prev_frame_time).count() / 1000000.0f;
+
+        current_time = glfwGetTime();
+
+        double delta_time = current_time - prev_frame_time;
 
         if (delta_time > target_frametime)
         {
@@ -165,6 +177,7 @@ void CEngine::Update()
 
     game->ProcessInput();
 
+    game->EarlyUpdate();
     world->UpdateEntities();
     game->Update();
 
@@ -256,6 +269,12 @@ float CEngine::GetDeltaTime()
 
 double CEngine::GetCurTime()
 {
-    return std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - start_engine_time).count() / 1000000000.0;
+    //return glfwGetTime();
+    return current_time;
+}
+
+double CEngine::GetSysTime()
+{
+    return glfwGetTime();
 }
 

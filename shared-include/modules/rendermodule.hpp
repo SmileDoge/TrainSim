@@ -1,6 +1,5 @@
 #pragma once
 #include "module.hpp"
-#include "GLFW/glfw3.h"
 
 #include "render/renderframe.hpp"
 #include "render/camera.hpp"
@@ -8,6 +7,10 @@
 #include "render/material.hpp"
 #include "render/mesh.hpp"
 #include "render/texture.hpp"
+#include "render/window.hpp"
+
+#define GLM_EULER_VEC3(x, y, z) glm::vec3(glm::radians(x), glm::radians(y), glm::radians(z))
+#define GLM_EULER(x, y, z) glm::quat(GLM_EULER_VEC3(x, y, z))
 
 enum RenderBackend
 {
@@ -36,6 +39,6 @@ public:
 
 	virtual IRenderFrame* GetRenderFrame() = 0;
 
-	virtual GLFWwindow* GetWindow() = 0;
+	virtual IWindow* GetWindow() = 0;
 	virtual void* GetImGuiContext() = 0;
 };

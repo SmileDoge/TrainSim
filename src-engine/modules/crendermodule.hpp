@@ -1,7 +1,12 @@
 #pragma once
+
+#include "GLFW/glfw3.h"
+
 #include "modules/rendermodule.hpp"
 
 #include "modules/render/crenderframe.hpp"
+
+#include "modules/render/cwindow.hpp"
 
 #include <map>
 #include <string>
@@ -35,15 +40,20 @@ public:
 
     virtual IRenderFrame* GetRenderFrame();
 
-    virtual GLFWwindow* GetWindow() { return Window; };
+    virtual IWindow* GetWindow() { return cWindow; };
     virtual void* GetImGuiContext();
 
+    GLFWwindow* GetGLFWWindow() { return Window; };
+
+    void UpdateSize(int width, int height);
 private:
     void DetectVersion();
 
     int ver_major, ver_minor;
 
     GLFWwindow* Window;
+    CWindow* cWindow;
+
     ICamera* camera;
 
     IMaterialManager* materialmanager;

@@ -24,18 +24,16 @@ private:
     float fps;
 };
 
+extern IEngine* g_Engine;
 extern TrainSimGame* g_Game;
 extern ILogModule* g_Log;
 
-class ExampleGameComponent : public IComponent
+class TestComponent : public IComponent
 {
 public:
-    virtual void Start() { g_Log->LogInfo("ExampleGameComponent Start()"); };
-    virtual void Update() { };
-    virtual void LateUpdate() { };
-    virtual void OnDestroy() { g_Log->LogInfo("ExampleGameComponent OnDestroy()"); };
+    virtual void Update();
 
-    virtual void Attached(IEntity* ent) { g_Log->LogInfo("ExampleGameComponent Attached to %p", ent); };
-    virtual void Detached(IEntity* ent) { g_Log->LogInfo("ExampleGameComponent Detached to %p", ent); };
-
+    void SetIndex(int index);
+private:
+    int index;
 };

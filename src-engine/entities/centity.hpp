@@ -10,8 +10,8 @@ public:
     CEntity();
     ~CEntity() override;
 
-    virtual IComponent* CreateComponent(const std::string& name);
-    virtual IComponent* CreateComponent(USHORT id);
+    virtual IComponent* CreateComponentInternal(const std::string& name);
+    virtual IComponent* CreateComponentInternal(USHORT id);
 
     virtual void AddComponent(IComponent* component);
     virtual void DeleteComponent(IComponent* component);

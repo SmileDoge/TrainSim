@@ -22,6 +22,15 @@ public:
 	virtual void SetVec3(char* name, glm::vec3& value);
 	virtual void SetMat4x4(char* name, glm::mat4x4& value);
 
+	virtual void SetInt(int loc, int value);
+	virtual void SetFloat(int loc, float value);
+	virtual void SetVec3(int loc, glm::vec3& value);
+	virtual void SetMat4x4(int loc, glm::mat4x4& value);
+
+	virtual void SetModelMat(glm::mat4& value);
+	virtual void SetViewMat(glm::mat4& value);
+	virtual void SetProjMat(glm::mat4& value);
+
 	virtual int GetUniformLocation(char* name);
 
 private:
@@ -31,4 +40,6 @@ private:
 
 	const char* vertex_code;
 	const char* fragment_code;
+
+	int model_uniform, view_uniform, proj_uniform;
 };

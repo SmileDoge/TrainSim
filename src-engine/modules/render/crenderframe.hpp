@@ -2,8 +2,6 @@
 
 #include "modules/render/renderframe.hpp"
 
-#include <map>
-
 class CRenderFrame : public IRenderFrame
 {
 public:
@@ -12,6 +10,11 @@ public:
 
 	virtual void AddRenderItem(IMesh* mesh, IMaterial* material, glm::mat4x4& transform);
 	virtual void AddRenderItem(RenderItem& item);
+
+	virtual void AddLight(ILight* light);
+
+	virtual std::map<IMaterial*, std::vector<RenderItem>>& GetItems();
+	virtual std::vector<ILight*>& GetLights();
 
 	virtual void Render();
 
@@ -24,4 +27,5 @@ private:
 	void RenderMaterial(IMaterial* material, std::vector<RenderItem>& items);
 
 	std::map<IMaterial*, std::vector<RenderItem>> items;
+	std::vector<ILight*> lights;
 };

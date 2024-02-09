@@ -13,6 +13,16 @@ void IComponent::SetEntity(IEntity* entity)
     this->entity = entity;
 }
 
+bool IComponent::GetEnabled()
+{
+    return enabled;
+}
+
+void IComponent::SetEnabled(bool enabled)
+{
+    this->enabled = enabled;
+}
+
 std::string& IComponent::GetName()
 {
     return g_ComponentFactory->GetComponentName(id);

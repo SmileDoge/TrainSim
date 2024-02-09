@@ -25,6 +25,7 @@ private:
 	unsigned int VAO, VBO, EBO;
 
 	USHORT indices_num;
+	int vertices_num;
 };
 
 class CMeshManager : public IMeshManager

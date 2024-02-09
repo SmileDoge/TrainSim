@@ -10,7 +10,13 @@ enum TexturePixelFormat
 	TEXTURE_FORMAT_BGR,
 	TEXTURE_FORMAT_RGB565,
 	TEXTURE_FORMAT_RGBA5551,
+	TEXTURE_FORMAT_BGR565,
+	TEXTURE_FORMAT_BGRA5551,
+	TEXTURE_FORMAT_BGRA4444,
 	TEXTURE_FORMAT_RED,
+	TEXTURE_FORMAT_DXT1,
+	TEXTURE_FORMAT_DXT3,
+	TEXTURE_FORMAT_DXT5,
 };
 
 enum TextureWrap
@@ -37,6 +43,14 @@ enum TextureUnit
 	TEXTURE_UNIT_5,
 	TEXTURE_UNIT_6,
 	TEXTURE_UNIT_7,
+	TEXTURE_UNIT_8,
+	TEXTURE_UNIT_9,
+	TEXTURE_UNIT_10,
+	TEXTURE_UNIT_11,
+	TEXTURE_UNIT_12,
+	TEXTURE_UNIT_13,
+	TEXTURE_UNIT_14,
+	TEXTURE_UNIT_15,
 };
 
 class ITexture
@@ -58,6 +72,8 @@ public:
 
 	virtual std::string& GetName() = 0;
 	virtual void SetName(const std::string& name) = 0;
+
+	virtual unsigned int GetID() = 0;
 };
 
 class ITextureManager

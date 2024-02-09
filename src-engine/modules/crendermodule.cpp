@@ -8,7 +8,6 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_glfw.h"
 
-
 #define GLFW_EXPOSE_NATIVE_WIN32
 #include "GLFW/glfw3native.h"
 
@@ -21,54 +20,10 @@
 
 CRenderModule* g_Render = NULL;
 
-/*
-#include <Ultralight/Ultralight.h>
-
-using namespace ultralight;
-
-void InitUltralight(CRenderModule* self)
+void CRenderModule_Framebuffer_Resize(GLFWwindow* window, int width, int height)
 {
-    Config config;
-
-    //config.user_stylesheet = "body { backgroud: white; opacity: 0.5; } h1 { color: white; }";
-
-    Platform::instance().set_config(config);
-
-    Platform::instance().set_font_loader(GetPlatformFontLoader());
-
-    Platform::instance().set_file_system(GetPlatformFileSystem("."));
-
-    Platform::instance().set_logger(GetDefaultLogger("ultralight.log"));
+    g_Render->UpdateSize(width, height);
 }
-
-int GenTexture()
-{
-    unsigned int texture;
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    char textureData[500 * 500 * 4];
-
-    memset(textureData, 127, sizeof(textureData));
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 500, 500, 0, GL_BGRA, GL_UNSIGNED_BYTE, textureData);
-
-    return texture;
-}
-
-
-class ViewList : public LoadListener
-{
-    virtual void OnFinishLoading(ultralight::View* caller, uint64_t frame_id, bool is_main_frame,
-        const String& url)
-    {
-        g_Log->LogDebug("frame_id: %f, is_main_frame: %f, url: %s", frame_id, is_main_frame, url.utf8().data());
-    }
-};
-*/
 
 CRenderModule::CRenderModule() : renderframe(), shaders(), ver_major(0), ver_minor(0)
 {
@@ -78,12 +33,13 @@ CRenderModule::CRenderModule() : renderframe(), shaders(), ver_major(0), ver_min
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    //glfwWindowHint(GLFW_DECORATED, FALSE);
 
-    Window = glfwCreateWindow(1366, 768, "TrainSimEngine", NULL, NULL);
+    Window = glfwCreateWindow(800, 600, "TrainSimEngine", NULL, NULL);
 
+    cWindow = new CWindow(Window);
+    
     glfwSetWindowAttrib(Window, GLFW_RESIZABLE, GLFW_FALSE);
-
-    //GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 
     _ASSERTE(Window != NULL);
 
@@ -93,6 +49,8 @@ CRenderModule::CRenderModule() : renderframe(), shaders(), ver_major(0), ver_min
     {
         __debugbreak();
     }
+
+    glfwSetFramebufferSizeCallback(Window, CRenderModule_Framebuffer_Resize);
 
     DetectVersion();
 
@@ -126,61 +84,31 @@ CRenderModule::CRenderModule() : renderframe(), shaders(), ver_major(0), ver_min
 
     g_Log->LogDebug("OpenGL Version: %s", version);
 
-    /*
-    InitUltralight(this);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
 
-    renderer = Renderer::Create();
+    glCullFace(GL_FRONT);
 
-    ViewConfig view_config;
-    view_config.is_accelerated = false;
-    view_config.is_transparent = true;
+    UpdateSize(800, 600);
+}
 
-    view = renderer->CreateView(500, 500, view_config, nullptr);
+void CRenderModule::UpdateSize(int width, int height)
+{
+    if (width == 0 || height == 0) return;
 
-    //view->LoadHTML(u8"<h1>бабах дорогой телефончик 😍😍😎😎😋</h1>");
-    view->LoadURL("https://www.google.com/");
+    glViewport(0, 0, width, height);
 
-    ViewList* viewlist = new ViewList();
-
-    view->set_load_listener(viewlist);
-
-    ul_texture = GenTexture();
-    */
+    camera->SetAspect(((float)width) / ((float)height));
 }
 
 void CRenderModule::UpdateRender()
 {
-    glClearColor(0.7f, 0.75f, 0.9f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClearColor(0.02f, 0.02f, 0.02f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     renderframe.Render();
 
     renderframe.Clear();
-    /*
-    ImGui::Begin("Ultralight");
-
-    ImGui::Image((void*)(intptr_t)ul_texture, ImVec2(500, 500));
-
-    ImGui::End();
-
-    renderer->Update();
-
-    renderer->Render();
-
-    BitmapSurface* surface = (BitmapSurface*)(view->surface());
-
-    if (!surface->dirty_bounds().IsEmpty())
-    {
-        void* pixels = surface->LockPixels();
-
-        glBindTexture(GL_TEXTURE_2D, ul_texture);
-        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 500, 500, GL_BGRA, GL_UNSIGNED_BYTE, pixels);
-
-        surface->UnlockPixels();
-
-        surface->ClearDirtyBounds();
-    }
-    */
 
     ImGui::Render();
 
@@ -278,7 +206,11 @@ CRenderModule::~CRenderModule()
     delete meshmanager;
     delete texturemanager;
 
-    glfwDestroyWindow(Window);
+    delete camera;
 
+    delete cWindow;
+
+    glfwDestroyWindow(Window);
+    
     glfwTerminate();
 }

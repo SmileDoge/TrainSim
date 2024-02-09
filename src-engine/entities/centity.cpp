@@ -2,11 +2,13 @@
 #include "entities/component.hpp"
 #include "modules/ccomponentfactory.hpp"
 
+#include "entities/components/transform.hpp"
+
 #include <algorithm>
 
 CEntity::CEntity() : parent(NULL), components(), childrens(), name("CEntity"), enabled(true)
 {
-    transform = (ITransform*)CreateComponent("Transform");
+    transform = CreateComponent<ITransform>();
 }
 
 CEntity::~CEntity()
@@ -18,13 +20,15 @@ CEntity::~CEntity()
 void CEntity::Update()
 {
     for (auto& [_, component] : components)
-        component->Update();
+        if (component->GetEnabled())
+            component->Update();
 }
 
 void CEntity::LateUpdate()
 {
     for (auto& [_, component] : components)
-        component->LateUpdate();
+        if (component->GetEnabled())
+            component->LateUpdate();
 }
 
 void CEntity::AddChildren(IEntity* children)
@@ -81,7 +85,7 @@ std::string& CEntity::GetName()
     return name;
 }
 
-IComponent* CEntity::CreateComponent(USHORT id)
+IComponent* CEntity::CreateComponentInternal(USHORT id)
 {
     IComponent* component = g_ComponentFactory->CreateComponent(id);
 
@@ -98,9 +102,9 @@ IComponent* CEntity::CreateComponent(USHORT id)
     return component;
 }
 
-IComponent* CEntity::CreateComponent(const std::string& name)
+IComponent* CEntity::CreateComponentInternal(const std::string& name)
 {
-    return CreateComponent(g_ComponentFactory->GetComponentID(name));
+    return CreateComponentInternal(g_ComponentFactory->GetComponentID(name));
 }
 
 void CEntity::AddComponent(IComponent* component)

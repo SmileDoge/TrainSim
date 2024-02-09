@@ -47,11 +47,14 @@ public:
 
     virtual float GetDeltaTime();
     virtual double GetCurTime();
+    virtual double GetSysTime();
 private:
     std::map<std::string, IModule*> modules;
 
-    std::chrono::steady_clock::time_point start_engine_time;
-    std::chrono::steady_clock::time_point prev_frame_time;
+    //std::chrono::steady_clock::time_point start_engine_time;
+    //std::chrono::steady_clock::time_point prev_frame_time;
+    double prev_frame_time;
+    double current_time;
 
     float delta_time;
     float target_frametime;

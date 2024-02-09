@@ -22,18 +22,24 @@ public:
 
 
     virtual void SetLocalPosition(glm::vec3& pos);
-    virtual glm::vec3& GetLocalPosition();
+    virtual glm::vec3 GetLocalPosition();
 
     virtual void SetLocalRotation(glm::quat& rot);
-    virtual glm::quat& GetLocalRotation();
+    virtual glm::quat GetLocalRotation();
 
     virtual void SetLocalSize(glm::vec3& size);
-    virtual glm::vec3& GetLocalSize();
+    virtual glm::vec3 GetLocalSize();
 
-    virtual glm::mat4& GetLocalMatrix();
+    virtual glm::mat4 GetLocalMatrix();
 
 private:
+    ITransform* GetParentTransform();
+    void UpdateTransform();
+    void UpdateMatrix();
+
     glm::vec3 position;
     glm::quat rotation;
-    glm::vec3 size;
+    glm::vec3 scale;
+
+    glm::mat4 matrix;
 };

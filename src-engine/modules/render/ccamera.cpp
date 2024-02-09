@@ -2,14 +2,21 @@
 
 CCamera::CCamera(): rotation(glm::vec3(0.0f, 0.0f, 0.0f)), position(0.0f, 0.0f, 0.0f), view_mat(1.0f), proj_mat(1.0f)
 {
-	left = 0;
-	right = 0;
-	bottom = 0;
-	top = 0;
+	left_ortho = 0;
+	right_ortho = 0;
+	bottom_ortho = 0;
+	top_ortho = 0;
 
 	type = CAMERA_TYPE_PERSPECTIVE;
 
 	fov = 70;
+
+	near = 0.1f;
+	far = 100.f;
+
+	UpdateViewMatrix();
+	UpdateProjMatrix();
+	//proj_mat = glm::perspective(glm::radians(45.0f), 1366.0f / 768.0f, 0.1f, 100.0f);
 }
 
 CCamera::~CCamera()
@@ -21,16 +28,20 @@ void CCamera::UpdateViewMatrix()
 {
 	glm::mat4 rot = glm::toMat4(rotation);
 
-	auto front = glm::vec3(rot * glm::vec4(0.0f, 0.0f, -1.0f, 0.0f));
-	auto up = glm::vec3(rot * glm::vec4(0.0f, 1.0f, 0.0f, 0.0f));
+	//auto front = glm::vec3(glm::vec4(0.0f, 0.0f, -1.0f, 0.0f));
+	up = glm::vec3(rot[1]);
+	front = glm::vec3(rot[2]);
+	right = glm::vec3(rot[0]);
 
+	//view_mat = glm::lookAt(position, position + front, glm::vec3(0.0f, 1.0f, 0.0f));
 	view_mat = glm::lookAt(position, position + front, up);
+	//view_mat = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0, -3.0f));
 }
 
 void CCamera::UpdateProjMatrix()
 {
 	if (type == CAMERA_TYPE_ORTHO)
-		proj_mat = glm::ortho(left, right, bottom, top);
+		proj_mat = glm::ortho(left_ortho, right_ortho, bottom_ortho, top_ortho);
 	else
 		proj_mat = glm::perspective(glm::radians(fov), aspect, near, far);
 }
@@ -81,10 +92,10 @@ void CCamera::SetNearFar(float near, float far)
 
 void CCamera::SetSize(float left, float right, float bottom, float top)
 {
-	this->left = left;
-	this->right = right;
-	this->bottom = bottom;
-	this->top = top;
+	this->left_ortho = left;
+	this->right_ortho = right;
+	this->bottom_ortho = bottom;
+	this->top_ortho = top;
 
 	UpdateProjMatrix();
 }
@@ -105,6 +116,46 @@ glm::quat& CCamera::GetRotation()
 	return rotation;
 }
 
+void CCamera::UpdateTransform()
+{
+	rotation = glm::quatLookAt(front, up);
+
+	rotation = glm::normalize(rotation);
+}
+
+void CCamera::SetFront(glm::vec3& front)
+{
+	this->front = front;
+
+	UpdateTransform();
+
+	UpdateViewMatrix();
+}
+
+glm::vec3& CCamera::GetFront()
+{
+	return front;
+}
+
+void CCamera::SetUp(glm::vec3& up)
+{
+	this->up = up;
+
+	UpdateTransform();
+
+	UpdateViewMatrix();
+}
+
+glm::vec3& CCamera::GetUp()
+{
+	return up;
+}
+
+glm::vec3& CCamera::GetRight()
+{
+	return right;
+}
+
 float CCamera::GetFOV()
 {
 	return fov;
@@ -123,10 +174,10 @@ void CCamera::GetNearFar(float& near, float& far)
 
 void CCamera::GetSize(float& left, float& right, float& bottom, float& top)
 {
-	left = this->left;
-	right = this->right;
-	bottom = this->bottom;
-	top = this->top;
+	left = this->left_ortho;
+	right = this->right_ortho;
+	bottom = this->bottom_ortho;
+	top = this->top_ortho;
 }
 
 

@@ -25,6 +25,21 @@ void CRenderFrame::AddRenderItem(RenderItem& item)
 	items[item.Material].push_back(item);
 }
 
+void CRenderFrame::AddLight(ILight* light)
+{
+	lights.push_back(light);
+}
+
+std::map<IMaterial*, std::vector<RenderItem>>& CRenderFrame::GetItems()
+{
+	return items;
+}
+
+std::vector<ILight*>& CRenderFrame::GetLights()
+{
+	return lights;
+}
+
 void CRenderFrame::Render()
 {
 	RenderOpaque();
@@ -35,7 +50,10 @@ void CRenderFrame::RenderMaterial(IMaterial* material, std::vector<RenderItem>& 
 {
 	material->PreRender();
 
-	material->Render(items, g_Render->GetCamera()->GetViewMatrix(), g_Render->GetCamera()->GetProjectionMatrix());
+	auto view = g_Render->GetCamera()->GetViewMatrix();
+	auto proj = g_Render->GetCamera()->GetProjectionMatrix();
+
+	material->Render(items, view, proj);
 
 	material->PostRender();
 }
@@ -63,4 +81,5 @@ void CRenderFrame::RenderBlended()
 void CRenderFrame::Clear()
 {
 	items.clear();
+	lights.clear();
 }

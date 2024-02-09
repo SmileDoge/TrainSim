@@ -4,7 +4,7 @@
 
 #include "modules/crendermodule.hpp"
 
-CMesh::CMesh() : indices_num(0), ref_count(0)
+CMesh::CMesh() : indices_num(0), vertices_num(0), ref_count(0)
 {
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -20,8 +20,19 @@ CMesh::~CMesh()
 
 void CMesh::Render()
 {
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glDrawElements(GL_TRIANGLES, indices_num, GL_UNSIGNED_SHORT, 0);
+	glBindVertexArray(VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
+	if (indices_num > 0)
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+		glDrawElements(GL_TRIANGLES, indices_num, GL_UNSIGNED_SHORT, 0);
+
+	}
+	else
+	{
+		glDrawArrays(GL_TRIANGLES, 0, vertices_num);
+	}
 }
 
 // XYZ Vertex Pos - 3 // 0
@@ -33,12 +44,14 @@ void CMesh::SetData(float* vertices, int num_vertices, USHORT* indices, int num_
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * (num_vertices * 3), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * (num_vertices * 8), vertices, GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(USHORT) * num_indices, indices, GL_STATIC_DRAW);
+	if (num_indices > 0)
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(USHORT) * num_indices, indices, GL_STATIC_DRAW);
+	}
 
-	/*
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
@@ -47,12 +60,9 @@ void CMesh::SetData(float* vertices, int num_vertices, USHORT* indices, int num_
 
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 	glEnableVertexAttribArray(2);
-	*/
-
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
-	glEnableVertexAttribArray(0);
 
 	indices_num = num_indices;
+	vertices_num = num_vertices;
 }
 
 void CMesh::SetName(const std::string& name)

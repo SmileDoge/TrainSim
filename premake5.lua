@@ -9,7 +9,13 @@ workspace "TrainSim"
 
     startproject "TrainSimGame"
     
-    defines { "_CRT_SECURE_NO_WARNINGS", "_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING" }
+    defines { 
+        "_CRT_SECURE_NO_WARNINGS", 
+        "_CRT_NON_CONFORMING_SWPRINTFS",
+        "_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING",
+        "GLM_FORCE_DEFAULT_ALIGNED_GENTYPES",
+        "GLM_FORCE_AVX",
+    }
 
     filter {"configurations:Debug"}
         defines { "DEBUG", "_DEBUG" }
@@ -19,7 +25,9 @@ workspace "TrainSim"
     filter {"configurations:Release"}
         defines { "NDEBUG" }
         runtime "Release"
+        optimize "Speed"
 
+    disablewarnings { "4267", "4244", "4305", "4005", "5082" }
 
     project "TrainSimEngine"
         kind "SharedLib"
@@ -27,6 +35,7 @@ workspace "TrainSim"
         includedirs {
             "src-engine",
             "shared-include",
+            "external/stb_image",
             "external/dxtcompress",
             "external/glad/include",
             "external/glm-include",
@@ -72,6 +81,7 @@ workspace "TrainSim"
         includedirs {
             "src-game",
             "shared-include",
+            "external/stb_image",
             "external/imgui-master",
             "external/imgui-master/backends",
             "external/ultralight/include",

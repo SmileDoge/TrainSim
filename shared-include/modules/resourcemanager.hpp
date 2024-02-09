@@ -1,34 +1,54 @@
 #pragma once
+
+#include "global.hpp"
+
 #include "module.hpp"
+
 #include "resources/resource.hpp"
+#include "resources/modelresource.hpp"
+
+#include "modules/filesystem.hpp"
 
 #include <vector>
 #include <map>
 #include <string>
 
-enum ResourceType
-{
-	RESOURCE_TYPE_UNKNOWN = 0,
+typedef unsigned int ResourceHeader;
 
-	RESOURCE_TYPE_TEXT = 1,
-	RESOURCE_TYPE_JSON,
+#define GET_RESOURCE_HEADER(header) ( (header[3] << 24) + (header[2] << 16) + (header[1] << 8) + header[0] )
 
-	RESOURCE_TYPE_MODEL,
-	RESOURCE_TYPE_TEXTURE,
-	RESOURCE_TYPE_MATERIAL,
-	RESOURCE_TYPE_SHADER,
-};
-
-class IResourceFactory : public IModule
+class IResourceFactory
 {
 public:
 	virtual ~IResourceFactory() = default;
 
-	virtual void AddResource(std::string name, IResource* resource) = 0;
-	
-	virtual void 
+	virtual TSResult CreateResourceFromStream(IFileStream* stream, IResource*& resource) = 0;
 
-private:
-	std::vector<IResource*> resources;
-	std::map<ResourceType, std::map<std::string, IResource*>> resources_named;
+	virtual ResourceType GetResourceType() = 0;
+	virtual ResourceHeader GetHeader() = 0;
 };
+
+class IResourceManager : public IModule
+{
+public:
+	virtual ~IResourceManager() = default;
+
+	virtual TSResult PrecacheResource(const std::string& path, ResourceLoadFlag loadflag) = 0;
+	virtual TSResult LoadResourceInternal(const std::string& path, ResourceLoadFlag loadflag, IResource*& resource) = 0;
+
+	virtual void RegisterResourceFactory(IResourceFactory* factory) = 0;
+
+	template<class T>
+	T* LoadResource(const std::string& path, ResourceLoadFlag loadflag);
+};
+
+#include <typeinfo>
+template<class T>
+T* IResourceManager::LoadResource(const std::string& path, ResourceLoadFlag loadflag)
+{
+	IResource* resource = NULL;
+
+	LoadResourceInternal(path, loadflag, resource);
+
+	return (T*)(void*)resource;
+}

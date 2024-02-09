@@ -2,6 +2,8 @@
 
 #include "cmesh.hpp"
 
+#include "modules/crendermodule.hpp"
+
 CMaterial::CMaterial() : name("CMaterial"), shader(NULL), albedo_texture(NULL), ref_count(0)
 {
 
@@ -30,12 +32,41 @@ void CMaterial::Render(std::vector<RenderItem>& items, glm::mat4x4& mat_view, gl
 	if (albedo_texture != NULL)
 		albedo_texture->Use();
 
-	//shader->SetMat4x4("view_mat", mat_view);
-	//shader->SetMat4x4("proj_mat", mat_proj);
+	auto lights = g_Render->GetRenderFrame()->GetLights();
+
+	ILight* light = NULL;
+
+	if (lights.size() > 0)
+		light = lights[0];
+
+	shader->SetViewMat(mat_view);
+	shader->SetProjMat(mat_proj);
+
+	shader->SetVec3("viewPos", g_Render->GetCamera()->GetPosition());
+
+	shader->SetVec3("ambient", glm::vec3(0.4f, 0.4f, 0.4f));
+	shader->SetVec3("specular", glm::vec3(0.5f, 0.5f, 0.5f));
+	shader->SetFloat("shininess", 32.0f);
+
+	if (light)
+	{
+		shader->SetVec3("light.position", light->GetPosition());
+		shader->SetVec3("light.ambient", light->GetAmbient());
+		shader->SetVec3("light.diffuse", light->GetDiffuse());
+		shader->SetVec3("light.specular", light->GetSpecular());
+	}
+	else
+	{
+		shader->SetVec3("light.position", glm::vec3(0.0f));
+		shader->SetVec3("light.ambient", glm::vec3(0.1f));
+		shader->SetVec3("light.diffuse", glm::vec3(0.1f));
+		shader->SetVec3("light.specular", glm::vec3(1.0f));
+	}
 
 	for (auto& item : items)
 	{
 		//shader->SetMat4x4("model_mat", item.Transform);
+		shader->SetModelMat(item.Transform);
 
 		item.Mesh->Render();
 	}

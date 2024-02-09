@@ -17,6 +17,14 @@ public:
 	virtual void SetRotation(glm::quat& rotation);
 	virtual glm::quat& GetRotation();
 
+	virtual void SetFront(glm::vec3& front);
+	virtual glm::vec3& GetFront();
+
+	virtual void SetUp(glm::vec3& up);
+	virtual glm::vec3& GetUp();
+
+	virtual glm::vec3& GetRight();
+
 	virtual void SetType(CameraType type);
 	virtual CameraType GetType();
 
@@ -39,15 +47,20 @@ private:
 	void UpdateViewMatrix();
 	void UpdateProjMatrix();
 
+	void UpdateTransform();
+
 	glm::mat4 view_mat;
 	glm::mat4 proj_mat;
 
 	glm::vec3 position;
+
 	glm::quat rotation;
+
+	glm::vec3 front, right, up;
 
 	CameraType type;
 
 	float fov, aspect, near, far;
 
-	float left, right, bottom, top;
+	float left_ortho, right_ortho, bottom_ortho, top_ortho;
 };

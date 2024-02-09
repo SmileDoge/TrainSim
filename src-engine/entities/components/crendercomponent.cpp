@@ -17,6 +17,9 @@ void CRenderComponent::Update()
     if (mesh == NULL) return;
     if (material == NULL) return;
 
+    //auto mat = glm::mat4(1.0f);
+    //auto mat = GetEntity()->GetTransform()->GetMatrix();
+
     g_Render->GetRenderFrame()->AddRenderItem(mesh, material, GetEntity()->GetTransform()->GetMatrix());
 }
 
