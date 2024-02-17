@@ -103,6 +103,16 @@ struct TSModel_file
 	std::vector<TSModel_Lod_file> lods;
 	std::vector<glm::mat4> matrices;
 	std::vector<std::string> matrices_name;
+
+	TSModel_file()
+	{
+		g_Log->LogDebug("Created TSModel_file");
+	}
+
+	~TSModel_file()
+	{
+		g_Log->LogError("Deleted TSModel_file");
+	}
 };
 
 glm::vec4 ReadVector4(IFileStream* stream)
@@ -121,83 +131,6 @@ glm::vec4 ReadVector4(IFileStream* stream)
 
 TSResult CTSModelResource::LoadFromStream(IFileStream* stream)
 {
-	TSModel_file _model = TSModel_file();
-
-	int lods_count = stream->ReadInt32();
-
-	for (int iLod = 0; iLod < lods_count; iLod++)
-	{
-		TSModel_Lod_file lod = TSModel_Lod_file();
-
-		lod.distance = stream->ReadFloat();
-
-		int subobjects_count = stream->ReadInt32();
-
-		for (int iSubObj = 0; iSubObj < subobjects_count; iSubObj++)
-		{
-			TSModel_SubObject_file subobject = TSModel_SubObject_file();
-
-			int primitives_count = stream->ReadInt32();
-
-			for (int iPrim = 0; iPrim < primitives_count; iPrim++)
-			{
-				TSModel_Primitive_file primitive = TSModel_Primitive_file();
-
-				primitive.iHierarchy = stream->ReadInt32();
-
-				int triangles_count = stream->ReadInt32();
-
-				for (int iTrig = 0; iTrig < triangles_count; iTrig++)
-					primitive.triangles.push_back(stream->ReadUInt16());
-
-				primitive.material = stream->ReadString(stream->ReadUInt16());
-				primitive.options = stream->ReadInt32();
-
-				subobject.primitives.push_back(primitive);
-			}
-
-			int vertices_count = stream->ReadInt32();
-
-			for (int iVert = 0; iVert < vertices_count; iVert++)
-			{
-				TSModel_Vertex_file vertex = TSModel_Vertex_file();
-
-				float pos_x, pos_y, pos_z;
-				float nor_x, nor_y, nor_z;
-				float uv_x, uv_y;
-
-				pos_x = stream->ReadFloat();
-				pos_y = stream->ReadFloat();
-				pos_z = stream->ReadFloat();
-				
-				nor_x = stream->ReadFloat();
-				nor_y = stream->ReadFloat();
-				nor_z = stream->ReadFloat();
-				
-				uv_x = stream->ReadFloat();
-				uv_y = stream->ReadFloat();
-
-				vertex.position = glm::highp_vec3(pos_x, pos_y, pos_z);
-				vertex.normal = glm::highp_vec3(nor_x, nor_y, nor_z);
-				vertex.texcoord = glm::highp_vec2(uv_x, uv_y);
-
-				subobject.vertices.push_back(vertex);
-			}
-
-			lod.subobjects.push_back(subobject);
-		}
-
-		int hierarchy_count = stream->ReadInt32();
-
-		for (int iHier = 0; iHier < hierarchy_count; iHier++)
-			lod.hierarchy.push_back(stream->ReadInt32());
-
-		_model.lods.push_back(lod);
-	}
-
-
-	// create model
-
 	int matrices_count = stream->ReadInt32();
 
 	for (int iMat = 0; iMat < matrices_count; iMat++)
@@ -215,6 +148,86 @@ TSResult CTSModelResource::LoadFromStream(IFileStream* stream)
 	for (int iMat = 0; iMat < matrices_count; iMat++)
 		model.matrices_name.push_back(stream->ReadString(stream->ReadUInt16()));
 
+	int lods_count = stream->ReadInt32();
+
+	unsigned int sort_index = 0;
+
+	for (int iLod = 0; iLod < lods_count; iLod++)
+	{
+		TSModel_Lod lod = TSModel_Lod();
+
+		lod.distance = stream->ReadFloat();
+
+		int subobjects_count = stream->ReadInt32();
+
+		for (int iSubObj = 0; iSubObj < subobjects_count; iSubObj++)
+		{
+			int vertices_count = stream->ReadInt32(); // vertix size, not float
+
+			float* vertices = new float[vertices_count * (3 + 3 + 2)];
+
+			int readed = stream->ReadBytes((char*)vertices, vertices_count * (3 + 3 + 2) * 4);
+
+			int primitives_count = stream->ReadInt32();
+
+			for (int iPrim = 0; iPrim < primitives_count; iPrim++)
+			{
+				TSModel_Primitive primitive = TSModel_Primitive();
+
+				primitive.iHierarchy = stream->ReadInt32();
+
+				primitive.sort_index = sort_index;
+
+				int triangles_count = stream->ReadInt32();
+
+				USHORT* indices = new USHORT[triangles_count];
+
+				stream->ReadBytes((char*)indices, triangles_count * 2);
+
+				auto texture_name = stream->ReadString(stream->ReadUInt16());
+				auto material_name = stream->ReadString(stream->ReadUInt16());
+
+				int options = stream->ReadInt32();
+
+				g_Log->LogError("Material %s - options %d", material_name.c_str(), options);
+
+				primitive.mesh = g_Render->GetMeshManager()->CreateMesh();
+
+				primitive.mesh->SetName(model.matrices_name[primitive.iHierarchy]);
+				primitive.mesh->SetData(vertices, vertices_count, indices, triangles_count);
+
+				auto texture_path = IFileSystem::GetFullPath(IFileSystem::Combine(IFileSystem::GetDirectoryName(stream->GetPath()), texture_name)).substr(1);
+
+				ITexture* texture = g_ResourceManager->LoadResource<TSTextureResource>(texture_path, RESOURCE_LOAD_FLAG_DEFAULT)->GetData();
+
+				primitive.material = g_Render->GetMaterialManager()->CreateMaterial(material_name, "msts_standard_shader");
+
+				primitive.material->SetTexture(MATERIAL_ALBEDO_TEXTURE, texture);
+				primitive.material->SetInt(MATERIAL_MSTS_OPTIONS, options);
+
+				delete[] indices;
+
+				sort_index++;
+
+				lod.primitives.push_back(primitive);
+			}
+
+			delete[] vertices;
+		}
+
+		int hierarchy_count = stream->ReadInt32();
+
+		for (int iHier = 0; iHier < hierarchy_count; iHier++)
+			lod.hierarchy.push_back(stream->ReadInt32());
+
+		model.lods.push_back(lod);
+	}
+
+
+	// create model
+
+
+	/*
 	for (auto& lod_file : _model.lods)
 	{
 		TSModel_Lod lod = TSModel_Lod();
@@ -227,21 +240,24 @@ TSResult CTSModelResource::LoadFromStream(IFileStream* stream)
 		{
 			auto& vertices = subobject_file.vertices;
 
+			
 			std::vector<float> vertices_float;
 
 			for (auto& vertex : vertices)
 			{
-				vertices_float.push_back(-vertex.position.x);
+				vertices_float.push_back(vertex.position.x);
 				vertices_float.push_back(vertex.position.y);
 				vertices_float.push_back(vertex.position.z);
 
-				vertices_float.push_back(-vertex.normal.x);
+				vertices_float.push_back(vertex.normal.x);
 				vertices_float.push_back(vertex.normal.y);
 				vertices_float.push_back(vertex.normal.z);
 
 				vertices_float.push_back(vertex.texcoord.x);
 				vertices_float.push_back(vertex.texcoord.y);
 			}
+
+			float* vertices_float = reinterpret_cast<float*>(vertices.data());
 
 			for (auto& primitive_file : subobject_file.primitives)
 			{
@@ -254,7 +270,8 @@ TSResult CTSModelResource::LoadFromStream(IFileStream* stream)
 				primitive.mesh = g_Render->GetMeshManager()->CreateMesh();
 
 				primitive.mesh->SetName(model.matrices_name[primitive.iHierarchy]);
-				primitive.mesh->SetData(reinterpret_cast<float*>(vertices_float.data()), vertices.size(), indices.data(), indices.size());
+				primitive.mesh->SetData(vertices_float, vertices.size(), indices.data(), indices.size());
+				//primitive.mesh->SetData(vertices_float.data(), vertices.size(), indices.data(), indices.size());
 
 				auto mat_path = IFileSystem::GetFullPath(IFileSystem::Combine(IFileSystem::GetDirectoryName(stream->GetPath()), primitive_file.material)).substr(1);
 
@@ -278,6 +295,7 @@ TSResult CTSModelResource::LoadFromStream(IFileStream* stream)
 
 		model.lods.push_back(lod);
 	}
+	*/
 
 	/*
 	int lods_count = stream->ReadInt32();

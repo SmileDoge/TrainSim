@@ -118,7 +118,12 @@ TSResult CTSTextureResource::LoadFromStream(IFileStream* stream)
 
 	texture->SetFilter(TEXTURE_FILTER_LINEAR, TEXTURE_FILTER_LINEAR);
 	texture->SetWrap(TEXTURE_WRAP_REPEAT, TEXTURE_WRAP_REPEAT);
-	texture->SetData(width, height, format, data);
+	
+	if (ITexture::IsCompressedFormat(format))
+		texture->SetCompressedData(width, height, format, data, data_len);
+	else
+		texture->SetData(width, height, format, data);
+	
 	texture->GenerateMipmap();
 
 	delete[] data;

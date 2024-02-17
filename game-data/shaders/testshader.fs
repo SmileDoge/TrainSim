@@ -25,6 +25,7 @@ uniform float shininess;
 
 void main()
 {
+    /*
     vec3 textureTexel = texture(ourTexture, vec2(TexCoord.x, TexCoord.y)).xyz;
     //vec3 textureTexel = vec3(0.8, 0.8, 0.8);
 
@@ -41,5 +42,7 @@ void main()
     vec3 specular = light.specular * (spec * specular);
 
     vec3 result = ambient + diffuse + specular;
+    */
+    vec3 result = texture(ourTexture, TexCoord).xyz;
     FragColor = vec4(result, 1.0);
 }

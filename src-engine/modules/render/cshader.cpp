@@ -46,7 +46,7 @@ int CShader::Compile(char* result)
 	glShaderSource(vertex, 1, &vertex_code, NULL);
 	glCompileShader(vertex);
 	glGetShaderiv(vertex, GL_COMPILE_STATUS, &res);
-	if (!res)
+	if (!res && result)
 		glGetShaderInfoLog(vertex, 512, NULL, result);
 	else if (!res && !result)
 	{

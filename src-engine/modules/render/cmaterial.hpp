@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 
+/*
 class CMaterial : public IMaterial
 {
 public:
@@ -32,6 +33,7 @@ private:
 
 	ITexture* albedo_texture;
 };
+*/
 
 class CMaterialManager : public IMaterialManager
 {
@@ -39,7 +41,7 @@ public:
 	CMaterialManager();
 	~CMaterialManager() override;
 
-	virtual IMaterial* CreateMaterial(const std::string& name);
+	virtual IMaterial* CreateMaterial(const std::string& name, const std::string& shader);
 	virtual IMaterial* GetMaterial(const std::string& name);
 	virtual bool IsMaterialCreated(const std::string& name);
 
@@ -47,9 +49,12 @@ public:
 
 	virtual int MaterialReferenceIncrement(IMaterial* material);
 	virtual int MaterialReferenceDecrement(IMaterial* material);
-	
+
+	virtual void RegisterMaterialFactory(IMaterialFactory* factory);
+
 private:
 	std::map<std::string, IMaterial*> materials;
+	std::map<std::string, IMaterialFactory*> factories;
 };
 
 extern CMaterialManager* g_MaterialManager;

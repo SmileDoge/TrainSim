@@ -15,6 +15,7 @@ public:
 	virtual void SetWrap(TextureWrap wrap_s, TextureWrap wrap_t);
 	virtual void SetFilter(TextureFilter min, TextureFilter mag);
 	virtual void SetData(int width, int height, TexturePixelFormat format, void* data);
+	virtual void SetCompressedData(int width, int height, TexturePixelFormat format, void* data, size_t data_len);
 
 	virtual void GenerateMipmap();
 

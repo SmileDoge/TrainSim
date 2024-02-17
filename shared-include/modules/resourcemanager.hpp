@@ -1,12 +1,8 @@
 #pragma once
 
 #include "global.hpp"
-
 #include "module.hpp"
-
 #include "resources/resource.hpp"
-#include "resources/modelresource.hpp"
-
 #include "modules/filesystem.hpp"
 
 #include <vector>
@@ -48,7 +44,12 @@ T* IResourceManager::LoadResource(const std::string& path, ResourceLoadFlag load
 {
 	IResource* resource = NULL;
 
-	LoadResourceInternal(path, loadflag, resource);
+	TSResult res = LoadResourceInternal(path, loadflag, resource);
+
+	if (res != TS_OK)
+	{
+		g_Log->LogError("IResourceManager::LoadResourceInternal != TS_OK");
+	}
 
 	return (T*)(void*)resource;
 }

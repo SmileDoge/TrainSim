@@ -44,7 +44,7 @@ void CModelRenderer::Update()
             matrices_cache[i] = matrix;
         }
 
-        g_Render->GetRenderFrame()->AddRenderItem(primitive.mesh, primitive.material, base_matrix * matrices_cache[i]);
+        g_Render->GetRenderFrame()->AddRenderItem(primitive.mesh, primitive.material, base_matrix * matrices_cache[i], primitive.sort_index);
 
         /*
         auto iter = matrices_cache.find(iNode2);

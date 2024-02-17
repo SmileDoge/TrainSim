@@ -20,7 +20,7 @@ enum class IComponentStandarts : USHORT
 
 #define GET_COMPONENT_ID(enumid) (USHORT)enumid
 
-#define DEFINE_INFO() IComponentInfo info;
+#define DEFINE_COMPONENT_INFO() IComponentInfo info;
 
 #define REGISTER_COMPONENT(factory, component) \
 info.name = #component; \

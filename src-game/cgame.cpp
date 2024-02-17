@@ -55,7 +55,7 @@ void TrainSimGame::Start()
 }
 
 IEntity* entity = NULL;
-IEntity* train = NULL;
+IEntity* train_2es4k = NULL;
 ILightComponent* light = NULL;
 ITexture* texture = NULL;
 
@@ -72,6 +72,7 @@ void TrainSimGame::PostStart()
     render->GetWindow()->SetSize(glm::vec2(1600, 900));
     render->GetWindow()->SetType(WINDOW_TYPE_WINDOWED);
 
+    /*
     float vertices[] = {
         // координаты        // нормали           // текстурные координаты
        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
@@ -138,22 +139,12 @@ void TrainSimGame::PostStart()
     entity = world->CreateEntity();
 
     entity->SetName("Test Entity");
-
-    //IRenderComponent* rendercomponent = entity->CreateComponent<IRenderComponent>();
-    //rendercomponent->SetMesh(mesh);
-    //rendercomponent->SetMaterial(material);
+    */
 
     ICamera* camera = render->GetCamera();
 
     camera->SetPosition(glm::vec3(0.0f, 0.0f, 2.0f));
-    camera->SetRotation(GLM_EULER(10.0f, 140.0f, 0.0f));
-
-    int width, height, channels;
-
-    size_t file_len;
-    uint8_t* file_data = filesystem->ReadFile("data/images/cinnamorol.png", &file_len);
-
-    uint8_t* data = stbi_load_from_memory(file_data, file_len, &width, &height, &channels, 0);
+    camera->SetRotation(GLM_EULER(0.0f, 0.0f, 0.0f));
 
     auto window = render->GetWindow();
 
@@ -161,38 +152,28 @@ void TrainSimGame::PostStart()
 
     window->LoadIcon("data/images/kek.jpg");
 
-    texture = render->GetTextureManager()->CreateTexture("exampletexture");
-
-    texture->SetFilter(TEXTURE_FILTER_LINEAR, TEXTURE_FILTER_LINEAR);
-    texture->SetWrap(TEXTURE_WRAP_REPEAT, TEXTURE_WRAP_REPEAT);
-    texture->SetData(width, height, channels == 4 ? TEXTURE_FORMAT_RGBA : TEXTURE_FORMAT_RGB, data);
-    texture->GenerateMipmap();
-
-    //stbi_image_free(data);
-
-    material->SetTexture(MATERIAL_ALBEDO_TEXTURE, texture);
-
 
     auto resourcefactory = engine->GetModule<IResourceManager>();
 
     auto start_time = engine->GetSysTime();
 
-    //auto res = resourcefactory->LoadResource<TSModelResource>("data/models/mdd_2es4ka.ts_model", RESOURCE_LOAD_FLAG_DEFAULT);
-    auto res = resourcefactory->LoadResource<TSModelResource>("data/trains/mdd_2ES4k-084/mdd_2es4ka.ts_model", RESOURCE_LOAD_FLAG_DEFAULT);
-    //auto res = resourcefactory->LoadResource<TSModelResource>("data/models/zdsLoco_chs4z-080.ts_model", RESOURCE_LOAD_FLAG_DEFAULT);
+    auto es4k = resourcefactory->LoadResource<TSModelResource>("data/trains/mdd_2ES4k-084/mdd_2es4ka.ts_model", RESOURCE_LOAD_FLAG_DEFAULT);
+    auto chs4 = resourcefactory->LoadResource<TSModelResource>("data/trains/zdsLoco_chs4z-080/zdsLoco_chs4z-080.ts_model", RESOURCE_LOAD_FLAG_DEFAULT);
 
     auto end_time = engine->GetSysTime();
 
-    g_Log->LogWarn("Resource: %p [%s], Loaded in %lf sec", res, res->GetPath().c_str(), (end_time - start_time));
+    g_Log->LogWarn("Resources Loaded in %lf sec", (end_time - start_time));
 
-
-    train = world->CreateEntity();
-
-    train->SetName("2ES4K");
-
-    train->CreateComponent<IModelRenderer>()->SetModel(res);
-
-    //window->SetSize(glm::vec2(800, 600));
+    
+    train_2es4k = world->CreateEntity();
+    train_2es4k->SetName("2ES4K");
+    train_2es4k->CreateComponent<IModelRenderer>()->SetModel(es4k);
+    
+    IEntity* train_chs4 = world->CreateEntity();
+    train_chs4->SetName("CHS4");
+    train_chs4->CreateComponent<IModelRenderer>()->SetModel(chs4);
+    train_chs4->GetTransform()->SetPosition(glm::vec3(4.0f, 0.0f, 0.0f));
+    
 
     /*
     for (int i = 0; i < 100; i++)
@@ -315,9 +296,9 @@ void TrainSimGame::RegisterComponents()
 {
     IComponentFactory* factory = engine->GetModule<IComponentFactory>();
 
-    DEFINE_INFO();
+    DEFINE_COMPONENT_INFO();
 
-    REGISTER_COMPONENT(factory, TestComponent);
+    //REGISTER_COMPONENT(factory, TestComponent);
 }
 
 #include "glm/glm.hpp"
@@ -330,14 +311,13 @@ float yaw, pitch;
 
 void TrainSimGame::ProcessInput()
 {
-    float cameraSpeed = 2.5f * engine->GetDeltaTime(); // настройте по вашему усмотрению
-
+    float cameraSpeed = 2.5f * engine->GetDeltaTime();
 
     auto render = engine->GetModule<IRenderModule>();
 
-    auto cameraFront = render->GetCamera()->GetFront();
-    auto cameraUp = render->GetCamera()->GetUp();
-    auto cameraPos = render->GetCamera()->GetPosition();
+    auto& cameraFront = render->GetCamera()->GetFront();
+    auto& cameraUp = render->GetCamera()->GetUp();
+    auto& cameraPos = render->GetCamera()->GetPosition();
 
     GLFWwindow* window = (GLFWwindow*)render->GetWindow()->GetGLFWPointer();
 
@@ -405,7 +385,7 @@ void TrainSimGame::ProcessInput()
 
     ImGui::Begin("Camera");
 
-    auto camera_pos = render->GetCamera()->GetPosition();
+    auto& camera_pos = render->GetCamera()->GetPosition();
 
     ImGui::Text("Position: (%f, %f, %f)", camera_pos.x, camera_pos.y, camera_pos.z);
     ImGui::Text("Rotation: (%f, %f, %f)", pitch, yaw, 0);
@@ -451,8 +431,8 @@ void TrainSimGame::Update()
 
     //ImGui::SetNextWindowSize(ImVec2(400, 720), ImGuiCond_Always);
     ImGui::Begin("Test", 0, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize);
-    ImGui::Text("delta_time: %f sec, fps: %f", engine->GetDeltaTime(), 1 / engine->GetDeltaTime());
-    ImGui::Text("Application average %f sec/frame (%f FPS)", engine->GetDeltaTime(), 1 / engine->GetDeltaTime());
+    ImGui::Text("delta_time: %f ms, fps: %f", engine->GetDeltaTime() * 1000.f, 1 / engine->GetDeltaTime());
+    ImGui::Text("Application average %f ms/frame (%f FPS)", engine->GetDeltaTime() * 1000.f, 1 / engine->GetDeltaTime());
 
     ImGui::SliderFloat("FPS Max", &fps, 1, 5000);
     
@@ -464,34 +444,37 @@ void TrainSimGame::Update()
     //ImGui::Image((void*)texture->GetID(), ImVec2(800, 800));
     //ImGui::End();
     
-    ImGui::Begin("Train");
+    if (train_2es4k != NULL)
+    {
+        ImGui::Begin("Train");
 
-    auto pos = train->GetTransform()->GetPosition();
-    auto ang = glm::eulerAngles(train->GetTransform()->GetRotation());
-    auto mat = train->GetTransform()->GetMatrix();
-    //auto mat = glm::mat4(1.0f);
+        auto& pos = train_2es4k->GetTransform()->GetPosition();
+        auto& ang = glm::eulerAngles(train_2es4k->GetTransform()->GetRotation());
+        auto& mat = train_2es4k->GetTransform()->GetMatrix();
+        //auto mat = glm::mat4(1.0f);
 
-    ImGui::Text("Position: (%f, %f, %f)", pos.x, pos.y, pos.z);
-    ImGui::Text("Angle: (%f, %f, %f)", glm::degrees(ang.x), ang.y, ang.z);
-    ImGui::Spacing();
-    ImGui::Text("Matrix:\n[%.1f; %.1f; %.1f; %.1f]\n[%.1f; %.1f; %.1f; %.1f]\n[%.1f; %.1f; %.1f; %.1f]\n[%.1f; %.1f; %.1f; %.1f]",
-        mat[0][0], mat[0][1], mat[0][2], mat[0][3],
-        mat[1][0], mat[1][1], mat[1][2], mat[1][3],
-        mat[2][0], mat[2][1], mat[2][2], mat[2][3],
-        mat[3][0], mat[3][1], mat[3][2], mat[3][3]
+        ImGui::Text("Position: (%f, %f, %f)", pos.x, pos.y, pos.z);
+        ImGui::Text("Angle: (%f, %f, %f)", glm::degrees(ang.x), ang.y, ang.z);
+        ImGui::Spacing();
+        ImGui::Text("Matrix:\n[%.1f; %.1f; %.1f; %.1f]\n[%.1f; %.1f; %.1f; %.1f]\n[%.1f; %.1f; %.1f; %.1f]\n[%.1f; %.1f; %.1f; %.1f]",
+            mat[0][0], mat[0][1], mat[0][2], mat[0][3],
+            mat[1][0], mat[1][1], mat[1][2], mat[1][3],
+            mat[2][0], mat[2][1], mat[2][2], mat[2][3],
+            mat[3][0], mat[3][1], mat[3][2], mat[3][3]
         );
 
-    float pos_x = pos.x;
-    float pos_y = pos.y;
-    float pos_z = pos.z;
+        float pos_x = pos.x;
+        float pos_y = pos.y;
+        float pos_z = pos.z;
 
-    ImGui::SliderFloat("X", &pos_x, -10.0f, 10.0f);
-    ImGui::SliderFloat("Y", &pos_y, -10.0f, 10.0f);
-    ImGui::SliderFloat("Z", &pos_z, -10.0f, 10.0f);
+        ImGui::SliderFloat("X", &pos_x, -10.0f, 10.0f);
+        ImGui::SliderFloat("Y", &pos_y, -10.0f, 10.0f);
+        ImGui::SliderFloat("Z", &pos_z, -10.0f, 10.0f);
 
-    train->GetTransform()->SetPosition(glm::vec3(pos_x, pos_y, pos_z));
+        train_2es4k->GetTransform()->SetPosition(glm::vec3(pos_x, pos_y, pos_z));
 
-    ImGui::End();
+        ImGui::End();
+    }
 
     ImGui::Begin("Light");
 

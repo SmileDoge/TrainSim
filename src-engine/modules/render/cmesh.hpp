@@ -2,8 +2,6 @@
 
 #include "modules/render/mesh.hpp"
 
-#include "glad/glad.h"
-
 #include <vector>
 
 class CMesh : public IMesh

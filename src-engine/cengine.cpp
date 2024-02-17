@@ -96,10 +96,9 @@ TSResult CEngine::Initialize()
     AddModule("ComponentFactory", new CComponentFactory());
     AddModule("ResourceManager", new CResourceManager());
 
-    RegisterComponents();
-
     AddModule("RenderModule", new CRenderModule());
 
+    RegisterComponents();
 
     IRenderModule* render = GetModule<IRenderModule>();
 
@@ -110,13 +109,13 @@ TSResult CEngine::Initialize()
     g_Log->LogDebug("Render Backend: %s", GetBackendName(render->GetBackend()));
     g_Log->LogDebug("Render Version: %d.%d", render_major, render_minor);
 
-    g_Log->LogDebug("Engine Initaliazed!");
+    g_Log->LogDebug("Engine Initialized!");
 
     game->Start();
     game->RegisterComponents();
     game->PostStart();
 
-    g_Log->LogDebug("Game Initaliazed!");
+    g_Log->LogDebug("Game Initialized!");
 
     return TS_OK;
 }
@@ -128,8 +127,11 @@ CEngine::~CEngine()
     for (auto& [name, module] : modules)
         module->PreDeinit();
 
-    game->Shutdown();
-    delete game;
+    if (game != NULL)
+    {
+        game->Shutdown();
+        delete game;
+    }
 
     for (auto& [name, module] : modules)
         delete module;
@@ -269,7 +271,6 @@ float CEngine::GetDeltaTime()
 
 double CEngine::GetCurTime()
 {
-    //return glfwGetTime();
     return current_time;
 }
 

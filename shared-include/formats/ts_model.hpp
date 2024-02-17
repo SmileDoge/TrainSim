@@ -51,6 +51,7 @@ struct TSModel
 
 struct TSModel_Primitive
 {
+	unsigned int sort_index;
 	int iHierarchy;
 	IMesh* mesh;
 	IMaterial* material;

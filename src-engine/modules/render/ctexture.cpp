@@ -2,6 +2,7 @@
 #include "glad/glad.h"
 
 #include "modules/crendermodule.hpp"
+#include "modules/clogmodule.hpp"
 
 CTexture::CTexture() : ref_count(0), width(0), height(0), format(TEXTURE_FORMAT_RGB), name("CTexture")
 {
@@ -73,6 +74,12 @@ int GetOpenGLInternalFormat(TexturePixelFormat format)
 		return GL_RGBA;
 	case TEXTURE_FORMAT_RED:
 		return GL_RED;
+	case TEXTURE_FORMAT_DXT1:
+		return GL_RGB;
+	case TEXTURE_FORMAT_DXT3:
+		return GL_RGBA;
+	case TEXTURE_FORMAT_DXT5:
+		return GL_RGBA;
 	default:
 		return GL_RGB;
 	}
@@ -102,6 +109,10 @@ int GetOpenGLFormat(TexturePixelFormat format)
 		return GL_BGRA;
 	case TEXTURE_FORMAT_RED:
 		return GL_RED;
+	case TEXTURE_FORMAT_DXT1:
+		return GL_COMPRESSED_RGBA_S3TC_DXT1_EXT;
+	case TEXTURE_FORMAT_DXT5:
+		return GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
 	default:
 		return GL_RGB;
 	}
@@ -136,6 +147,14 @@ int GetOpenGLDataType(TexturePixelFormat format)
 	}
 }
 
+bool IsCompressedFormat(TexturePixelFormat format)
+{
+	if (format >= TEXTURE_FORMAT_COMPRESSED_FORMATS)
+		return true;
+
+	return false;
+}
+
 void CTexture::SetWrap(TextureWrap wrap_s, TextureWrap wrap_t)
 {
 	glBindTexture(GL_TEXTURE_2D, texture_handle);
@@ -164,7 +183,37 @@ void CTexture::SetData(int width, int height, TexturePixelFormat format, void* d
 	int gl_format = GetOpenGLFormat(format);
 	int gl_data = GetOpenGLDataType(format);
 
+	bool is_compressed = IsCompressedFormat(format);
+
+	if (is_compressed)
+	{
+		g_Log->LogError("CTexture::SetData(%d) - Texture format is compressed!", format);
+		__debugbreak();
+	}
+
 	glTexImage2D(GL_TEXTURE_2D, 0, gl_int_format, width, height, 0, gl_format, gl_data, data);
+}
+
+void CTexture::SetCompressedData(int width, int height, TexturePixelFormat format, void* data, size_t data_len)
+{
+	glBindTexture(GL_TEXTURE_2D, texture_handle);
+
+	this->width = width;
+	this->height = height;
+	this->format = format;
+
+	int gl_format = GetOpenGLFormat(format);
+
+	bool is_compressed = IsCompressedFormat(format);
+
+	if (!is_compressed)
+	{
+		g_Log->LogError("CTexture::SetCompressedData(%d) - Texture format is not compressed!", format);
+		__debugbreak();
+	}
+
+	glCompressedTexImage2D(GL_TEXTURE_2D, 0, gl_format, width, height, 0, data_len, data);
+	//glTexImage2D(GL_TEXTURE_2D, 0, gl_int_format, width, height, 0, gl_format, gl_data, data);
 }
 
 void CTexture::GenerateMipmap()

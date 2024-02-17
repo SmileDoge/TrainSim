@@ -63,8 +63,10 @@ void CLogModule::LogInfo(const std::string& format, ...)
 {
 	char buf[2048];
 
+	const char* str_ptr = format.c_str();
+
 	va_list args;
-	va_start(args, format.c_str());
+	va_start(args, str_ptr);
 	vsprintf(buf, format.c_str(), args);
 	va_end(args);
 
@@ -75,8 +77,10 @@ void CLogModule::LogWarn(const std::string& format, ...)
 {
 	char buf[2048];
 
+	const char* str_ptr = format.c_str();
+
 	va_list args;
-	va_start(args, format.c_str());
+	va_start(args, str_ptr);
 	vsprintf(buf, format.c_str(), args);
 	va_end(args);
 
@@ -87,8 +91,10 @@ void CLogModule::LogError(const std::string& format, ...)
 {
 	char buf[2048];
 
+	const char* str_ptr = format.c_str();
+
 	va_list args;
-	va_start(args, format.c_str());
+	va_start(args, str_ptr);
 	vsprintf(buf, format.c_str(), args);
 	va_end(args);
 
@@ -99,8 +105,10 @@ void CLogModule::LogDebug(const std::string& format, ...)
 {
 	char buf[2048];
 
+	const char* str_ptr = format.c_str();
+
 	va_list args;
-	va_start(args, format.c_str());
+	va_start(args, str_ptr);
 	vsprintf(buf, format.c_str(), args);
 	va_end(args);
 

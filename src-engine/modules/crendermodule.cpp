@@ -81,8 +81,10 @@ CRenderModule::CRenderModule() : renderframe(), shaders(), ver_major(0), ver_min
     texturemanager = new CTextureManager();
 
     auto version = glGetString(GL_VERSION);
+    auto renderer = glGetString(GL_RENDERER);
 
     g_Log->LogDebug("OpenGL Version: %s", version);
+    g_Log->LogDebug("OpenGL Renderer: %s", renderer);
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);

@@ -17,6 +17,8 @@ enum TexturePixelFormat
 	TEXTURE_FORMAT_DXT1,
 	TEXTURE_FORMAT_DXT3,
 	TEXTURE_FORMAT_DXT5,
+
+	TEXTURE_FORMAT_COMPRESSED_FORMATS = TEXTURE_FORMAT_DXT1,
 };
 
 enum TextureWrap
@@ -63,6 +65,7 @@ public:
 	virtual void SetWrap(TextureWrap wrap_s, TextureWrap wrap_t) = 0;
 	virtual void SetFilter(TextureFilter min, TextureFilter mag) = 0;
 	virtual void SetData(int width, int height, TexturePixelFormat format, void* data) = 0;
+	virtual void SetCompressedData(int width, int height, TexturePixelFormat format, void* data, size_t data_len) = 0;
 
 	virtual void GenerateMipmap() = 0;
 
@@ -74,6 +77,14 @@ public:
 	virtual void SetName(const std::string& name) = 0;
 
 	virtual unsigned int GetID() = 0;
+
+	static bool IsCompressedFormat(TexturePixelFormat format)
+	{
+		if (format >= TEXTURE_FORMAT_COMPRESSED_FORMATS)
+			return true;
+
+		return false;
+	}
 };
 
 class ITextureManager
