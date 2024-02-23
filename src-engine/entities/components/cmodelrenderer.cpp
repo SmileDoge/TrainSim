@@ -3,15 +3,23 @@
 #include "modules/crendermodule.hpp"
 #include "entities/components/transform.hpp"
 
-CModelRenderer::CModelRenderer() : model(NULL), matrices_cache(NULL)
+CModelRenderer::CModelRenderer() : model(NULL)
 {
-    need_rebuild_cache = true;
 }
 
 CModelRenderer::~CModelRenderer()
 {
+    /*
+    for (int i = 0; i < model->GetData().lods.size(); i++)
+    {
+        delete[] matrices_cache[i];
+    }
+    
     delete[] matrices_cache;
+    */
 }
+
+#include "imgui.h"
 
 void CModelRenderer::Update()
 {
@@ -19,58 +27,36 @@ void CModelRenderer::Update()
 
     auto& base_matrix = GetEntity()->GetTransform()->GetMatrix();
 
-    auto& matrices = model->GetData().matrices;
+    auto& data = model->GetData();
 
-    auto& lod = model->GetData().lods[0];
+    auto& matrices = data.matrices;
 
-    if (matrices_cache == NULL)
-        matrices_cache = new glm::mat4[matrices.size()];
+    auto camera_distance = WorldLocation::GetDistanceSquared(g_Render->GetCamera()->GetWorldLocation(), GetEntity()->GetTransform()->GetWorldPosition().WLocation());
 
-    for (auto& primitive : lod.primitives)
+    for (auto& lod : data.lods)
     {
-        auto iNode = primitive.iHierarchy;
-        auto i = iNode;
+        if (camera_distance > (lod.distance * 0.5f * lod.distance * 0.5f))
+            continue;
 
-        auto matrix = glm::mat4(1.0f);
-
-        if (need_rebuild_cache)
+        for (auto& primitive : lod.primitives)
         {
+            auto iNode = primitive.iHierarchy;
+            auto i = iNode;
+
+            auto matrix = glm::mat4(1.0f);
+
             while (iNode != -1)
             {
                 matrix = matrices[iNode] * matrix;
                 iNode = lod.hierarchy[iNode];
             }
 
-            matrices_cache[i] = matrix;
+
+            g_Render->GetRenderFrame()->AddRenderItem(primitive.mesh, primitive.material, base_matrix * matrix, primitive.sort_index);
         }
 
-        g_Render->GetRenderFrame()->AddRenderItem(primitive.mesh, primitive.material, base_matrix * matrices_cache[i], primitive.sort_index);
-
-        /*
-        auto iter = matrices_cache.find(iNode2);
-
-        if (iter == matrices_cache.end())
-        {
-            while (iNode != -1)
-            {
-                matrix = matrices[iNode] * matrix;
-                iNode = lod.hierarchy[iNode];
-            }
-
-            matrices_cache[iNode2] = matrix;
-
-            g_Render->GetRenderFrame()->AddRenderItem(primitive.mesh, primitive.material, base_matrix * matrix);
-        }
-        else
-        {
-            matrix = base_matrix * (*iter).second;
-
-            g_Render->GetRenderFrame()->AddRenderItem(primitive.mesh, primitive.material, matrix);
-        }
-        */
+        break;
     }
-
-    need_rebuild_cache = false;
 }
 
 void CModelRenderer::SetModel(TSModelResource* model)

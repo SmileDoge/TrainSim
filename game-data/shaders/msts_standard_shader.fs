@@ -25,31 +25,38 @@ uniform float shininess;
 
 uniform float alpha_test;
 
+uniform bool fullbright;
+
 void main()
 {
-    
-    vec4 textureTexel = texture(ourTexture, vec2(TexCoord.x, TexCoord.y));
+    vec2 texCoord = vec2(TexCoord.x, TexCoord.y);
+    vec4 textureTexel = texture(ourTexture, texCoord);
 
     if (textureTexel.a <= alpha_test)
         discard;
 
-    vec3 inColor = textureTexel.rgb;
+    if (fullbright)
+    {
+        FragColor = textureTexel;
+    }
+    else
+    {
+        vec3 inColor = textureTexel.rgb;
 
-    vec3 ambient = light.ambient * inColor;
+        vec3 ambient = light.ambient * inColor;
 
-    vec3 norm = normalize(Normal);
-    vec3 lightDir = normalize(light.position - FragPos);
-    float diff = max(dot(norm, lightDir), 0.0);
-    vec3 diffuse = (diff * inColor);
+        vec3 norm = normalize(Normal);
+        vec3 lightDir = normalize(light.position - FragPos);
+        float diff = max(dot(norm, lightDir), 0.0);
+        vec3 diffuse = (diff * inColor);
 
-    vec3 viewDir = normalize(viewPos - FragPos);
-    vec3 reflectDir = reflect(-lightDir, norm);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
-    vec3 specular = light.specular * (spec * specular);
+        vec3 viewDir = normalize(viewPos - FragPos);
+        vec3 reflectDir = reflect(-lightDir, norm);
+        float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
+        vec3 specular = light.specular * (spec * specular);
 
-    vec3 result = ambient + diffuse + specular;
-    
-    //vec4 result = texture(ourTexture, TexCoord);
-    
-    FragColor = vec4(result, textureTexel.a);
+        vec3 result = ambient + diffuse + specular;
+        
+        FragColor = vec4(result, textureTexel.a);
+    }
 }

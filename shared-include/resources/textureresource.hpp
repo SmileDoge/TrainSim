@@ -4,6 +4,15 @@
 
 #include "modules/render/texture.hpp"
 
+class TextureResourceLoadOptions : public ResourceLoadOptions
+{
+public:
+	bool ForceDXT;
+
+	TextureResourceLoadOptions() : ForceDXT(false)
+	{}
+};
+
 class TSTextureResource : public IResource
 {
 public:

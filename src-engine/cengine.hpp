@@ -2,6 +2,7 @@
 
 #include "engine.hpp"
 #include "cworld.hpp"
+#include "cconfig.hpp"
 
 #include <string>
 #include <map>
@@ -35,10 +36,13 @@ public:
 
     virtual IWorld* GetWorld();
 
+    virtual IConfig* GetEngineConfig();
+    virtual IConfig* GetGameConfig();
+
     virtual void GetBuildInfo(char*& date, char*& time, long& cppVersion, char*& compiler);
 
-    virtual const char* GetEngineVersion() { return ENGINE_VERSION; };
-    virtual void GetEngineVersion(short& major, short& minor, short& patch);
+    virtual const char* GetEngineVersionString() { return ENGINE_VERSION; };
+    virtual TSVersion GetEngineVersion();
 
     virtual void RunLoop();
 
@@ -51,8 +55,6 @@ public:
 private:
     std::map<std::string, IModule*> modules;
 
-    //std::chrono::steady_clock::time_point start_engine_time;
-    //std::chrono::steady_clock::time_point prev_frame_time;
     double prev_frame_time;
     double current_time;
 
@@ -61,6 +63,9 @@ private:
 
     IGame* game;
     CWorld* world;
+
+    CConfig* engine_config;
+    CConfig* game_config;
 };
 
 extern CEngine* g_Engine;

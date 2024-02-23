@@ -21,13 +21,15 @@ enum ResourceType
 {
 	RESOURCE_TYPE_UNKNOWN = 0,
 
-	RESOURCE_TYPE_TEXT = 1,
-	RESOURCE_TYPE_JSON,
-
 	RESOURCE_TYPE_MODEL,
 	RESOURCE_TYPE_TEXTURE,
 	RESOURCE_TYPE_MATERIAL,
-	RESOURCE_TYPE_SHADER,
+};
+
+class ResourceLoadOptions
+{
+public:
+	virtual ~ResourceLoadOptions() = default;
 };
 
 class IResource
@@ -50,28 +52,3 @@ private:
 
 	std::string path;
 };
-
-/*
-template <class T>
-class ResourceRef
-{
-public:
-	ResourceRef()
-	{
-		data = 0;
-	}
-
-	ResourceRef(T* resource)
-	{
-		data = resource;
-	}
-
-	~ResourceRef()
-	{
-		if (data == 0) return;
-	}
-
-private:
-	T* data;
-};
-*/

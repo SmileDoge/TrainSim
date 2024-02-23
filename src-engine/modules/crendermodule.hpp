@@ -35,8 +35,11 @@ public:
     virtual IShader* GetShader(const std::string& name);
     virtual IShader* CreateShader(const std::string& name);
 
-    virtual void SetCamera(ICamera* camera) ;
+    virtual void SetCamera(ICamera* camera);
     virtual ICamera* GetCamera();
+
+    virtual int GetTotalVideoMemory();
+    virtual int GetAvailableVideoMemory();
 
     virtual IRenderFrame* GetRenderFrame();
 

@@ -8,6 +8,9 @@ public:
 	CRenderFrame();
 	~CRenderFrame() override;
 
+	virtual bool GetFullBright();
+	virtual void SetFullBright(bool state);
+
 	virtual void AddRenderItem(IMesh* mesh, IMaterial* material, glm::mat4x4& transform);
 	virtual void AddRenderItem(IMesh* mesh, IMaterial* material, glm::mat4x4& transform, unsigned int sort_index);
 	virtual void AddRenderItem(RenderItem& item);
@@ -23,13 +26,15 @@ public:
 
 private:
 	void RenderOpaque();
-	void RenderBlended();
+	void RenderTransparent();
 
 	void RenderMaterial(IMaterial* material, std::vector<RenderItem>& items, IMaterial* prev_material, glm::mat4x4& mat_view, glm::mat4x4& mat_proj);
 
 	void Sort();
 
 	std::map<IMaterial*, std::vector<RenderItem>> items;
-	std::vector<RenderItem> items_blended;
+	std::vector<RenderItem> items_transparent;
 	std::vector<ILight*> lights;
+
+	bool fullbright;
 };

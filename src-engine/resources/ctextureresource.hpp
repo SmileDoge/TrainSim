@@ -10,7 +10,7 @@ public:
 	TextureResourceFactory();
 	~TextureResourceFactory() override;
 
-	virtual TSResult CreateResourceFromStream(IFileStream* stream, IResource*& resource);
+	virtual TSResult CreateResourceFromStream(IFileStream* stream, IResource*& resource, ResourceLoadOptions* options);
 
 	virtual ResourceType GetResourceType() { return RESOURCE_TYPE_TEXTURE; };
 	virtual ResourceHeader GetHeader() { return GET_RESOURCE_HEADER("TEXT"); };
@@ -24,7 +24,7 @@ public:
 
 	virtual ITexture* GetData();
 
-	TSResult LoadFromStream(IFileStream* stream);
+	TSResult LoadFromStream(IFileStream* stream, TextureResourceLoadOptions* options);
 private:
 
 	ITexture* texture;

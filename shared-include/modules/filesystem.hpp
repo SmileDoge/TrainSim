@@ -2,6 +2,8 @@
 
 #include "module.hpp"
 
+#include "engine.hpp"
+
 #include <string>
 #include <vector>
 #include <sstream>
@@ -59,6 +61,24 @@ public:
 	virtual void Close() = 0;
 };
 
+enum FindFileFrom
+{
+	FIND_FILE_FROM_ROUTE,
+	FIND_FILE_FROM_GLOBAL,
+	FIND_FILE_FROM_TRAIN,
+
+	FIND_FILE_FROM_CURRENT_DIRECTORY = FIND_FILE_FROM_TRAIN,
+};
+
+enum FileType
+{
+	FILE_TYPE_MODEL,
+	FILE_TYPE_TEXTURE,
+	FILE_TYPE_MATERIAL,
+	FILE_TYPE_SOUND,
+	FILE_TYPE_OTHER,
+};
+
 class IFileSystem : public IModule
 {
 public:
@@ -75,6 +95,13 @@ public:
 	virtual bool FileExists(const std::string& path) = 0;
 
 	virtual IFileStream* OpenFile(const std::string& path, const char* mode) = 0;
+
+	ENGINE_EXPORT static std::string GetGameDirectory();
+
+	static std::string GetDataDirectory()
+	{
+		return Combine(GetGameDirectory(), "data");
+	}
 
 	static std::string GetDirectoryName(const std::string& path)
 	{
@@ -107,6 +134,16 @@ public:
 		else {
 			return path + newExtension;
 		}
+	}
+
+	static std::string GetExtension(const std::string& filename)
+	{
+		size_t pos = filename.find_last_of('.');
+
+		if (pos != std::string::npos)
+			return filename.substr(pos + 1);
+
+		return "";
 	}
 
 	static std::string GetFileName(const std::string& path)
@@ -158,7 +195,86 @@ public:
 			full_path = "/";
 		}
 
-		return full_path;
+		return full_path.substr(1);
+	}
+
+	static FileType GetFileType(const std::string& filename)
+	{
+		auto& ext = GetExtension(filename);
+
+		if (ext == "ts_model")
+			return FILE_TYPE_MODEL;
+
+		if (ext == "ts_tex")
+			return FILE_TYPE_TEXTURE;
+
+		if (ext == "ts_mat")
+			return FILE_TYPE_MATERIAL;
+
+		return FILE_TYPE_OTHER;
+	}
+
+	static std::string GetResourceFilepath(const std::string& filename, const std::string& root_path, FindFileFrom from)
+	{
+		auto file_type = GetFileType(filename);
+
+		auto data_directory = GetGameDirectory();
+
+		std::string result_path = "";
+
+		switch (from)
+		{
+		case FIND_FILE_FROM_ROUTE:
+			if (file_type == FILE_TYPE_MODEL)
+				result_path = Combine(Combine(root_path, "models"), filename);
+
+			if (file_type == FILE_TYPE_TEXTURE)
+				result_path = Combine(Combine(root_path, "textures"), filename);
+
+			if (file_type == FILE_TYPE_MATERIAL)
+				result_path = Combine(Combine(root_path, "materials"), filename);
+			break;
+		case FIND_FILE_FROM_GLOBAL:
+			if (file_type == FILE_TYPE_MODEL)
+				result_path = Combine(Combine(data_directory, "models"), filename);
+
+			if (file_type == FILE_TYPE_TEXTURE)
+				result_path = Combine(Combine(data_directory, "textures"), filename);
+
+			if (file_type == FILE_TYPE_MATERIAL)
+				result_path = Combine(Combine(data_directory, "materials"), filename);
+			break;
+		case FIND_FILE_FROM_TRAIN:
+			result_path = Combine(root_path, filename);
+			break;
+		default:
+			break;
+		}
+
+		if (result_path != "")
+			return GetFullPath(result_path);
+
+		return result_path;
+	}
+
+	std::string FindResourcePath(const std::string& filename, const std::string& root_path, FindFileFrom from)
+	{
+		std::string result_path = "";
+
+		if (from == FIND_FILE_FROM_ROUTE)
+		{
+			result_path = GetResourceFilepath(filename, root_path, FIND_FILE_FROM_ROUTE);
+
+			if (!FileExists(result_path))
+				result_path = GetResourceFilepath(filename, root_path, FIND_FILE_FROM_GLOBAL);
+		}
+
+		if (from == FIND_FILE_FROM_TRAIN)
+		{
+			result_path = GetResourceFilepath(filename, root_path, FIND_FILE_FROM_TRAIN);
+		}
+
+		return result_path;
 	}
 };
 

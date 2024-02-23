@@ -1,6 +1,6 @@
 #include "ctransform.hpp"
 
-CTransform::CTransform() : position(0.0f), rotation(1.0f, 0.0f, 0.0f, 0.0f), scale(1.0f), matrix(1.0f)
+CTransform::CTransform() : position(), rotation(1.0f, 0.0f, 0.0f, 0.0f), scale(1.0f)
 {
 
 }
@@ -10,10 +10,64 @@ CTransform::~CTransform()
 
 }
 
-
-void CTransform::SetPosition(glm::vec3& pos)
+int CTransform::GetTileX()
 {
-    position = pos;
+    return 0;
+}
+
+int CTransform::GetTileZ()
+{
+    return 0;
+}
+
+glm::vec3 CTransform::GetLocation()
+{
+    return position.Location();
+}
+
+WorldPosition& CTransform::GetWorldPosition()
+{
+    return position;
+}
+
+void CTransform::SetTileX(int tile)
+{
+    position.TileX = tile;
+}
+
+void CTransform::SetTileZ(int tile)
+{
+    position.TileZ = tile;
+}
+
+void CTransform::SetLocation(glm::vec3& location)
+{
+    position.SetLocation(location);
+}
+
+/*
+void CTransform::Move(glm::vec3& direction)
+{
+    //position.Location();
+}
+*/
+
+#include "modules/crendermodule.hpp"
+
+glm::vec3 CTransform::GetRelativeToCamera(ICamera* camera)
+{
+    if (camera == NULL)
+        camera = g_Render->GetCamera();
+
+    glm::vec3 result = GetLocation();
+
+    int dx = position.TileX - camera->GetTileX();
+    int dz = position.TileZ - camera->GetTileZ();
+
+    result.x += dx * 2048;
+    result.z += dz * 2048;
+
+    return result;
 }
 
 void CTransform::SetRotation(glm::quat& rot)
@@ -26,11 +80,6 @@ void CTransform::SetSize(glm::vec3& size)
     scale = size;
 }
 
-glm::vec3& CTransform::GetPosition()
-{
-    return position;
-}
-
 glm::quat& CTransform::GetRotation()
 {
     return rotation;
@@ -41,6 +90,23 @@ glm::vec3& CTransform::GetSize()
     return scale;
 }
 
+glm::mat4 CTransform::GetMatrix(ICamera* camera)
+{
+    if (camera == NULL)
+        camera = g_Render->GetCamera();
+
+    glm::mat4 matrix = position.Matrix;
+
+    int dx = position.TileX - camera->GetTileX();
+    int dz = position.TileZ - camera->GetTileZ();
+
+    matrix[3].x += dx * 2048;
+    matrix[3].z -= dz * 2048;
+
+    return matrix * glm::mat4_cast(rotation);
+}
+
+/*
 void CTransform::SetLocalPosition(glm::vec3& pos)
 {
     ITransform* parent = GetParentTransform();
@@ -152,7 +218,6 @@ void CTransform::UpdateMatrix()
 {
     matrix = glm::translate(glm::mat4(1.0f), position) * glm::mat4_cast(rotation) * glm::scale(glm::mat4(1.0f), scale);
 }
-/*
 
     virtual void SetPosition(glm::vec3& pos);
     virtual glm::vec3& GetPosition();

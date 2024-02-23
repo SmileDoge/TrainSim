@@ -20,11 +20,11 @@ TextureResourceFactory::~TextureResourceFactory()
 {
 }
 
-TSResult TextureResourceFactory::CreateResourceFromStream(IFileStream* stream, IResource*& resource)
+TSResult TextureResourceFactory::CreateResourceFromStream(IFileStream* stream, IResource*& resource, ResourceLoadOptions* options)
 {
 	CTSTextureResource* res_texture = new CTSTextureResource();
 
-	TSResult result = res_texture->LoadFromStream(stream);
+	TSResult result = res_texture->LoadFromStream(stream, (TextureResourceLoadOptions*)(void*)options);
 
 	resource = res_texture;
 
@@ -94,7 +94,7 @@ TexturePixelFormat GetPixelFormat(TSTexture_format format)
 	}
 }
 
-TSResult CTSTextureResource::LoadFromStream(IFileStream* stream)
+TSResult CTSTextureResource::LoadFromStream(IFileStream* stream, TextureResourceLoadOptions* options)
 {
 	int width, height, data_len;
 	TexturePixelFormat format;

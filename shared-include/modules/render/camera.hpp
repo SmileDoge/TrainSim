@@ -1,5 +1,7 @@
 #pragma once
 
+#include "coordinates.hpp"
+
 #include "glm/mat4x4.hpp"
 #include "glm/vec3.hpp"
 #include "glm/gtx/quaternion.hpp"
@@ -15,8 +17,12 @@ class ICamera
 public:
 	virtual ~ICamera() = default;
 
-	virtual void SetPosition(glm::vec3& pos) = 0;
-	virtual glm::vec3& GetPosition() = 0;
+	virtual int GetTileX() = 0;
+	virtual int GetTileZ() = 0;
+	virtual glm::vec3 GetLocation() = 0;
+	virtual WorldLocation& GetWorldLocation() = 0;
+
+	virtual void Move(glm::vec3& direction) = 0;
 
 	virtual void SetRotation(glm::quat& rotation) = 0;
 	virtual glm::quat& GetRotation() = 0;
@@ -37,6 +43,9 @@ public:
 
 	virtual void SetAspect(float aspect) = 0;
 	virtual float GetAspect() = 0;
+
+	virtual void SetNearFar(float near, float far) = 0;
+	virtual void GetNearFar(float& near, float& far) = 0;
 
 	virtual void SetSize(float left, float right, float bottom, float top) = 0;
 	virtual void GetSize(float& left, float& right, float& bottom, float& top) = 0;

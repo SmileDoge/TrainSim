@@ -4,7 +4,7 @@
 
 #include <algorithm>
 
-CRenderFrame::CRenderFrame() : items()
+CRenderFrame::CRenderFrame() : items(), fullbright(false)
 {
 
 }
@@ -14,8 +14,19 @@ CRenderFrame::~CRenderFrame()
 
 }
 
+bool CRenderFrame::GetFullBright()
+{
+	return fullbright;
+}
+
+void CRenderFrame::SetFullBright(bool state)
+{
+	fullbright = state;
+}
+
 void CRenderFrame::AddRenderItem(IMesh* mesh, IMaterial* material, glm::mat4x4& transform)
 {
+	/*
 	if (mesh == NULL) return;
 	if (material == NULL) return;
 
@@ -23,6 +34,9 @@ void CRenderFrame::AddRenderItem(IMesh* mesh, IMaterial* material, glm::mat4x4& 
 		items[NULL].emplace_back(mesh, material, transform);
 	else
 		items[material].emplace_back(mesh, material, transform);
+		*/
+
+	AddRenderItem(mesh, material, transform, 0);
 }
 
 void CRenderFrame::AddRenderItem(IMesh* mesh, IMaterial* material, glm::mat4x4& transform, unsigned int sort_index)
@@ -30,18 +44,36 @@ void CRenderFrame::AddRenderItem(IMesh* mesh, IMaterial* material, glm::mat4x4& 
 	if (mesh == NULL) return;
 	if (material == NULL) return;
 
-	if (material->IsBlended())
+	auto is_blended = material->IsBlended();
+	
+	if (is_blended) // This method of drawing taken from OpenRails https://github.com/openrails/openrails/blob/e0bf062eb64f61f6f41f99d3d49acb8fcc591442/Source/RunActivity/Viewer3D/RenderFrame.cs#L620
+	{
 		items[NULL].emplace_back(mesh, material, transform, sort_index);
-	else
 		items[material].emplace_back(mesh, material, transform, sort_index);
+	}
+	else
+	{
+		items[material].emplace_back(mesh, material, transform, sort_index);
+	}
+
+	//if (material->IsBlended())
+	//	items[NULL].emplace_back(mesh, material, transform, sort_index);
+	//else
+	//	items[material].emplace_back(mesh, material, transform, sort_index);
 }
+
+#include "modules/clogmodule.hpp"
 
 void CRenderFrame::AddRenderItem(RenderItem& item)
 {
+	g_Log->LogError("Deprecated AddRenderItem(RenderItem& item)! ! ! ! !");
+
+	/*
 	if (item.Material->IsBlended())
 		items[NULL].push_back(item);
 	else
 		items[item.Material].push_back(item);
+	*/
 }
 
 void CRenderFrame::AddLight(ILight* light)
@@ -66,15 +98,15 @@ bool CRenderFrame_Items_Sort(RenderItem& x, RenderItem& y)
 	float xd = glm::distance2(glm::vec3(x.Transform[3]), camera_position);
 	float yd = glm::distance2(glm::vec3(y.Transform[3]), camera_position);
 
-	if (abs(yd - xd) >= 0.1)
-		return signbit(yd - xd);
+	if (abs(yd - xd) >= 1)
+		return (signbit(yd - xd));
 
-	return signbit((float)(x.SortIndex - y.SortIndex));
+	return (signbit((float)(x.SortIndex - y.SortIndex)));
 }
 
 void CRenderFrame::Sort()
 {
-	camera_position = g_Render->GetCamera()->GetPosition();
+	camera_position = g_Render->GetCamera()->GetLocation();
 
 	for (auto& [material, items] : items)
 	{
@@ -90,7 +122,7 @@ void CRenderFrame::Render()
 	Sort();
 
 	RenderOpaque();
-	RenderBlended();
+	RenderTransparent();
 }
 
 void CRenderFrame::RenderMaterial(IMaterial* material, std::vector<RenderItem>& items, IMaterial* prev_material, glm::mat4x4& mat_view, glm::mat4x4& mat_proj)
@@ -104,25 +136,23 @@ void CRenderFrame::RenderMaterial(IMaterial* material, std::vector<RenderItem>& 
 
 void CRenderFrame::RenderOpaque()
 {
-	auto view = g_Render->GetCamera()->GetViewMatrix();
-	auto proj = g_Render->GetCamera()->GetProjectionMatrix();
+	auto& view = g_Render->GetCamera()->GetViewMatrix();
+	auto& proj = g_Render->GetCamera()->GetProjectionMatrix();
 
 	for (auto& [material, items] : items)
 	{
-		auto real_material = items[0].Material;
+		if (material == NULL) continue;
 
-		if (real_material->IsBlended()) continue;
-
-		RenderMaterial(real_material, items, NULL, view, proj);
+		RenderMaterial(material, items, NULL, view, proj);
 	}
 }
 
-void CRenderFrame::RenderBlended()
+void CRenderFrame::RenderTransparent()
 {
 	IMaterial* prev_material = NULL;
 
-	auto view = g_Render->GetCamera()->GetViewMatrix();
-	auto proj = g_Render->GetCamera()->GetProjectionMatrix();
+	auto& view = g_Render->GetCamera()->GetViewMatrix();
+	auto& proj = g_Render->GetCamera()->GetProjectionMatrix();
 
 	for (auto& [material, items] : items)
 	{
@@ -134,10 +164,10 @@ void CRenderFrame::RenderBlended()
 
 			if (prev_material != real_material)
 			{
-				if (items_blended.size() > 0)
+				if (items_transparent.size() > 0)
 				{
-					prev_material->Render(items_blended, view, proj);
-					items_blended.clear();
+					prev_material->Render(items_transparent, view, proj);
+					items_transparent.clear();
 				}
 				if (prev_material != NULL)
 					prev_material->PostRender();
@@ -145,12 +175,12 @@ void CRenderFrame::RenderBlended()
 				prev_material = real_material;
 			}
 
-			items_blended.push_back(item);
+			items_transparent.push_back(item);
 		}
-		if (items_blended.size() > 0)
+		if (items_transparent.size() > 0)
 		{
-			prev_material->Render(items_blended, view, proj);
-			items_blended.clear();
+			prev_material->Render(items_transparent, view, proj);
+			items_transparent.clear();
 		}
 		if (prev_material != NULL)
 			prev_material->PostRender();

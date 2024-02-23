@@ -17,7 +17,7 @@ void CLightComponent::Update()
 {
     if (light == NULL) return;
 
-    light->SetPosition(GetEntity()->GetTransform()->GetPosition());
+    light->SetPosition(GetEntity()->GetTransform()->GetRelativeToCamera());
 
     g_Render->GetRenderFrame()->AddLight(light);
 }

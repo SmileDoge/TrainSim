@@ -10,7 +10,7 @@ public:
 	ModelResourceFactory();
 	~ModelResourceFactory() override;
 
-	virtual TSResult CreateResourceFromStream(IFileStream* stream, IResource*& resource);
+	virtual TSResult CreateResourceFromStream(IFileStream* stream, IResource*& resource, ResourceLoadOptions* options);
 
 	virtual ResourceType GetResourceType() { return RESOURCE_TYPE_MODEL; };
 	virtual ResourceHeader GetHeader() { return GET_RESOURCE_HEADER("MODL"); };
@@ -24,7 +24,7 @@ public:
 
 	virtual TSModel& GetData();
 
-	TSResult LoadFromStream(IFileStream* stream);
+	TSResult LoadFromStream(IFileStream* stream, ModelResourceLoadOptions* options);
 private:
 
 	TSModel model;

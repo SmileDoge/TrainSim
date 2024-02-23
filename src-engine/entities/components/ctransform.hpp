@@ -8,8 +8,17 @@ public:
 	CTransform();
 	~CTransform() override;
 
-    virtual void SetPosition(glm::vec3& pos);
-    virtual glm::vec3& GetPosition();
+    virtual int GetTileX();
+    virtual int GetTileZ();
+    virtual glm::vec3 GetLocation();
+    virtual WorldPosition& GetWorldPosition();
+
+    virtual void SetTileX(int tile);
+    virtual void SetTileZ(int tile);
+    virtual void SetLocation(glm::vec3& location);
+    //virtual void Move(glm::vec3& direction);
+
+    virtual glm::vec3 GetRelativeToCamera(ICamera* camera = NULL);
 
     virtual void SetRotation(glm::quat& rot);
     virtual glm::quat& GetRotation();
@@ -17,29 +26,18 @@ public:
     virtual void SetSize(glm::vec3& size);
     virtual glm::vec3& GetSize();
 
-    virtual void SetMatrix(glm::mat4& mat);
-    virtual glm::mat4& GetMatrix();
-
-
-    virtual void SetLocalPosition(glm::vec3& pos);
-    virtual glm::vec3 GetLocalPosition();
-
-    virtual void SetLocalRotation(glm::quat& rot);
-    virtual glm::quat GetLocalRotation();
-
-    virtual void SetLocalSize(glm::vec3& size);
-    virtual glm::vec3 GetLocalSize();
-
-    virtual glm::mat4 GetLocalMatrix();
+    virtual glm::mat4 GetMatrix(ICamera* camera = NULL);
 
 private:
     ITransform* GetParentTransform();
     void UpdateTransform();
     void UpdateMatrix();
 
-    glm::vec3 position;
+    WorldPosition position;
+
+    //glm::vec3 position;
     glm::quat rotation;
     glm::vec3 scale;
 
-    glm::mat4 matrix;
+    //glm::mat4 matrix;
 };

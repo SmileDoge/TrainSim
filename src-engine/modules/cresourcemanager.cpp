@@ -14,18 +14,16 @@ CResourceManager::~CResourceManager()
 {
 }
 
-TSResult CResourceManager::PrecacheResource(const std::string& path, ResourceLoadFlag loadflag)
+TSResult CResourceManager::PrecacheResource(const std::string& path, ResourceLoadFlag load_flag)
 {
 	return TSResult();
 }
 
-TSResult CResourceManager::LoadResourceInternal(const std::string& path, ResourceLoadFlag loadflag, IResource*& resource)
+TSResult CResourceManager::LoadResourceInternal(const std::string& path, ResourceLoadFlag load_flag, IResource*& resource, ResourceLoadOptions* options)
 {
 	if (resources.find(path) != resources.end())
 	{
 		resource = resources[path];
-
-		//g_Log->LogWarn("Return loaded %s", path.c_str());
 
 		return TS_OK;
 	}
@@ -48,7 +46,7 @@ TSResult CResourceManager::LoadResourceInternal(const std::string& path, Resourc
 
 	stream->Seek(6); // TS****
 
-	TSResult res = factory->CreateResourceFromStream(stream, resource);
+	TSResult res = factory->CreateResourceFromStream(stream, resource, options);
 
 	if (res == TS_OK)
 	{

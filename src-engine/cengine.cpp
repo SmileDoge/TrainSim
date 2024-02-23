@@ -24,6 +24,9 @@ CEngine::CEngine() : modules(), world(NULL), game(NULL)
     setlocale(LC_ALL, ".UTF8");
 
     AddModule("LogModule", new CLogModule());
+    AddModule("FileSystem", new CFileSystem());
+
+    engine_config = new CConfig("engine_config.json");
 }
 
 #include <dbghelp.h>
@@ -84,11 +87,12 @@ TSResult CEngine::Initialize()
         return TS_INVALID_OPERATION;
     }
 
+    game_config = new CConfig("game_config.json");
+
     SetFPS(60);
 
     SetUnhandledExceptionFilter((LPTOP_LEVEL_EXCEPTION_FILTER)SignalHandler);
 
-    AddModule("FileSystem", new CFileSystem());
     AddModule("PluginManager", new CPluginManager());
 
     world = new CWorld();
@@ -201,11 +205,9 @@ void CEngine::GetBuildInfo(char*& date, char*& time, long& cppVersion, char*& co
     compiler = ENGINE_COMPILER;
 }
 
-void CEngine::GetEngineVersion(short& major, short& minor, short& patch)
+TSVersion CEngine::GetEngineVersion()
 {
-    major = ENGINE_VERSION_MAJOR;
-    minor = ENGINE_VERSION_MINOR;
-    patch = ENGINE_VERSION_PATCH;
+    return TSVersion(ENGINE_VERSION_MAJOR, ENGINE_VERSION_MINOR, ENGINE_VERSION_PATCH);
 }
 
 void CEngine::SetGame(IGame* game)
@@ -252,6 +254,16 @@ void CEngine::DeleteModule(const std::string& name)
 IWorld* CEngine::GetWorld()
 {
     return world;
+}
+
+IConfig* CEngine::GetEngineConfig()
+{
+    return engine_config;
+}
+
+IConfig* CEngine::GetGameConfig()
+{
+    return game_config;
 }
 
 void CEngine::SetFPS(float fps)

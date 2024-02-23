@@ -37,6 +37,9 @@ public:
 	virtual void SetCamera(ICamera* camera) = 0;
 	virtual ICamera* GetCamera() = 0;
 
+	virtual int GetTotalVideoMemory() = 0;
+	virtual int GetAvailableVideoMemory() = 0;
+
 	virtual IRenderFrame* GetRenderFrame() = 0;
 
 	virtual IWindow* GetWindow() = 0;

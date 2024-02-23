@@ -1,0 +1,1270 @@
+{
+  "TileX": -4829,
+  "TileZ": 15015,
+  "Objects": [
+    {
+      "Type": "PlatformObj",
+      "UID": 74,
+      "Position": [
+        151.196,
+        0.938133,
+        -292.14
+      ],
+      "Direction": [
+        0.0,
+        -0.0374912,
+        0.0,
+        0.999297
+      ],
+      "Filename": null
+    },
+    {
+      "Type": "PlatformObj",
+      "UID": 75,
+      "Position": [
+        146.211,
+        0.938133,
+        798.418
+      ],
+      "Direction": [
+        0.0,
+        0.51199,
+        0.0,
+        0.858991
+      ],
+      "Filename": null
+    },
+    {
+      "Type": "SidingObj",
+      "UID": 76,
+      "Position": [
+        161.167,
+        0.938133,
+        -247.339
+      ],
+      "Direction": [
+        0.0,
+        0.997495,
+        0.0,
+        0.0707373
+      ],
+      "Filename": null
+    },
+    {
+      "Type": "SidingObj",
+      "UID": 71,
+      "Position": [
+        156.181,
+        0.938133,
+        241.523
+      ],
+      "Direction": [
+        0.0,
+        0.124675,
+        0.0,
+        0.992198
+      ],
+      "Filename": null
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 28,
+      "Position": [
+        153.696,
+        3.85784,
+        -730.291
+      ],
+      "Direction": [
+        0.0,
+        4.33126E-07,
+        0.0,
+        1.0
+      ],
+      "Filename": "T_Signal_Head_YG_RY_I.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 61,
+      "Position": [
+        148.711,
+        0.938133,
+        833.076
+      ],
+      "Direction": [
+        0.0,
+        -4.37114E-08,
+        0.0,
+        1.0
+      ],
+      "Filename": "T_Signal_Head_YG_RW.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 62,
+      "Position": [
+        153.696,
+        0.938133,
+        798.785
+      ],
+      "Direction": [
+        0.0,
+        -4.37114E-08,
+        0.0,
+        1.0
+      ],
+      "Filename": "T_Signal_Small_GR_YW.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 63,
+      "Position": [
+        158.681,
+        0.938133,
+        752.424
+      ],
+      "Direction": [
+        0.0,
+        -4.37114E-08,
+        0.0,
+        1.0
+      ],
+      "Filename": "T_Signal_Small_GR_YW.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 64,
+      "Position": [
+        163.666,
+        0.938133,
+        748.109
+      ],
+      "Direction": [
+        0.0,
+        -4.37114E-08,
+        0.0,
+        1.0
+      ],
+      "Filename": "T_Signal_Small_GR_YW.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 67,
+      "Position": [
+        153.696,
+        1.00933,
+        -526.845
+      ],
+      "Direction": [
+        0.0,
+        6.71544E-07,
+        0.0,
+        1.0
+      ],
+      "Filename": "T_Signal_Small_WB.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 68,
+      "Position": [
+        148.711,
+        1.00354,
+        -526.432
+      ],
+      "Direction": [
+        0.0,
+        6.71544E-07,
+        0.0,
+        1.0
+      ],
+      "Filename": "T_Signal_Small_WB.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 69,
+      "Position": [
+        143.711,
+        3.85401,
+        -730.018
+      ],
+      "Direction": [
+        0.0,
+        6.71544E-07,
+        0.0,
+        1.0
+      ],
+      "Filename": "T_Signal_Head_YG_RY_I.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 70,
+      "Position": [
+        158.661,
+        0.938133,
+        -252.723
+      ],
+      "Direction": [
+        0.0,
+        0.999985,
+        0.0,
+        0.0055022
+      ],
+      "Filename": "T_Signal_Small_YGW_Rx.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 72,
+      "Position": [
+        148.696,
+        0.938133,
+        -314.48
+      ],
+      "Direction": [
+        0.0,
+        -1.0,
+        0.0,
+        1.3113E-06
+      ],
+      "Filename": "T_Signal_Small_YGW_Rx.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 73,
+      "Position": [
+        143.711,
+        0.938133,
+        -430.29
+      ],
+      "Direction": [
+        0.0,
+        -1.0,
+        0.0,
+        1.3113E-06
+      ],
+      "Filename": "T_Signal_Head_YG_RW.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 89,
+      "Position": [
+        153.681,
+        0.938133,
+        -269.312
+      ],
+      "Direction": [
+        0.0,
+        1.0,
+        0.0,
+        0.000401735
+      ],
+      "Filename": "T_Signal_Small_YGW_Rx.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 100,
+      "Position": [
+        146.846,
+        0.438133,
+        895.676
+      ],
+      "Direction": [
+        0.0,
+        -0.0341911,
+        0.0,
+        -0.999415
+      ],
+      "Filename": "T_Signal_Always_W.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 101,
+      "Position": [
+        151.195,
+        0.938133,
+        802.606
+      ],
+      "Direction": [
+        0.0,
+        1.0,
+        0.0,
+        -1.54972E-06
+      ],
+      "Filename": "T_Signal_Always_W.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 102,
+      "Position": [
+        156.181,
+        0.938133,
+        756.381
+      ],
+      "Direction": [
+        0.0,
+        1.0,
+        0.0,
+        -1.54972E-06
+      ],
+      "Filename": "T_Signal_Always_W.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 105,
+      "Position": [
+        156.181,
+        0.938133,
+        -273.291
+      ],
+      "Direction": [
+        0.0,
+        1.50601E-06,
+        0.0,
+        1.0
+      ],
+      "Filename": "T_Signal_Always_W.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 107,
+      "Position": [
+        151.893,
+        0.938133,
+        -351.311
+      ],
+      "Direction": [
+        0.0,
+        0.999358,
+        0.0,
+        0.0358225
+      ],
+      "Filename": "T_Signal_Always_W.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 109,
+      "Position": [
+        150.52,
+        0.938133,
+        -464.905
+      ],
+      "Direction": [
+        0.0,
+        0.0352604,
+        0.0,
+        -0.999378
+      ],
+      "Filename": "T_Signal_Always_W.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 110,
+      "Position": [
+        150.864,
+        0.938133,
+        -507.342
+      ],
+      "Direction": [
+        0.0,
+        -0.999695,
+        0.0,
+        0.0247055
+      ],
+      "Filename": "T_Signal_Always_W.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 111,
+      "Position": [
+        146.536,
+        0.938133,
+        -507.474
+      ],
+      "Direction": [
+        0.0,
+        0.999701,
+        0.0,
+        0.024462
+      ],
+      "Filename": "T_Signal_Always_W.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 115,
+      "Position": [
+        146.881,
+        0.938133,
+        -464.827
+      ],
+      "Direction": [
+        0.0,
+        0.0351166,
+        0.0,
+        0.999383
+      ],
+      "Filename": "T_Signal_Always_W.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 120,
+      "Position": [
+        161.159,
+        0.938133,
+        -252.768
+      ],
+      "Direction": [
+        0.0,
+        0.999993,
+        0.0,
+        0.00369476
+      ],
+      "Filename": "T_Signal_Always_W.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 122,
+      "Position": [
+        161.165,
+        0.938133,
+        748.241
+      ],
+      "Direction": [
+        0.0,
+        1.50601E-06,
+        0.0,
+        1.0
+      ],
+      "Filename": "T_Signal_Always_W.ts_model"
+    },
+    {
+      "Type": "SpeedPostObj",
+      "UID": 78,
+      "Position": [
+        153.649,
+        16.9796,
+        -1382.75
+      ],
+      "Direction": [
+        0.0,
+        1.45237E-06,
+        0.0,
+        1.0
+      ],
+      "Filename": "tsrSign_Milepost1.ts_model"
+    },
+    {
+      "Type": "SpeedPostObj",
+      "UID": 80,
+      "Position": [
+        153.682,
+        0.938133,
+        -440.777
+      ],
+      "Direction": [
+        0.0,
+        8.74228E-08,
+        0.0,
+        1.0
+      ],
+      "Filename": "tsrSign_Milepost1.ts_model"
+    },
+    {
+      "Type": "SpeedPostObj",
+      "UID": 84,
+      "Position": [
+        143.462,
+        0.938133,
+        563.775
+      ],
+      "Direction": [
+        0.0,
+        1.45237E-06,
+        0.0,
+        1.0
+      ],
+      "Filename": "tsrSign_Milepost1.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 1,
+      "Position": [
+        153.688,
+        0.938133,
+        249.24
+      ],
+      "Direction": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "Filename": "A4t500mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 2,
+      "Position": [
+        153.688,
+        0.938133,
+        249.24
+      ],
+      "Direction": [
+        0.0,
+        1.0,
+        0.0,
+        4.37114E-08
+      ],
+      "Filename": "A4t500mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 3,
+      "Position": [
+        159.515,
+        0.938133,
+        -280.663
+      ],
+      "Direction": [
+        0.0,
+        -0.0551245,
+        0.0,
+        0.998479
+      ],
+      "Filename": "A1tEndPnt3dx2.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 6,
+      "Position": [
+        156.182,
+        0.938133,
+        -295.748
+      ],
+      "Direction": [
+        0.0,
+        -8.74228E-08,
+        0.0,
+        1.0
+      ],
+      "Filename": "A1tFrog3d15mRgt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 7,
+      "Position": [
+        156.182,
+        0.938133,
+        -250.748
+      ],
+      "Direction": [
+        0.0,
+        1.0,
+        0.0,
+        4.37114E-08
+      ],
+      "Filename": "A1t30mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 8,
+      "Position": [
+        154.531,
+        0.938133,
+        -325.663
+      ],
+      "Direction": [
+        0.0,
+        -0.0551245,
+        0.0,
+        0.998479
+      ],
+      "Filename": "A1tPnt3dBLft.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 10,
+      "Position": [
+        148.703,
+        0.938133,
+        -325.76
+      ],
+      "Direction": [
+        0.0,
+        -8.74228E-08,
+        0.0,
+        1.0
+      ],
+      "Filename": "A2t75mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 11,
+      "Position": [
+        151.198,
+        0.938133,
+        -340.748
+      ],
+      "Direction": [
+        0.0,
+        -8.74228E-08,
+        0.0,
+        1.0
+      ],
+      "Filename": "A1tFrog3d15mRgt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 13,
+      "Position": [
+        151.195,
+        0.938133,
+        -370.76
+      ],
+      "Direction": [
+        0.0,
+        -8.74228E-08,
+        0.0,
+        1.0
+      ],
+      "Filename": "A1tPnt3dBRgt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 16,
+      "Position": [
+        148.703,
+        0.938133,
+        -445.76
+      ],
+      "Direction": [
+        0.0,
+        -8.74228E-08,
+        0.0,
+        1.0
+      ],
+      "Filename": "A2t75mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 17,
+      "Position": [
+        151.196,
+        0.938133,
+        -445.76
+      ],
+      "Direction": [
+        0.0,
+        1.0,
+        0.0,
+        4.37114E-08
+      ],
+      "Filename": "A1tPnt3dBRgt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 18,
+      "Position": [
+        146.211,
+        0.938133,
+        -445.76
+      ],
+      "Direction": [
+        0.0,
+        1.0,
+        0.0,
+        4.37114E-08
+      ],
+      "Filename": "A1tPnt3dBLft.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 19,
+      "Position": [
+        148.703,
+        0.938133,
+        -490.76
+      ],
+      "Direction": [
+        0.0,
+        -8.74228E-08,
+        0.0,
+        1.0
+      ],
+      "Filename": "A2tFrog3d15mDbl.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 20,
+      "Position": [
+        151.196,
+        0.938133,
+        -520.76
+      ],
+      "Direction": [
+        0.0,
+        -8.74228E-08,
+        0.0,
+        1.0
+      ],
+      "Filename": "A1tPnt3dBLft.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 21,
+      "Position": [
+        146.211,
+        0.938133,
+        -520.76
+      ],
+      "Direction": [
+        0.0,
+        -8.74228E-08,
+        0.0,
+        1.0
+      ],
+      "Filename": "A1tPnt3dBRgt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 22,
+      "Position": [
+        148.703,
+        0.938133,
+        -520.76
+      ],
+      "Direction": [
+        3.05985E-10,
+        0.999976,
+        0.00700013,
+        4.37103E-08
+      ],
+      "Filename": "A2t500mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 23,
+      "Position": [
+        148.703,
+        7.93809,
+        -1020.71
+      ],
+      "Direction": [
+        5.46423E-10,
+        0.999922,
+        0.0125007,
+        4.3708E-08
+      ],
+      "Filename": "A2t500mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 24,
+      "Position": [
+        146.211,
+        0.938133,
+        -325.76
+      ],
+      "Direction": [
+        0.0,
+        1.0,
+        0.0,
+        4.37114E-08
+      ],
+      "Filename": "A1t45mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 39,
+      "Position": [
+        161.166,
+        0.938133,
+        749.24
+      ],
+      "Direction": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "Filename": "A1tEndPnt3dx2.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 40,
+      "Position": [
+        156.183,
+        0.938133,
+        794.228
+      ],
+      "Direction": [
+        0.0,
+        1.0,
+        0.0,
+        4.37114E-08
+      ],
+      "Filename": "A1tFrog3d15mLft.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 41,
+      "Position": [
+        156.181,
+        0.938133,
+        779.24
+      ],
+      "Direction": [
+        0.0,
+        1.0,
+        0.0,
+        4.37114E-08
+      ],
+      "Filename": "A1t30mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 49,
+      "Position": [
+        154.531,
+        0.938133,
+        824.143
+      ],
+      "Direction": [
+        0.0,
+        -0.998479,
+        0.0,
+        0.0551244
+      ],
+      "Filename": "A1tPnt3dBRgt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 51,
+      "Position": [
+        148.703,
+        0.938133,
+        824.24
+      ],
+      "Direction": [
+        0.0,
+        1.0,
+        0.0,
+        1.19249E-08
+      ],
+      "Filename": "A2t75mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 52,
+      "Position": [
+        151.196,
+        0.938133,
+        839.24
+      ],
+      "Direction": [
+        0.0,
+        1.0,
+        0.0,
+        1.19249E-08
+      ],
+      "Filename": "A1tFrog3d15mLft.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 54,
+      "Position": [
+        149.544,
+        0.938133,
+        869.155
+      ],
+      "Direction": [
+        0.0,
+        -0.998479,
+        0.0,
+        0.0551244
+      ],
+      "Filename": "A1tPnt3dBRgt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 58,
+      "Position": [
+        146.211,
+        0.938133,
+        869.24
+      ],
+      "Direction": [
+        0.0,
+        1.0,
+        0.0,
+        1.19249E-08
+      ],
+      "Filename": "A1t45mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 59,
+      "Position": [
+        146.211,
+        0.938133,
+        884.24
+      ],
+      "Direction": [
+        0.0,
+        1.0,
+        0.0,
+        1.19249E-08
+      ],
+      "Filename": "A1tFrog3d15mLft.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 60,
+      "Position": [
+        146.211,
+        0.938133,
+        914.24
+      ],
+      "Direction": [
+        0.0,
+        1.0,
+        0.0,
+        1.19249E-08
+      ],
+      "Filename": "A1tPnt3dBLft.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 92,
+      "Position": [
+        136.765,
+        0.993164,
+        346.151
+      ],
+      "Direction": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "Filename": "uzot-st1m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 93,
+      "Position": [
+        136.776,
+        0.990963,
+        348.15
+      ],
+      "Direction": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "Filename": "uzot-st3m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 94,
+      "Position": [
+        136.769,
+        0.991211,
+        350.165
+      ],
+      "Direction": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "Filename": "uzot-hkol.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 95,
+      "Position": [
+        137.318,
+        0.986328,
+        351.181
+      ],
+      "Direction": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "Filename": "uzot-trg.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 96,
+      "Position": [
+        139.928,
+        0.969727,
+        348.652
+      ],
+      "Direction": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "Filename": "uzot-ruk.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 97,
+      "Position": [
+        187.444,
+        1.21406,
+        447.504
+      ],
+      "Direction": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "Filename": "VOKZAL.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 98,
+      "Position": [
+        185.116,
+        0.961873,
+        550.801
+      ],
+      "Direction": [
+        0.0,
+        0.707107,
+        0.0,
+        0.707107
+      ],
+      "Filename": "platf_fonar_2.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 99,
+      "Position": [
+        55.101,
+        0.958246,
+        541.459
+      ],
+      "Direction": [
+        0.0,
+        0.707107,
+        0.0,
+        -0.707107
+      ],
+      "Filename": "platf_fonar_9_2.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 124,
+      "Position": [
+        -54.4202,
+        0.995704,
+        608.894
+      ],
+      "Direction": [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "Filename": "A1tPnt3dBLft.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 127,
+      "Position": [
+        -51.6609,
+        1.24085,
+        443.976
+      ],
+      "Direction": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "Filename": "terminal.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 133,
+      "Position": [
+        -54.4202,
+        0.995704,
+        478.894
+      ],
+      "Direction": [
+        0.0,
+        8.74228E-08,
+        0.0,
+        -1.0
+      ],
+      "Filename": "A1t100mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 134,
+      "Position": [
+        -54.4202,
+        0.995704,
+        378.894
+      ],
+      "Direction": [
+        0.0,
+        8.74228E-08,
+        0.0,
+        -1.0
+      ],
+      "Filename": "A1t100mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 145,
+      "Position": [
+        -49.3837,
+        0.995704,
+        544.671
+      ],
+      "Direction": [
+        0.0,
+        -0.0275726,
+        0.0,
+        -0.99962
+      ],
+      "Filename": "A1tEndPnt3d.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 146,
+      "Position": [
+        -48.9707,
+        0.995704,
+        529.697
+      ],
+      "Direction": [
+        0.0,
+        8.74228E-08,
+        0.0,
+        -1.0
+      ],
+      "Filename": "A1tEndPnt3d.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 147,
+      "Position": [
+        -48.9707,
+        0.995704,
+        529.697
+      ],
+      "Direction": [
+        0.0,
+        -1.0,
+        0.0,
+        -4.37114E-08
+      ],
+      "Filename": "A1t100mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 150,
+      "Position": [
+        -52.7693,
+        0.995704,
+        578.991
+      ],
+      "Direction": [
+        0.0,
+        0.998479,
+        0.0,
+        -0.0551244
+      ],
+      "Filename": "A1t15mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 151,
+      "Position": [
+        -51.1181,
+        0.995704,
+        564.082
+      ],
+      "Direction": [
+        0.0,
+        -0.998479,
+        0.0,
+        0.0551244
+      ],
+      "Filename": "A1t3mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 153,
+      "Position": [
+        -50.7878,
+        0.995704,
+        561.101
+      ],
+      "Direction": [
+        0.0,
+        0.998479,
+        0.0,
+        -0.0551244
+      ],
+      "Filename": "A1t1_5mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 154,
+      "Position": [
+        -54.4202,
+        0.995704,
+        608.894
+      ],
+      "Direction": [
+        0.0,
+        8.74228E-08,
+        0.0,
+        -1.0
+      ],
+      "Filename": "A1t500mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 155,
+      "Position": [
+        -48.9707,
+        0.995704,
+        429.697
+      ],
+      "Direction": [
+        0.0,
+        -1.0,
+        0.0,
+        -4.37114E-08
+      ],
+      "Filename": "A1t100mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 156,
+      "Position": [
+        -54.4202,
+        0.995704,
+        378.894
+      ],
+      "Direction": [
+        0.0,
+        -1.0,
+        0.0,
+        -4.37114E-08
+      ],
+      "Filename": "A1t100mStrt.ts_model"
+    }
+  ]
+}

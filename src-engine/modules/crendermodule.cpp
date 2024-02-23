@@ -30,6 +30,7 @@ CRenderModule::CRenderModule() : renderframe(), shaders(), ver_major(0), ver_min
     g_Render = this;
 
 	glfwInit();
+    glfwWindowHint(GLFW_SAMPLES, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -82,14 +83,19 @@ CRenderModule::CRenderModule() : renderframe(), shaders(), ver_major(0), ver_min
 
     auto version = glGetString(GL_VERSION);
     auto renderer = glGetString(GL_RENDERER);
+    int total_vmem = 0;
+
+    glGetIntegerv(0x9048, &total_vmem);
 
     g_Log->LogDebug("OpenGL Version: %s", version);
     g_Log->LogDebug("OpenGL Renderer: %s", renderer);
+    g_Log->LogDebug("Total Video Memory: %d MB", total_vmem / 1024);
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 
     glCullFace(GL_FRONT);
+    //glFrontFace(GL_CW);
 
     UpdateSize(800, 600);
 }
@@ -137,6 +143,27 @@ void CRenderModule::SetCamera(ICamera* camera)
 ICamera* CRenderModule::GetCamera()
 {
     return camera;
+}
+
+#define GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX 0x9048
+#define GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX 0x9049
+
+int CRenderModule::GetTotalVideoMemory()
+{
+    int memory;
+
+    glGetIntegerv(GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX, &memory);
+
+    return memory;
+}
+
+int CRenderModule::GetAvailableVideoMemory()
+{
+    int memory;
+
+    glGetIntegerv(GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX, &memory);
+
+    return memory;
 }
 
 IMaterialManager* CRenderModule::GetMaterialManager()

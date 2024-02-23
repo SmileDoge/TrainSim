@@ -9,18 +9,16 @@
 
 void ShowEngineInfo(IEngine* engine, ILogModule* log)
 {
-    short major, minor, patch;
-
     char* date, *time, *compiler;
 
-    long version = 0;
+    long cpp_version = 0;
 
-    engine->GetBuildInfo(date, time, version, compiler);
-    engine->GetEngineVersion(major, minor, patch);
+    engine->GetBuildInfo(date, time, cpp_version, compiler);
+    TSVersion version = engine->GetEngineVersion();
 
     log->LogInfo("Engine Date Build %s", date);
     log->LogInfo("Engine Time Build %s", time);
-    log->LogInfo("Engine Version %d.%d.%d", major, minor, patch);
+    log->LogInfo("Engine Version %d.%d.%d", version.major, version.minor, version.patch);
     log->LogInfo("Engine Compiler %s", compiler);
 }
 

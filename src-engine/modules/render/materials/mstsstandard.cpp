@@ -82,6 +82,7 @@ void MSTSStandardMaterial::PreRender(IMaterial* prev_material)
 			int destinationBlend = GL_ONE;
 			int depthFunction = GL_LEQUAL;
 
+			
 			if ((options & MSTS_MATERIAL_ALPHA_BLENDING_MASK) == MSTS_MATERIAL_ALPHA_BLENDING_BLEND)
 			{
 				destinationBlend = GL_ONE_MINUS_SRC_ALPHA;
@@ -91,7 +92,7 @@ void MSTSStandardMaterial::PreRender(IMaterial* prev_material)
 			glBlendFuncSeparate(GL_SRC_ALPHA, destinationBlend, GL_ZERO, GL_ONE);
 
 			glDepthFunc(depthFunction);
-			//glDepthMask(GL_FALSE);
+			glDepthMask(GL_FALSE);
 		}
 	}
 	else
@@ -126,7 +127,7 @@ void MSTSStandardMaterial::Render(std::vector<RenderItem>& items, glm::mat4x4& m
 	shader->SetViewMat(mat_view);
 	shader->SetProjMat(mat_proj);
 
-	shader->SetVec3("viewPos", g_Render->GetCamera()->GetPosition());
+	shader->SetVec3("viewPos", g_Render->GetCamera()->GetLocation());
 
 	shader->SetVec3("ambient", glm::vec3(0.4f, 0.4f, 0.4f));
 	shader->SetVec3("specular", glm::vec3(0.5f, 0.5f, 0.5f));
@@ -146,6 +147,8 @@ void MSTSStandardMaterial::Render(std::vector<RenderItem>& items, glm::mat4x4& m
 		shader->SetVec3("light.diffuse", glm::vec3(0.1f));
 		shader->SetVec3("light.specular", glm::vec3(1.0f));
 	}
+
+	shader->SetInt("fullbright", g_Render->GetRenderFrame()->GetFullBright());
 
 	for (auto& item : items)
 	{

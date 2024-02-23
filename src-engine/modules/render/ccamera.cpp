@@ -1,6 +1,6 @@
 #include "ccamera.hpp"
 
-CCamera::CCamera(): rotation(glm::vec3(0.0f, 0.0f, 0.0f)), position(0.0f, 0.0f, 0.0f), view_mat(1.0f), proj_mat(1.0f)
+CCamera::CCamera(): rotation(glm::vec3(0.0f, 0.0f, 0.0f)), camera_location(0, 0, 0, 0, 0), view_mat(1.0f), proj_mat(1.0f)
 {
 	left_ortho = 0;
 	right_ortho = 0;
@@ -24,18 +24,53 @@ CCamera::~CCamera()
 
 }
 
+int CCamera::GetTileX()
+{
+	return camera_location.TileX;
+}
+
+int CCamera::GetTileZ()
+{
+	return camera_location.TileZ;
+}
+
+glm::vec3 CCamera::GetLocation()
+{
+	return camera_location.Location;
+}
+
+WorldLocation& CCamera::GetWorldLocation()
+{
+	return camera_location;
+}
+
+void CCamera::Move(glm::vec3& direction)
+{
+	camera_location.Location += direction;
+	camera_location.Normalize();
+
+	UpdateViewMatrix();
+}
+
 void CCamera::UpdateViewMatrix()
 {
 	glm::mat4 rot = glm::toMat4(rotation);
 
-	//auto front = glm::vec3(glm::vec4(0.0f, 0.0f, -1.0f, 0.0f));
 	up = glm::vec3(rot[1]);
 	front = glm::vec3(rot[2]);
-	right = glm::vec3(rot[0]);
 
-	//view_mat = glm::lookAt(position, position + front, glm::vec3(0.0f, 1.0f, 0.0f));
-	view_mat = glm::lookAt(position, position + front, up);
-	//view_mat = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0, -3.0f));
+	auto& location = camera_location.Location;
+
+	view_mat = glm::lookAt(location, location + front, up);
+
+	glm::mat4 invertZ = glm::mat4(
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, -1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	);
+
+	view_mat = invertZ * view_mat;
 }
 
 void CCamera::UpdateProjMatrix()
@@ -54,12 +89,14 @@ void CCamera::SetType(CameraType type)
 	UpdateProjMatrix();
 }
 
+/*
 void CCamera::SetPosition(glm::vec3& pos)
 {
 	position = pos;
 
 	UpdateViewMatrix();
 }
+*/
 
 void CCamera::SetRotation(glm::quat& rot)
 {
@@ -106,10 +143,12 @@ CameraType CCamera::GetType()
 	return type;
 }
 
+/*
 glm::vec3& CCamera::GetPosition()
 {
 	return position;
 }
+*/
 
 glm::quat& CCamera::GetRotation()
 {

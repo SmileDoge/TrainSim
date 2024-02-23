@@ -2,6 +2,17 @@
 
 #include <io.h>
 
+#include <Windows.h>
+
+std::string IFileSystem::GetGameDirectory()
+{
+	char buffer[FILENAME_MAX];
+
+	GetCurrentDirectoryA(FILENAME_MAX, buffer);
+
+	return buffer;
+}
+
 CFileStream::CFileStream() : file(NULL)
 {
 

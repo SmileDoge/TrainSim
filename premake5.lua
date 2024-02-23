@@ -18,6 +18,8 @@ workspace "TrainSim"
         "GLM_FORCE_AVX",
     }
 
+    disablewarnings { "4267", "4244", "4305", "4005", "5082" }
+
     filter {"configurations:Debug"}
         defines { "DEBUG", "_DEBUG" }
         symbols "On"
@@ -27,8 +29,6 @@ workspace "TrainSim"
         defines { "NDEBUG" }
         runtime "Release"
         optimize "Speed"
-
-    disablewarnings { "4267", "4244", "4305", "4005", "5082" }
 
     project "TrainSimEngine"
         kind "SharedLib"
@@ -43,6 +43,7 @@ workspace "TrainSim"
             "external/imgui-master",
             "external/imgui-master/backends",
             "external/ultralight/include",
+            "external/json",
         }
 
         files {
@@ -87,6 +88,7 @@ workspace "TrainSim"
             "external/imgui-master/backends",
             "external/ultralight/include",
             "external/glm-include",
+            "external/json",
         }
 
         files {
@@ -128,6 +130,7 @@ workspace "TrainSim"
             "external/imgui-master/backends",
             "external/ultralight/include",
             "external/glm-include",
+            "external/json",
         }
 
         files {

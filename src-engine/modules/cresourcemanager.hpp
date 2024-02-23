@@ -12,8 +12,8 @@ public:
 	virtual void PreDeinit() {};
 	virtual void Update() {};
 
-	virtual TSResult PrecacheResource(const std::string& path, ResourceLoadFlag loadflag);
-	virtual TSResult LoadResourceInternal(const std::string& path, ResourceLoadFlag loadflag, IResource*& resource);
+	virtual TSResult PrecacheResource(const std::string& path, ResourceLoadFlag load_flag);
+	virtual TSResult LoadResourceInternal(const std::string& path, ResourceLoadFlag load_flag, IResource*& resource, ResourceLoadOptions* options);
 
 	virtual void RegisterResourceFactory(IResourceFactory* factory);
 

@@ -2,6 +2,7 @@
 
 #include "global.hpp"
 #include "module.hpp"
+#include "config.hpp"
 #include <string>
 
 #if defined(__clang__)
@@ -45,9 +46,12 @@ public:
 
     virtual IWorld* GetWorld() = 0;
 
+    virtual IConfig* GetEngineConfig() = 0;
+    virtual IConfig* GetGameConfig() = 0;
+
     virtual void GetBuildInfo(char*& date, char*& time, long& cppVersion, char*& compiler) = 0;
-    virtual const char* GetEngineVersion() = 0;
-    virtual void GetEngineVersion(short& major, short& minor, short& patch) = 0;
+    virtual const char* GetEngineVersionString() = 0;
+    virtual TSVersion GetEngineVersion() = 0;
 
     virtual void RunLoop() = 0;
 

@@ -2,6 +2,7 @@
 
 #include "modules/clogmodule.hpp"
 #include "modules/crendermodule.hpp"
+#include "modules/cfilesystem.hpp"
 
 #include "resources/textureresource.hpp"
 
@@ -22,11 +23,11 @@ ModelResourceFactory::~ModelResourceFactory()
 {
 }
 
-TSResult ModelResourceFactory::CreateResourceFromStream(IFileStream* stream, IResource*& resource)
+TSResult ModelResourceFactory::CreateResourceFromStream(IFileStream* stream, IResource*& resource, ResourceLoadOptions* options)
 {
 	CTSModelResource* res_model = new CTSModelResource();
 
-	TSResult result = res_model->LoadFromStream(stream);
+	TSResult result = res_model->LoadFromStream(stream, (ModelResourceLoadOptions*)(void*)options);
 
 	resource = res_model;
 
@@ -46,6 +47,8 @@ TSModel& CTSModelResource::GetData()
 {
 	return model;
 }
+
+#include "modules/render/materials/mstsstandard.hpp"
 
 /*
 struct TSModel_Primitive
@@ -69,52 +72,6 @@ struct TSModel
 };
 */
 
-
-struct TSModel_Vertex_file
-{
-	glm::highp_vec3 position;
-	glm::highp_vec3 normal;
-	glm::highp_vec2 texcoord;
-};
-
-struct TSModel_Primitive_file
-{
-	int iHierarchy;
-	std::vector<USHORT> triangles;
-	std::string material;
-	int options;
-};
-
-struct TSModel_SubObject_file
-{
-	std::vector<TSModel_Primitive_file> primitives;
-	std::vector<TSModel_Vertex_file> vertices;
-};
-
-struct TSModel_Lod_file
-{
-	float distance;
-	std::vector<TSModel_SubObject_file> subobjects;
-	std::vector<int> hierarchy;
-};
-
-struct TSModel_file
-{
-	std::vector<TSModel_Lod_file> lods;
-	std::vector<glm::mat4> matrices;
-	std::vector<std::string> matrices_name;
-
-	TSModel_file()
-	{
-		g_Log->LogDebug("Created TSModel_file");
-	}
-
-	~TSModel_file()
-	{
-		g_Log->LogError("Deleted TSModel_file");
-	}
-};
-
 glm::vec4 ReadVector4(IFileStream* stream)
 {
 	float x, y, z, w;
@@ -129,8 +86,13 @@ glm::vec4 ReadVector4(IFileStream* stream)
 
 #include <filesystem>
 
-TSResult CTSModelResource::LoadFromStream(IFileStream* stream)
+TSResult CTSModelResource::LoadFromStream(IFileStream* stream, ModelResourceLoadOptions* options)
 {
+	std::string root_path = options->RootPath;
+
+	if (root_path == "")
+		root_path = IFileSystem::GetDirectoryName(stream->GetPath());
+
 	int matrices_count = stream->ReadInt32();
 
 	for (int iMat = 0; iMat < matrices_count; iMat++)
@@ -139,6 +101,20 @@ TSResult CTSModelResource::LoadFromStream(IFileStream* stream)
 		glm::vec4 row2 = ReadVector4(stream);
 		glm::vec4 row3 = ReadVector4(stream);
 		glm::vec4 row4 = ReadVector4(stream);
+
+		/*
+		float m00, m01, m02, m03;
+		float m10, m11, m12, m13;
+		float m20, m21, m22, m23;
+		float m30, m31, m32, m33;
+
+		m00 = stream->ReadFloat(); m01 = stream->ReadFloat(); m02 = stream->ReadFloat(); m03 = stream->ReadFloat();
+		m10 = stream->ReadFloat(); m11 = stream->ReadFloat(); m12 = stream->ReadFloat(); m13 = stream->ReadFloat();
+		m20 = stream->ReadFloat(); m21 = stream->ReadFloat(); m22 = stream->ReadFloat(); m23 = stream->ReadFloat();
+		m30 = stream->ReadFloat(); m31 = stream->ReadFloat(); m32 = stream->ReadFloat(); m33 = stream->ReadFloat();
+
+		glm::vec4 row1 = glm::vec4
+		*/
 
 		glm::mat4 mat(row1, row2, row3, row4);
 
@@ -182,28 +158,31 @@ TSResult CTSModelResource::LoadFromStream(IFileStream* stream)
 
 				USHORT* indices = new USHORT[triangles_count];
 
-				stream->ReadBytes((char*)indices, triangles_count * 2);
+				stream->ReadBytes((char*)indices, triangles_count * sizeof(USHORT));
 
 				auto texture_name = stream->ReadString(stream->ReadUInt16());
 				auto material_name = stream->ReadString(stream->ReadUInt16());
 
-				int options = stream->ReadInt32();
+				int mat_options = stream->ReadInt32();
 
-				g_Log->LogError("Material %s - options %d", material_name.c_str(), options);
+				if ((mat_options & MSTS_MATERIAL_ALPHA_BLENDING_ADD) != 0)
+					g_Log->LogInfo("Model %s - Texture %s - Blending Add - Options %d", stream->GetPath(), texture_name, mat_options);
 
 				primitive.mesh = g_Render->GetMeshManager()->CreateMesh();
 
 				primitive.mesh->SetName(model.matrices_name[primitive.iHierarchy]);
 				primitive.mesh->SetData(vertices, vertices_count, indices, triangles_count);
 
-				auto texture_path = IFileSystem::GetFullPath(IFileSystem::Combine(IFileSystem::GetDirectoryName(stream->GetPath()), texture_name)).substr(1);
+				auto texture_path = g_FileSystem->FindResourcePath(texture_name, root_path, options->TextureLoadFrom);
 
-				ITexture* texture = g_ResourceManager->LoadResource<TSTextureResource>(texture_path, RESOURCE_LOAD_FLAG_DEFAULT)->GetData();
+				auto texture_load_options = TextureResourceLoadOptions();
+
+				ITexture* texture = g_ResourceManager->LoadResource<TSTextureResource>(texture_path, RESOURCE_LOAD_FLAG_DEFAULT, &texture_load_options)->GetData();
 
 				primitive.material = g_Render->GetMaterialManager()->CreateMaterial(material_name, "msts_standard_shader");
 
 				primitive.material->SetTexture(MATERIAL_ALBEDO_TEXTURE, texture);
-				primitive.material->SetInt(MATERIAL_MSTS_OPTIONS, options);
+				primitive.material->SetInt(MATERIAL_MSTS_OPTIONS, mat_options);
 
 				delete[] indices;
 
