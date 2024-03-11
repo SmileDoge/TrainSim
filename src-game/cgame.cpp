@@ -29,8 +29,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-DEFINE_COMPONENT_FUNCTIONS(TestComponent)
-
 ILogModule* g_Log = NULL;
 IEngine* g_Engine = NULL;
 
@@ -65,16 +63,19 @@ void TrainSimGame::PostStart()
 {
     IWorld* world = engine->GetWorld();
 
+    world->SetSunDirection(glm::vec3(-1, 1, -2));
+
     IEntity* light_entity = world->CreateEntity();
 
     light = light_entity->CreateComponent<ILightComponent>();
 
-    light->GetEntity()->GetTransform()->SetLocation(glm::vec3(0.f, 5.f, 0.f));
+    light->GetEntity()->GetTransform()->SetLocation(glm::vec3(891.0f, 224.0f, -855.0f));
 
     IRenderModule* render = engine->GetModule<IRenderModule>();
 
     render->GetWindow()->SetSize(glm::vec2(1600, 900));
     render->GetWindow()->SetType(WINDOW_TYPE_WINDOWED);
+    render->GetWindow()->SetVSync(false);
 
     /*
     float vertices[] = {
@@ -147,9 +148,14 @@ void TrainSimGame::PostStart()
 
     ICamera* camera = render->GetCamera();
 
-    camera->Move(glm::vec3(0.0f, 0.0f, 2.0f));
-    camera->SetRotation(GLM_EULER(0.0f, 180.0f, 0.0f));
-    camera->SetNearFar(1.0f, 500.0f);
+    int main_x = -2973;
+    int main_z = 15038;
+
+    //camera->Move(glm::vec3(0.0f, 0.0f, 0.0f));
+    camera->Move(glm::vec3(893, 224, -896));
+    camera->SetTileX(main_x);
+    camera->SetTileZ(main_z);
+    camera->SetNearFar(0.1f, 500.0f);
     camera->SetFOV(60.0f);
 
     auto window = render->GetWindow();
@@ -158,21 +164,22 @@ void TrainSimGame::PostStart()
 
     window->LoadIcon("data/images/kek.jpg");
 
+    engine->SetFPS(fps);
 
     auto resourcefactory = engine->GetModule<IResourceManager>();
-
+    
+    
     auto start_time = engine->GetSysTime();
 
     auto model_load_options = ModelResourceLoadOptions();
 
     auto es4k = resourcefactory->LoadResource<TSModelResource>("data/trains/mdd_2ES4k-084/mdd_2es4ka.ts_model", RESOURCE_LOAD_FLAG_DEFAULT, &model_load_options);
     auto chs4 = resourcefactory->LoadResource<TSModelResource>("data/trains/zdsLoco_chs4z-080/zdsLoco_chs4z-080.ts_model", RESOURCE_LOAD_FLAG_DEFAULT, &model_load_options);
-
+    auto er9t_674_m = resourcefactory->LoadResource<TSModelResource>("data/trains/zdsEMU_ER9T-674/zdsEMU_ER9T_G.ts_model", RESOURCE_LOAD_FLAG_DEFAULT, &model_load_options);
+    
     auto end_time = engine->GetSysTime();
 
     g_Log->LogWarn("Resources Loaded in %lf sec", (end_time - start_time));
-
-    render->GetRenderFrame()->SetFullBright(true);
     
     train_2es4k = world->CreateEntity();
     train_2es4k->SetName("2ES4K");
@@ -183,11 +190,16 @@ void TrainSimGame::PostStart()
     train_chs4->SetName("CHS4");
     train_chs4->CreateComponent<IModelRenderer>()->SetModel(chs4);
     train_chs4->GetTransform()->SetLocation(glm::vec3(4.0f, 0.0f, 0.0f));
+
+    IEntity* train_er9t = world->CreateEntity();
+    train_er9t->SetName("ER9T");
+    train_er9t->CreateComponent<IModelRenderer>()->SetModel(er9t_674_m);
+    train_er9t->GetTransform()->SetLocation(glm::vec3(8.0f, 0.0f, 0.0f));
+    
     
     /*
     auto model_load_options = ModelResourceLoadOptions();
 
-    auto er9t_674_m = resourcefactory->LoadResource<TSModelResource>("data/trains/zdsEMU_ER9T-674/zdsEMU_ER9T_G.ts_model", RESOURCE_LOAD_FLAG_DEFAULT, &model_load_options);
     auto er9t_704_m = resourcefactory->LoadResource<TSModelResource>("data/trains/zdsEMU_ER9T-704/zdsEMU_ER9T_G.ts_model", RESOURCE_LOAD_FLAG_DEFAULT, &model_load_options);
     
     IEntity* er9t_674 = world->CreateEntity();
@@ -211,37 +223,60 @@ void TrainSimGame::PostStart()
 
     IFileSystem* filesystem = engine->GetModule<IFileSystem>();
 
-    std::string route_path = "data/routes/TestRoute_RTS_converted";
+    std::string route_path = "data/routes/Novokuznetsk";
 
-    TSWorld tsworld = TSWorld::CreateFromText(filesystem->ReadFileString(route_path + "/world/w-004829+015015.ts_world"));
+    std::vector<std::string> world_tiles = {
+        "/world/w-2972+15038.ts_world",
+        "/world/w-2973+15038.ts_world",
+    };
 
-    g_Log->LogInfo("World (%d, %d)", tsworld.TileX, tsworld.TileZ);
 
-    g_Log->LogInfo("World Objects count %d", tsworld.Objects.size());
+    auto start_time_world_load = engine->GetSysTime();
 
-    for (auto& obj : tsworld.Objects)
+    for (auto& world_tile : world_tiles)
     {
-        if (obj.Type != "StaticObj") continue;
+        TSWorld tsworld = TSWorld::CreateFromText(filesystem->ReadFileString(route_path + world_tile));
 
-        auto full_path = filesystem->FindResourcePath(obj.Filename, route_path, FIND_FILE_FROM_ROUTE);
+        g_Log->LogInfo("World (%d, %d)", tsworld.TileX, tsworld.TileZ);
 
-        auto route_model_options = ModelResourceLoadOptions();
+        g_Log->LogInfo("World Objects count %d", tsworld.Objects.size());
 
-        route_model_options.TextureLoadFrom = FIND_FILE_FROM_ROUTE;
-        route_model_options.RootPath = route_path;
+        for (auto& obj : tsworld.Objects)
+        {
+            if (obj.Type != "StaticObj" && obj.Type != "TrackObj") continue;
 
-        auto model = resourcefactory->LoadResource<TSModelResource>(full_path, RESOURCE_LOAD_FLAG_DEFAULT, &route_model_options);
+            auto full_path = filesystem->FindResourcePath(obj.Filename, route_path, FIND_FILE_FROM_ROUTE);
 
-        auto route_model_entity = world->CreateEntity();
+            auto route_model_options = ModelResourceLoadOptions();
 
-        route_model_entity->SetName(obj.Filename);
-        route_model_entity->CreateComponent<IModelRenderer>()->SetModel(model);
-        route_model_entity->GetTransform()->SetLocation(obj.Position);
-        route_model_entity->GetTransform()->SetRotation(obj.Direction);
+            route_model_options.TextureLoadFrom = FIND_FILE_FROM_ROUTE;
+            route_model_options.RootPath = route_path;
 
-        g_Log->LogInfo("World object %s [%s]", full_path.c_str(), obj.Filename.c_str());
+            auto model = resourcefactory->LoadResource<TSModelResource>(full_path, RESOURCE_LOAD_FLAG_DEFAULT, &route_model_options);
+
+            if (model == NULL)
+            {
+                g_Log->LogError("World object %s not found", obj.Filename);
+                continue;
+            }
+
+            auto route_model_entity = world->CreateEntity();
+
+            route_model_entity->SetName(obj.Filename);
+            route_model_entity->CreateComponent<IModelRenderer>()->SetModel(model);
+            route_model_entity->GetTransform()->SetLocation(obj.Position);
+            route_model_entity->GetTransform()->SetRotation(obj.Direction);
+
+            route_model_entity->GetTransform()->SetTileX(tsworld.TileX);
+            route_model_entity->GetTransform()->SetTileZ(tsworld.TileZ);
+
+            //g_Log->LogInfo("World object %s [%s]", full_path.c_str(), obj.Filename.c_str());
+        }
     }
 
+    auto end_time_world_load = engine->GetSysTime();
+
+    g_Log->LogWarn("Worlds Loaded in %lf sec", (end_time_world_load - start_time_world_load));
     /*
     for (int i = 0; i < 100; i++)
     {
@@ -374,7 +409,7 @@ glm::vec2 prevMousePos;
 bool mousePressed;
 bool mouseFirstTime;
 
-float yaw = 180, pitch;
+float yaw, pitch;
 
 void TrainSimGame::ProcessInput()
 {
@@ -397,13 +432,13 @@ void TrainSimGame::ProcessInput()
         cameraSpeed = 600.0f * engine->GetDeltaTime();
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        direction -= cameraSpeed * cameraFront;
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
         direction += cameraSpeed * cameraFront;
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        direction -= cameraSpeed * cameraFront;
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        direction -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         direction += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        direction -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 
     render->GetCamera()->Move(direction);
 
@@ -438,7 +473,7 @@ void TrainSimGame::ProcessInput()
         mouseDelta *= sensitivity;
 
         yaw += mouseDelta.x;
-        pitch -= mouseDelta.y;
+        pitch += mouseDelta.y;
 
         if (pitch > 89.0f)
             pitch = 89.0f;
@@ -468,6 +503,21 @@ void TrainSimGame::ProcessInput()
     ImGui::Text("Position: (%f, %f, %f)", camera_pos.x, camera_pos.y, camera_pos.z);
     ImGui::Text("Rotation: (%f, %f, %f)", pitch, yaw, 0);
 
+    static int tp_tile[2];
+
+    ImGui::InputInt2("Teleport Tile", tp_tile);
+
+    if (ImGui::Button("Teleport to tile"))
+    {
+        render->GetCamera()->SetTileX(tp_tile[0]);
+        render->GetCamera()->SetTileZ(tp_tile[1]);
+        g_Log->LogError("lel");
+    }
+
+    ImGui::End();
+
+    ImGui::Begin("Graphics");
+    ImGui::Text("Vertices drawn count: %d", render->GetTrianglesDrawnCount());
     ImGui::End();
 }
 
@@ -505,23 +555,34 @@ void TrainSimGame::EarlyUpdate()
 
 void TrainSimGame::Update()
 {
-    ImGui::ShowDemoWindow();
-
     IRenderModule* render = engine->GetModule<IRenderModule>();
 
     //ImGui::SetNextWindowSize(ImVec2(400, 720), ImGuiCond_Always);
     ImGui::Begin("Test", 0, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize);
     ImGui::Text("delta_time: %f ms, fps: %f", engine->GetDeltaTime() * 1000.f, 1 / engine->GetDeltaTime());
     ImGui::Text("Application average %f ms/frame (%f FPS)", engine->GetDeltaTime() * 1000.f, 1 / engine->GetDeltaTime());
-    ImGui::Text("Total V-Memory %d MB", render->GetTotalVideoMemory() / 1024);
-    ImGui::Text("Available V-Memory %d MB", render->GetAvailableVideoMemory() / 1024);
+    //ImGui::Text("Total V-Memory %d MB", render->GetTotalVideoMemory() / 1024);
+    //ImGui::Text("Available V-Memory %d MB", render->GetAvailableVideoMemory() / 1024);
 
-    ImGui::SliderFloat("FPS Max", &fps, 1, 5000);
+    ImGui::SliderFloat("FPS Max", &fps, 10, 5000);
     
     engine->SetFPS(fps);
 
+    glm::highp_vec3 sunColor = engine->GetWorld()->GetSunColor();
+    glm::highp_vec3 ambientColor = engine->GetWorld()->GetAmbientColor();
+    glm::highp_vec3 sunDir = engine->GetWorld()->GetSunDirection();
+
+    ImGui::SliderFloat3("Sun Color", sunColor.data.data, 0, 1);
+    ImGui::SliderFloat3("Ambient Color", ambientColor.data.data, 0, 1);
+    ImGui::SliderFloat3("Sun Direction", sunDir.data.data, -1, 1);
+
+    engine->GetWorld()->SetSunColor(sunColor);
+    engine->GetWorld()->SetAmbientColor(ambientColor);
+    engine->GetWorld()->SetSunDirection(sunDir);
+
     ImGui::End();
 
+    /*
     //ImGui::Begin("cinnamoroll");
     //ImGui::Image((void*)texture->GetID(), ImVec2(800, 800));
     //ImGui::End();
@@ -572,7 +633,7 @@ void TrainSimGame::Update()
 
     ImGui::SliderFloat("X", &light_pos_x, -10.0f, 10.0f);
     ImGui::SliderFloat("Y", &light_pos_y, -10.0f, 10.0f);
-    ImGui::SliderFloat("Z", &light_pos_z, -10.0f, 10.0f);*/
+    ImGui::SliderFloat("Z", &light_pos_z, -10.0f, 10.0f);
 
     //light->GetEntity()->GetTransform()->SetLocation(glm::vec3(light_pos_x, light_pos_y, light_pos_z));
     
@@ -602,8 +663,8 @@ void TrainSimGame::Update()
     }
 
     ImGui::End();
+    
     */
-
     //g_Log->LogInfo("delta_time: %f, fps: %f", engine->GetDeltaTime(), 1/engine->GetDeltaTime());
 }
 
@@ -615,19 +676,4 @@ void TrainSimGame::LateUpdate()
 void TrainSimGame::Shutdown()
 {
 
-}
-
-void TestComponent::Update()
-{
-    auto transform = GetEntity()->GetTransform();
-
-    float x = cos(g_Engine->GetCurTime() + index);
-    float y = sin(g_Engine->GetCurTime() + index);
-
-    transform->SetLocation(glm::vec3(x, y, 0));
-}
-
-void TestComponent::SetIndex(int index)
-{
-    this->index = index;
 }

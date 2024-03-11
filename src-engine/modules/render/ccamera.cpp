@@ -16,7 +16,6 @@ CCamera::CCamera(): rotation(glm::vec3(0.0f, 0.0f, 0.0f)), camera_location(0, 0,
 
 	UpdateViewMatrix();
 	UpdateProjMatrix();
-	//proj_mat = glm::perspective(glm::radians(45.0f), 1366.0f / 768.0f, 0.1f, 100.0f);
 }
 
 CCamera::~CCamera()
@@ -44,6 +43,16 @@ WorldLocation& CCamera::GetWorldLocation()
 	return camera_location;
 }
 
+void CCamera::SetTileX(int tile)
+{
+	camera_location.TileX = tile;
+}
+
+void CCamera::SetTileZ(int tile)
+{
+	camera_location.TileZ = tile;
+}
+
 void CCamera::Move(glm::vec3& direction)
 {
 	camera_location.Location += direction;
@@ -62,15 +71,6 @@ void CCamera::UpdateViewMatrix()
 	auto& location = camera_location.Location;
 
 	view_mat = glm::lookAt(location, location + front, up);
-
-	glm::mat4 invertZ = glm::mat4(
-		1.0f, 0.0f, 0.0f, 0.0f,
-		0.0f, 1.0f, 0.0f, 0.0f,
-		0.0f, 0.0f, -1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
-	);
-
-	view_mat = invertZ * view_mat;
 }
 
 void CCamera::UpdateProjMatrix()
@@ -79,6 +79,8 @@ void CCamera::UpdateProjMatrix()
 		proj_mat = glm::ortho(left_ortho, right_ortho, bottom_ortho, top_ortho);
 	else
 		proj_mat = glm::perspective(glm::radians(fov), aspect, near, far);
+
+	sky_proj_mat = glm::perspective(glm::radians(fov), aspect, 1000.0f, 6200.0f);
 }
 
 
@@ -230,21 +232,7 @@ glm::mat4& CCamera::GetProjectionMatrix()
 	return proj_mat;
 }
 
-/*
-virtual void SetTransform(glm::mat4& mat);
-
-virtual void SetPosition(glm::vec3& pos);
-virtual glm::vec3& GetPosition();
-
-virtual void SetRotation(glm::quat& rotation);
-virtual glm::quat& GetRotation();
-
-virtual void SetType(CameraType type);
-virtual CameraType GetType();
-
-virtual void SetFOV(float fov);
-virtual float GetFOV();
-
-virtual void SetSize(float left, float right, float bottom, float top);
-virtual void GetSize(float& left, float& right, float& bottom, float& top);
-*/
+glm::mat4& CCamera::GetSkyProjectionMatrix()
+{
+	return sky_proj_mat;
+}

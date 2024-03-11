@@ -174,11 +174,13 @@ CFileSystem::~CFileSystem()
 
 std::string CFileSystem::ReadFileString(const std::string& path)
 {
-	IFileStream* stream = OpenFile(path, "r");
+	IFileStream* stream = OpenFile(path, "rb");
 
 	if (stream == NULL) return "";
 
-	std::string str = stream->ReadString(stream->GetSize());
+	size_t size = stream->GetSize();
+
+	std::string str = stream->ReadString(size);
 
 	delete stream;
 

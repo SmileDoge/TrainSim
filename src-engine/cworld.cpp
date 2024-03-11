@@ -2,7 +2,7 @@
 #include "entities/centity.hpp"
 #include "modules/clogmodule.hpp"
 
-CWorld::CWorld() : entities()
+CWorld::CWorld() : entities(), sun_direction(0, -1, 0), sun_color(1, 0.9, 0.9), ambient_color(0.2f)
 {
 
 }
@@ -75,10 +75,32 @@ std::vector<IEntity*>& CWorld::GetEntities()
     return entities;
 }
 
-/*
+void CWorld::SetSunDirection(glm::vec3 dir)
+{
+    sun_direction = glm::normalize(dir);
+}
 
-    virtual IEntity* CreateEntity();
-    virtual void DeleteEntity(IEntity* entity);
-    virtual void DeleteEntityWithChildrens(IEntity* entity);
+glm::vec3& CWorld::GetSunDirection()
+{
+    return sun_direction;
+}
 
-    virtual std::vector<IEntity*>& GetEntities();*/
+void CWorld::SetSunColor(glm::vec3 color)
+{
+    sun_color = color;
+}
+
+glm::vec3& CWorld::GetSunColor()
+{
+    return sun_color;
+}
+
+void CWorld::SetAmbientColor(glm::vec3 color)
+{
+    ambient_color = color;
+}
+
+glm::vec3& CWorld::GetAmbientColor()
+{
+    return ambient_color;
+}

@@ -98,7 +98,7 @@ bool CRenderFrame_Items_Sort(RenderItem& x, RenderItem& y)
 	float xd = glm::distance2(glm::vec3(x.Transform[3]), camera_position);
 	float yd = glm::distance2(glm::vec3(y.Transform[3]), camera_position);
 
-	if (abs(yd - xd) >= 1)
+	if (abs(yd - xd) >= 0.001f)
 		return (signbit(yd - xd));
 
 	return (signbit((float)(x.SortIndex - y.SortIndex)));
@@ -121,6 +121,8 @@ void CRenderFrame::Render()
 {
 	Sort();
 
+	RenderSky();
+
 	RenderOpaque();
 	RenderTransparent();
 }
@@ -134,16 +136,27 @@ void CRenderFrame::RenderMaterial(IMaterial* material, std::vector<RenderItem>& 
 	material->PostRender();
 }
 
+void CRenderFrame::RenderSky()
+{
+	if (g_Render->GetSky() == NULL) return;
+
+	g_Render->GetSky()->Render();
+}
+
 void CRenderFrame::RenderOpaque()
 {
 	auto& view = g_Render->GetCamera()->GetViewMatrix();
 	auto& proj = g_Render->GetCamera()->GetProjectionMatrix();
+
+	IMaterial* prev_material = NULL;
 
 	for (auto& [material, items] : items)
 	{
 		if (material == NULL) continue;
 
 		RenderMaterial(material, items, NULL, view, proj);
+
+		prev_material = material;
 	}
 }
 

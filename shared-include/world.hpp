@@ -1,5 +1,8 @@
 #pragma once
+
 #include "entities/entity.hpp"
+
+#include "glm/glm.hpp"
 
 #include <vector>
 
@@ -14,6 +17,12 @@ public:
 
     virtual std::vector<IEntity*>& GetEntities() = 0;
 
-    //virtual void UpdateEntities() = 0;
-    //virtual void LateUpdateEntities() = 0;
+    virtual void SetSunDirection(glm::vec3 dir) = 0;
+    virtual glm::vec3& GetSunDirection() = 0;
+
+    virtual void SetSunColor(glm::vec3 color) = 0;
+    virtual glm::vec3& GetSunColor() = 0;
+
+    virtual void SetAmbientColor(glm::vec3 color) = 0;
+    virtual glm::vec3& GetAmbientColor() = 0;
 };

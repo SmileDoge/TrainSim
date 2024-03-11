@@ -22,11 +22,19 @@ public:
 	virtual void SetFloat(MaterialStandardParam param, float val) { };
 	virtual void SetTexture(MaterialStandardParam param, ITexture* val) { };
 
+	virtual void SetInt(int param, int val) { };
+	virtual void SetFloat(int param, float val) { };
+	virtual void SetTexture(int param, ITexture* val) { };
+
 	virtual ITexture* GetTexture(MaterialStandardParam param) { return NULL; };
+
+	virtual ITexture* GetTexture(int param) { return NULL; };
 
 	virtual void PreRender(IMaterial* prev_material) = 0;
 	virtual void Render(std::vector<RenderItem>& items, glm::mat4x4& mat_view, glm::mat4x4& mat_proj) = 0;
 	virtual void PostRender() = 0;
+
+	virtual void Render(RenderItem& item, glm::mat4x4& mat_view, glm::mat4x4& mat_proj) { };
 
 	virtual bool IsBlended() = 0;
 

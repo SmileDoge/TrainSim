@@ -24,11 +24,13 @@ public:
 	virtual void SetInt(char* name, int value) = 0;
 	virtual void SetFloat(char* name, float value) = 0;
 	virtual void SetVec3(char* name, glm::vec3& value) = 0;
+	virtual void SetVec4(char* name, glm::vec4& value) = 0;
 	virtual void SetMat4x4(char* name, glm::mat4x4& value) = 0;
 
 	virtual void SetInt(int loc, int value) = 0;
 	virtual void SetFloat(int loc, float value) = 0;
 	virtual void SetVec3(int loc, glm::vec3& value) = 0;
+	virtual void SetVec4(int loc, glm::vec4& value) = 0;
 	virtual void SetMat4x4(int loc, glm::mat4x4& value) = 0;
 
 	virtual void SetModelMat(glm::mat4& value) = 0;

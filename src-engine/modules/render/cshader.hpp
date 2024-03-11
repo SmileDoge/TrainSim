@@ -20,11 +20,13 @@ public:
 	virtual void SetInt(char* name, int value);
 	virtual void SetFloat(char* name, float value);
 	virtual void SetVec3(char* name, glm::vec3& value);
+	virtual void SetVec4(char* name, glm::vec4& value);
 	virtual void SetMat4x4(char* name, glm::mat4x4& value);
 
 	virtual void SetInt(int loc, int value);
 	virtual void SetFloat(int loc, float value);
 	virtual void SetVec3(int loc, glm::vec3& value);
+	virtual void SetVec4(int loc, glm::vec4& value);
 	virtual void SetMat4x4(int loc, glm::mat4x4& value);
 
 	virtual void SetModelMat(glm::mat4& value);

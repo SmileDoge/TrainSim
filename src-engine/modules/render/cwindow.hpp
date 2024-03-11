@@ -20,6 +20,9 @@ public:
 	virtual void SetType(WindowType type);
 	virtual WindowType GetType();
 
+	virtual bool IsVSyncEnabled();
+	virtual void SetVSync(bool state);
+
 	virtual void SetIcon(void* pixels, int width, int height);
 	virtual void SetTitle(const std::string& title);
 
@@ -29,4 +32,6 @@ private:
 	GLFWwindow* window;
 
 	WindowType type;
+
+	bool vsync_state;
 };

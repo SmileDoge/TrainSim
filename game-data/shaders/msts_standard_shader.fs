@@ -2,6 +2,9 @@
 
 out vec4 FragColor;
 
+in vec2 TexCoord;
+in vec3 FragPos;
+in vec3 Normal;
 
 struct Light {
     vec3 position;
@@ -11,26 +14,38 @@ struct Light {
     vec3 specular;
 };
 
-in vec2 TexCoord;
-in vec3 FragPos;
-in vec3 Normal;
+uniform vec3 sunDirection;
+uniform vec3 sunColor;
+
+uniform vec3 worldAmbient;
 
 uniform Light light;
 uniform sampler2D ourTexture;
 uniform vec3 viewPos;
-
-uniform vec3 ambient;
-uniform vec3 specular;
 uniform float shininess;
 
 uniform float alpha_test;
-
 uniform bool fullbright;
+
+vec3 CalculateSunLight(vec3 normal, vec3 viewDir)
+{
+    vec3 lightDir = normalize(sunDirection);
+
+    float diff = max(dot(normal, lightDir), 0.0);
+
+    vec3 reflectDir = reflect(sunDirection, normal);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
+
+    vec3 ambient = worldAmbient * vec3(texture(ourTexture, TexCoord));
+    vec3 diffuse = sunColor * diff * vec3(texture(ourTexture, TexCoord));
+    vec3 specular = vec3(0.1) * spec * vec3(0.2);
+
+    return ambient + diffuse + specular;
+}
 
 void main()
 {
-    vec2 texCoord = vec2(TexCoord.x, TexCoord.y);
-    vec4 textureTexel = texture(ourTexture, texCoord);
+    vec4 textureTexel = texture(ourTexture, TexCoord);
 
     if (textureTexel.a <= alpha_test)
         discard;
@@ -41,6 +56,13 @@ void main()
     }
     else
     {
+        vec3 outputColor = vec3(0.0);
+
+        vec3 norm = normalize(Normal);
+        vec3 viewDir = normalize(viewPos - FragPos);
+
+        outputColor += CalculateSunLight(norm, viewDir);
+        /*
         vec3 inColor = textureTexel.rgb;
 
         vec3 ambient = light.ambient * inColor;
@@ -56,7 +78,8 @@ void main()
         vec3 specular = light.specular * (spec * specular);
 
         vec3 result = ambient + diffuse + specular;
+        */
         
-        FragColor = vec4(result, textureTexel.a);
+        FragColor = vec4(outputColor, textureTexel.a);
     }
 }

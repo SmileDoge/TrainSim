@@ -22,6 +22,9 @@ public:
 	virtual glm::vec3 GetLocation() = 0;
 	virtual WorldLocation& GetWorldLocation() = 0;
 
+	virtual void SetTileX(int tile) = 0;
+	virtual void SetTileZ(int tile) = 0;
+
 	virtual void Move(glm::vec3& direction) = 0;
 
 	virtual void SetRotation(glm::quat& rotation) = 0;
@@ -52,6 +55,8 @@ public:
 
 	virtual glm::mat4& GetViewMatrix() = 0;
 	virtual glm::mat4& GetProjectionMatrix() = 0;
+
+	virtual glm::mat4& GetSkyProjectionMatrix() = 0;
 
 	virtual void Update() {};
 };

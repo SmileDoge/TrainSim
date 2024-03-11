@@ -137,6 +137,18 @@ void CShader::SetVec3(int loc, glm::vec3& value)
 	glUniform3f(loc, value.x, value.y, value.z);
 }
 
+void CShader::SetVec4(char* name, glm::vec4& value)
+{
+	int loc = GetUniformLocation(name);
+
+	SetVec4(loc, value);
+}
+
+void CShader::SetVec4(int loc, glm::vec4& value)
+{
+	glUniform4f(loc, value.x, value.y, value.z, value.w);
+}
+
 void CShader::SetMat4x4(char* name, glm::mat4x4& value)
 {
 	int loc = GetUniformLocation(name);

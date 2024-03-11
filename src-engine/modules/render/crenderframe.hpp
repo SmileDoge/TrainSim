@@ -2,6 +2,13 @@
 
 #include "modules/render/renderframe.hpp"
 
+enum RenderItemType
+{
+	RENDER_ITEM_TYPE_SKY,
+	RENDER_ITEM_TYPE_OBJECT_OPAQUE,
+	RENDER_ITEM_TYPE_OBJECT_TRANSPARENT,
+};
+
 class CRenderFrame : public IRenderFrame
 {
 public:
@@ -25,6 +32,8 @@ public:
 	virtual void Clear();
 
 private:
+	void RenderSky();
+
 	void RenderOpaque();
 	void RenderTransparent();
 

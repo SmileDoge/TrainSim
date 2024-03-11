@@ -16,6 +16,7 @@
 #include "resources/ctextureresource.hpp"
 
 #include "modules/render/materials/mstsstandard.hpp"
+#include "modules/render/materials/skymaterial.hpp"
 
 DEFINE_CCOMPONENT_FUNCTIONS(Transform);
 DEFINE_CCOMPONENT_FUNCTIONS(RenderComponent);
@@ -46,8 +47,13 @@ void RegisterComponents()
 
 	RegisterShader("msts_standard_shader", "data/shaders/msts_standard_shader");
 
+	RegisterShader("sky_shader", "data/shaders/sky_shader");
+	RegisterShader("moon_shader", "data/shaders/sky_shader");
+	RegisterShader("clouds_shader", "data/shaders/sky_shader");
+
 	g_ResourceManager->RegisterResourceFactory(new ModelResourceFactory());
 	g_ResourceManager->RegisterResourceFactory(new TextureResourceFactory());
 
 	g_MaterialManager->RegisterMaterialFactory(new MSTSStandardFactory());
+	g_MaterialManager->RegisterMaterialFactory(new SkyFactory());
 }

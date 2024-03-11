@@ -17,6 +17,7 @@
 #include "modules/render/ctexture.hpp"
 #include "modules/render/cshader.hpp"
 #include "modules/render/ccamera.hpp"
+#include "modules/render/csky.hpp"
 
 CRenderModule* g_Render = NULL;
 
@@ -25,7 +26,7 @@ void CRenderModule_Framebuffer_Resize(GLFWwindow* window, int width, int height)
     g_Render->UpdateSize(width, height);
 }
 
-CRenderModule::CRenderModule() : renderframe(), shaders(), ver_major(0), ver_minor(0)
+CRenderModule::CRenderModule() : render_frame(), shaders(), ver_major(0), ver_minor(0), triangles_drawn_count(0), sky(NULL)
 {
     g_Render = this;
 
@@ -77,9 +78,18 @@ CRenderModule::CRenderModule() : renderframe(), shaders(), ver_major(0), ver_min
 
     camera = new CCamera();
 
-    materialmanager = new CMaterialManager();
-    meshmanager = new CMeshManager();
-    texturemanager = new CTextureManager();
+    material_manager = new CMaterialManager();
+    mesh_manager = new CMeshManager();
+    texture_manager = new CTextureManager();
+
+    char gray_texture_data[] = {
+        0xcc, 0xcc, 0xcc, 0xff
+    };
+
+    gray_texture = texture_manager->CreateTexture("gray_texture");
+    gray_texture->SetFilter(TEXTURE_FILTER_NEAREST, TEXTURE_FILTER_NEAREST);
+    gray_texture->SetWrap(TEXTURE_WRAP_REPEAT, TEXTURE_WRAP_REPEAT);
+    gray_texture->SetData(1, 1, TEXTURE_FORMAT_RGBA, gray_texture_data);
 
     auto version = glGetString(GL_VERSION);
     auto renderer = glGetString(GL_RENDERER);
@@ -93,9 +103,9 @@ CRenderModule::CRenderModule() : renderframe(), shaders(), ver_major(0), ver_min
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
+    glEnable(GL_MULTISAMPLE);
 
     glCullFace(GL_FRONT);
-    //glFrontFace(GL_CW);
 
     UpdateSize(800, 600);
 }
@@ -114,9 +124,11 @@ void CRenderModule::UpdateRender()
     glClearColor(0.02f, 0.02f, 0.02f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    renderframe.Render();
+    triangles_drawn_count = 0;
 
-    renderframe.Clear();
+    render_frame.Render();
+
+    render_frame.Clear();
 
     ImGui::Render();
 
@@ -132,7 +144,7 @@ void* CRenderModule::GetImGuiContext()
 
 IRenderFrame* CRenderModule::GetRenderFrame()
 {
-    return &renderframe;
+    return &render_frame;
 }
 
 void CRenderModule::SetCamera(ICamera* camera)
@@ -143,6 +155,21 @@ void CRenderModule::SetCamera(ICamera* camera)
 ICamera* CRenderModule::GetCamera()
 {
     return camera;
+}
+
+void CRenderModule::SetSky(ISky* sky)
+{
+    this->sky = sky;
+}
+
+ISky* CRenderModule::GetSky()
+{
+    return sky;
+}
+
+void CRenderModule::InitializeSky()
+{
+    sky = new CSky();
 }
 
 #define GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX 0x9048
@@ -166,19 +193,24 @@ int CRenderModule::GetAvailableVideoMemory()
     return memory;
 }
 
+int CRenderModule::GetTrianglesDrawnCount()
+{
+    return triangles_drawn_count;
+}
+
 IMaterialManager* CRenderModule::GetMaterialManager()
 {
-    return materialmanager;
+    return material_manager;
 }
 
 IMeshManager* CRenderModule::GetMeshManager()
 {
-    return meshmanager;
+    return mesh_manager;
 }
 
 ITextureManager* CRenderModule::GetTextureManager()
 {
-    return texturemanager;
+    return texture_manager;
 }
 
 IShader* CRenderModule::GetShader(const std::string& name)
@@ -201,6 +233,11 @@ IShader* CRenderModule::CreateShader(const std::string& name)
     shaders[name] = shader;
 
     return shader;
+}
+
+ITexture* CRenderModule::GetGrayTexture()
+{
+    return gray_texture;
 }
 
 RenderBackend CRenderModule::GetBackend()
@@ -231,9 +268,9 @@ void CRenderModule::DetectVersion()
 
 CRenderModule::~CRenderModule()
 {
-    delete materialmanager;
-    delete meshmanager;
-    delete texturemanager;
+    delete material_manager;
+    delete mesh_manager;
+    delete texture_manager;
 
     delete camera;
 

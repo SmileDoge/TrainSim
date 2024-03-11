@@ -27,6 +27,9 @@ public:
 	virtual void SetType(WindowType type) = 0;
 	virtual WindowType GetType() = 0;
 
+	virtual bool IsVSyncEnabled() = 0;
+	virtual void SetVSync(bool state) = 0;
+
 	// RGBA 32 bit
 	virtual void SetIcon(void* pixels, int width, int height) = 0;
 	virtual void SetTitle(const std::string& title) = 0;

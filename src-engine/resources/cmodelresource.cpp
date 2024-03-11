@@ -163,6 +163,7 @@ TSResult CTSModelResource::LoadFromStream(IFileStream* stream, ModelResourceLoad
 				auto texture_name = stream->ReadString(stream->ReadUInt16());
 				auto material_name = stream->ReadString(stream->ReadUInt16());
 
+
 				int mat_options = stream->ReadInt32();
 
 				if ((mat_options & MSTS_MATERIAL_ALPHA_BLENDING_ADD) != 0)
@@ -170,19 +171,37 @@ TSResult CTSModelResource::LoadFromStream(IFileStream* stream, ModelResourceLoad
 
 				primitive.mesh = g_Render->GetMeshManager()->CreateMesh();
 
-				primitive.mesh->SetName(model.matrices_name[primitive.iHierarchy]);
+				primitive.mesh->SetName(stream->GetFilename() + model.matrices_name[primitive.iHierarchy]);
 				primitive.mesh->SetData(vertices, vertices_count, indices, triangles_count);
 
-				auto texture_path = g_FileSystem->FindResourcePath(texture_name, root_path, options->TextureLoadFrom);
+				if (texture_name != "")
+				{
+					auto texture_path = g_FileSystem->FindResourcePath(texture_name, root_path, options->TextureLoadFrom);
 
-				auto texture_load_options = TextureResourceLoadOptions();
+					auto texture_load_options = TextureResourceLoadOptions();
 
-				ITexture* texture = g_ResourceManager->LoadResource<TSTextureResource>(texture_path, RESOURCE_LOAD_FLAG_DEFAULT, &texture_load_options)->GetData();
+					TSTextureResource* texture = g_ResourceManager->LoadResource<TSTextureResource>(texture_path, RESOURCE_LOAD_FLAG_DEFAULT, &texture_load_options);
 
-				primitive.material = g_Render->GetMaterialManager()->CreateMaterial(material_name, "msts_standard_shader");
+					primitive.material = g_Render->GetMaterialManager()->CreateMaterial(material_name, "msts_standard_shader");
 
-				primitive.material->SetTexture(MATERIAL_ALBEDO_TEXTURE, texture);
-				primitive.material->SetInt(MATERIAL_MSTS_OPTIONS, mat_options);
+					if (texture != NULL)
+					{
+						primitive.material->SetTexture(MATERIAL_ALBEDO_TEXTURE, texture->GetData());
+						primitive.material->SetInt(MATERIAL_MSTS_OPTIONS, mat_options);
+					}
+					else
+					{
+						primitive.material->SetTexture(MATERIAL_ALBEDO_TEXTURE, g_Render->GetGrayTexture());
+						primitive.material->SetInt(MATERIAL_MSTS_OPTIONS, 0);
+					}
+				}
+				else
+				{
+					primitive.material = g_Render->GetMaterialManager()->CreateMaterial(material_name, "msts_standard_shader");
+					primitive.material->SetTexture(MATERIAL_ALBEDO_TEXTURE, g_Render->GetGrayTexture());
+					primitive.material->SetInt(MATERIAL_MSTS_OPTIONS, 0);
+				}
+
 
 				delete[] indices;
 

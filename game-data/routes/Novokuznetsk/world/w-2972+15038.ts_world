@@ -1,0 +1,3254 @@
+{
+  "TileX": -2972,
+  "TileZ": 15038,
+  "Objects": [
+    {
+      "Type": "ForestObj",
+      "UID": 279,
+      "Position": [
+        503.071,
+        205.055,
+        971.859
+      ],
+      "Direction": [
+        0.0,
+        -0.0624592,
+        0.0,
+        0.998046
+      ],
+      "Filename": null
+    },
+    {
+      "Type": "ForestObj",
+      "UID": 280,
+      "Position": [
+        807.452,
+        197.966,
+        922.023
+      ],
+      "Direction": [
+        0.0,
+        -0.161785,
+        0.0,
+        0.986825
+      ],
+      "Filename": null
+    },
+    {
+      "Type": "PlatformObj",
+      "UID": 463,
+      "Position": [
+        -955.672,
+        210.042,
+        -987.005
+      ],
+      "Direction": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "Filename": null
+    },
+    {
+      "Type": "SidingObj",
+      "UID": 464,
+      "Position": [
+        -710.968,
+        210.042,
+        -1017.4
+      ],
+      "Direction": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "Filename": null
+    },
+    {
+      "Type": "SidingObj",
+      "UID": 465,
+      "Position": [
+        -893.621,
+        210.042,
+        -1018.48
+      ],
+      "Direction": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "Filename": null
+    },
+    {
+      "Type": "CarSpawnerObj",
+      "UID": 484,
+      "Position": [
+        -192.851,
+        203.927,
+        -933.647
+      ],
+      "Direction": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "Filename": null
+    },
+    {
+      "Type": "CarSpawnerObj",
+      "UID": 485,
+      "Position": [
+        -189.743,
+        203.927,
+        -933.993
+      ],
+      "Direction": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "Filename": null
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 459,
+      "Position": [
+        -972.791,
+        203.142,
+        -907.405
+      ],
+      "Direction": [
+        0.0,
+        0.553489,
+        0.0,
+        0.832857
+      ],
+      "Filename": "T_Signal_Always_R.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 460,
+      "Position": [
+        -902.295,
+        200.442,
+        -1014.84
+      ],
+      "Direction": [
+        0.0,
+        0.55349,
+        0.0,
+        0.832856
+      ],
+      "Filename": "T_Signal_Always_R.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 461,
+      "Position": [
+        -936.2,
+        210.042,
+        -998.776
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "T_Signal_Head_YG_RW.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 462,
+      "Position": [
+        -932.29,
+        210.042,
+        -994.127
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "T_Signal_Head_YG_RW.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 466,
+      "Position": [
+        -900.271,
+        201.642,
+        -1015.69
+      ],
+      "Direction": [
+        0.0,
+        0.55349,
+        0.0,
+        0.832856
+      ],
+      "Filename": "T_Signal_Always_W.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 467,
+      "Position": [
+        -971.017,
+        201.342,
+        -908.15
+      ],
+      "Direction": [
+        0.0,
+        0.553489,
+        0.0,
+        0.832857
+      ],
+      "Filename": "T_Signal_Always_W.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 474,
+      "Position": [
+        -888.265,
+        191.142,
+        -1011.85
+      ],
+      "Direction": [
+        0.0,
+        -0.801078,
+        0.0,
+        0.59856
+      ],
+      "Filename": "T_Signal_Always_W.ts_model"
+    },
+    {
+      "Type": "SignalObj",
+      "UID": 476,
+      "Position": [
+        -930.313,
+        193.542,
+        -997.658
+      ],
+      "Direction": [
+        0.0,
+        0.55349,
+        0.0,
+        0.832856
+      ],
+      "Filename": "T_Signal_Always_W.ts_model"
+    },
+    {
+      "Type": "SpeedPostObj",
+      "UID": 469,
+      "Position": [
+        -887.96,
+        199.542,
+        -1010.05
+      ],
+      "Direction": [
+        0.0,
+        0.55349,
+        0.0,
+        0.832856
+      ],
+      "Filename": "tsrSign_SpeedLimit1.ts_model"
+    },
+    {
+      "Type": "SpeedPostObj",
+      "UID": 470,
+      "Position": [
+        -887.541,
+        197.142,
+        -1010.22
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "tsrSign_SpeedLimit1.ts_model"
+    },
+    {
+      "Type": "SpeedPostObj",
+      "UID": 471,
+      "Position": [
+        -890.106,
+        194.442,
+        -1009.14
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "tsrSign_SpeedLimit1.ts_model"
+    },
+    {
+      "Type": "SpeedPostObj",
+      "UID": 473,
+      "Position": [
+        -901.179,
+        190.842,
+        -1009.9
+      ],
+      "Direction": [
+        0.0,
+        0.55349,
+        0.0,
+        0.832856
+      ],
+      "Filename": "tsrSign_SpeedLimit1.ts_model"
+    },
+    {
+      "Type": "SpeedPostObj",
+      "UID": 475,
+      "Position": [
+        -900.938,
+        200.442,
+        -1010.0
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "tsrSign_SpeedLimit1.ts_model"
+    },
+    {
+      "Type": "SpeedPostObj",
+      "UID": 478,
+      "Position": [
+        -933.921,
+        198.942,
+        -996.142
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "tsrSign_SpeedLimit1.ts_model"
+    },
+    {
+      "Type": "SpeedPostObj",
+      "UID": 479,
+      "Position": [
+        -934.187,
+        196.542,
+        -996.031
+      ],
+      "Direction": [
+        0.0,
+        0.55349,
+        0.0,
+        0.832856
+      ],
+      "Filename": "tsrSign_SpeedLimit1.ts_model"
+    },
+    {
+      "Type": "TransferObj",
+      "UID": 420,
+      "Position": [
+        -202.664,
+        203.968,
+        -980.695
+      ],
+      "Direction": [
+        0.0,
+        -0.197575,
+        0.0,
+        0.980288
+      ],
+      "Filename": "Pak_06.ts_model"
+    },
+    {
+      "Type": "TransferObj",
+      "UID": 421,
+      "Position": [
+        -185.958,
+        203.98,
+        -940.923
+      ],
+      "Direction": [
+        0.0,
+        -0.197575,
+        0.0,
+        0.980288
+      ],
+      "Filename": "Pak_06.ts_model"
+    },
+    {
+      "Type": "TransferObj",
+      "UID": 422,
+      "Position": [
+        -168.72,
+        203.981,
+        -899.604
+      ],
+      "Direction": [
+        0.0,
+        -0.197575,
+        0.0,
+        0.980288
+      ],
+      "Filename": "Pak_06.ts_model"
+    },
+    {
+      "Type": "TransferObj",
+      "UID": 423,
+      "Position": [
+        -151.449,
+        203.895,
+        -858.896
+      ],
+      "Direction": [
+        0.0,
+        -0.197575,
+        0.0,
+        0.980288
+      ],
+      "Filename": "Pak_06.ts_model"
+    },
+    {
+      "Type": "TransferObj",
+      "UID": 424,
+      "Position": [
+        -136.449,
+        203.949,
+        -823.088
+      ],
+      "Direction": [
+        0.0,
+        -0.197575,
+        0.0,
+        0.980288
+      ],
+      "Filename": "Pak_06.ts_model"
+    },
+    {
+      "Type": "TransferObj",
+      "UID": 438,
+      "Position": [
+        -986.594,
+        203.831,
+        -815.421
+      ],
+      "Direction": [
+        0.0,
+        -0.186403,
+        0.0,
+        0.982473
+      ],
+      "Filename": "Pak_06.ts_model"
+    },
+    {
+      "Type": "TransferObj",
+      "UID": 439,
+      "Position": [
+        -908.488,
+        203.965,
+        -848.926
+      ],
+      "Direction": [
+        0.0,
+        -0.186403,
+        0.0,
+        0.982473
+      ],
+      "Filename": "Pak_06.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 317,
+      "Position": [
+        -929.215,
+        203.808,
+        -836.604
+      ],
+      "Direction": [
+        0.0,
+        0.39538,
+        0.0,
+        0.918518
+      ],
+      "Filename": "A2t250r20d.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 10,
+      "Position": [
+        -904.241,
+        210.042,
+        -1014.02
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "A1t45mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 29,
+      "Position": [
+        -858.904,
+        210.042,
+        -1022.25
+      ],
+      "Direction": [
+        0.0,
+        0.55349,
+        0.0,
+        0.832856
+      ],
+      "Filename": "A1tPnt3dBLft.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 30,
+      "Position": [
+        -887.528,
+        210.042,
+        -1012.93
+      ],
+      "Direction": [
+        0.0,
+        0.55349,
+        0.0,
+        0.832856
+      ],
+      "Filename": "A2tFrog3d15mLft.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 31,
+      "Position": [
+        -929.981,
+        210.042,
+        -997.798
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "A1tPnt3dBLft.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 33,
+      "Position": [
+        -928.051,
+        210.042,
+        -993.202
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "A1t30mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 36,
+      "Position": [
+        -1021.21,
+        210.042,
+        -956.77
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "A2t100mStrt.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 37,
+      "Position": [
+        -988.679,
+        209.832,
+        -940.489
+      ],
+      "Direction": [
+        0.0,
+        0.5535,
+        0.0,
+        0.8329
+      ],
+      "Filename": "IZp_350mD_h2.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 39,
+      "Position": [
+        -994.594,
+        209.742,
+        -954.451
+      ],
+      "Direction": [
+        0.0,
+        0.5535,
+        0.0,
+        0.8329
+      ],
+      "Filename": "IZp_350mD_h2.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 45,
+      "Position": [
+        -1004.81,
+        209.982,
+        -975.039
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "IZp_100mD_h3.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 51,
+      "Position": [
+        -698.181,
+        210.042,
+        -1022.77
+      ],
+      "Direction": [
+        0.0,
+        0.553489,
+        0.0,
+        0.832856
+      ],
+      "Filename": "A1t100mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 52,
+      "Position": [
+        -790.376,
+        210.042,
+        -984.035
+      ],
+      "Direction": [
+        0.0,
+        0.553489,
+        0.0,
+        0.832856
+      ],
+      "Filename": "A1t100mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 53,
+      "Position": [
+        -882.572,
+        210.042,
+        -945.305
+      ],
+      "Direction": [
+        0.0,
+        0.553489,
+        0.0,
+        0.832856
+      ],
+      "Filename": "A1t100mStrt.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 54,
+      "Position": [
+        -976.733,
+        210.042,
+        -909.579
+      ],
+      "Direction": [
+        0.0,
+        0.55349,
+        0.0,
+        0.832856
+      ],
+      "Filename": "IZp_200mD_h3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 55,
+      "Position": [
+        -1016.69,
+        216.342,
+        -892.276
+      ],
+      "Direction": [
+        0.0,
+        -0.842414,
+        0.0,
+        0.538831
+      ],
+      "Filename": "KS_fider3Z-50m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 56,
+      "Position": [
+        -971.158,
+        216.342,
+        -913.35
+      ],
+      "Direction": [
+        0.0,
+        -0.834237,
+        0.0,
+        0.551406
+      ],
+      "Filename": "KS_fider3Z-50m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 58,
+      "Position": [
+        -925.177,
+        216.342,
+        -932.887
+      ],
+      "Direction": [
+        0.0,
+        -0.832163,
+        0.0,
+        0.55453
+      ],
+      "Filename": "KS_fider3Z-50m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 60,
+      "Position": [
+        -878.831,
+        216.342,
+        -952.089
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "KS_fider3Z-50m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 62,
+      "Position": [
+        -832.51,
+        216.342,
+        -971.472
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "KS_fider3Z-50m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 63,
+      "Position": [
+        -786.345,
+        216.342,
+        -990.286
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "KS_fider3Z-50m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 64,
+      "Position": [
+        -740.106,
+        216.342,
+        -1009.5
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "KS_fider3Z-50m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 65,
+      "Position": [
+        -986.423,
+        210.042,
+        -949.747
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "KS_provod-podv-2x100m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 66,
+      "Position": [
+        -894.087,
+        210.042,
+        -988.532
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "KS_provod-podv-2x100m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 67,
+      "Position": [
+        -993.19,
+        210.042,
+        -965.852
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "KS_provod-podv-3x50m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 68,
+      "Position": [
+        -947.072,
+        210.042,
+        -985.224
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "KS_provod-podv-3x50m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 69,
+      "Position": [
+        -900.861,
+        210.042,
+        -1004.64
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "KS_provod-podv-3x50m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 70,
+      "Position": [
+        -854.734,
+        210.042,
+        -1024.01
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "KS_provod-podv-3x50m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 71,
+      "Position": [
+        -808.584,
+        210.042,
+        -1043.4
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "KS_provod-podv-3x50m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 72,
+      "Position": [
+        -977.555,
+        210.042,
+        -928.609
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "KS_provod-podv-5x50m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 73,
+      "Position": [
+        -931.433,
+        210.042,
+        -947.983
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "KS_provod-podv-5x50m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 74,
+      "Position": [
+        -885.218,
+        210.042,
+        -967.398
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "KS_provod-podv-5x50m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 75,
+      "Position": [
+        -839.103,
+        210.042,
+        -986.767
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "KS_provod-podv-5x50m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 76,
+      "Position": [
+        -792.934,
+        210.042,
+        -1006.16
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "KS_provod-podv-5x50m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 77,
+      "Position": [
+        -746.801,
+        210.042,
+        -1025.54
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "KS_provod-podv-5x50m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 79,
+      "Position": [
+        -892.908,
+        210.042,
+        -985.762
+      ],
+      "Direction": [
+        0.0,
+        -0.1975,
+        0.0,
+        0.9803
+      ],
+      "Filename": "Gr_GP13.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 80,
+      "Position": [
+        -846.785,
+        210.042,
+        -1005.08
+      ],
+      "Direction": [
+        0.0,
+        0.980294,
+        0.0,
+        0.197543
+      ],
+      "Filename": "Gr_GP13.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 81,
+      "Position": [
+        -939.223,
+        210.042,
+        -966.577
+      ],
+      "Direction": [
+        0.0,
+        -0.1975,
+        0.0,
+        0.9803
+      ],
+      "Filename": "Gr_GP13.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 82,
+      "Position": [
+        -985.268,
+        210.042,
+        -947.032
+      ],
+      "Direction": [
+        0.0,
+        -0.1975,
+        0.0,
+        0.9803
+      ],
+      "Filename": "Gr_GP13.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 84,
+      "Position": [
+        -970.579,
+        210.042,
+        -898.105
+      ],
+      "Direction": [
+        0.0,
+        0.55349,
+        0.0,
+        0.832856
+      ],
+      "Filename": "by_packgauz1.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 90,
+      "Position": [
+        -473.442,
+        203.812,
+        -970.769
+      ],
+      "Direction": [
+        0.0,
+        0.5535,
+        0.0,
+        0.8329
+      ],
+      "Filename": "by_hrusch_build1_3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 91,
+      "Position": [
+        -513.048,
+        203.811,
+        -954.113
+      ],
+      "Direction": [
+        0.0,
+        0.5535,
+        0.0,
+        0.8329
+      ],
+      "Filename": "by_hrusch_build1_3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 92,
+      "Position": [
+        -365.638,
+        203.786,
+        -1016.03
+      ],
+      "Direction": [
+        0.0,
+        0.5535,
+        0.0,
+        0.8329
+      ],
+      "Filename": "by_hrusch_build1_3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 93,
+      "Position": [
+        -405.247,
+        203.785,
+        -999.38
+      ],
+      "Direction": [
+        0.0,
+        0.5535,
+        0.0,
+        0.8329
+      ],
+      "Filename": "by_hrusch_build1_3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 96,
+      "Position": [
+        -719.105,
+        203.992,
+        -899.091
+      ],
+      "Direction": [
+        0.0,
+        0.5535,
+        0.0,
+        0.8329
+      ],
+      "Filename": "by_hrusch_build1_3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 97,
+      "Position": [
+        -758.713,
+        203.992,
+        -882.435
+      ],
+      "Direction": [
+        0.0,
+        0.5535,
+        0.0,
+        0.8329
+      ],
+      "Filename": "by_hrusch_build1_3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 98,
+      "Position": [
+        -714.866,
+        204.011,
+        -839.886
+      ],
+      "Direction": [
+        0.0,
+        -0.8329,
+        0.0,
+        0.5535
+      ],
+      "Filename": "by_hrusch_build1_3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 99,
+      "Position": [
+        -771.849,
+        203.894,
+        -808.129
+      ],
+      "Direction": [
+        0.0,
+        -0.197566,
+        0.0,
+        0.980333
+      ],
+      "Filename": "by_hrusch_build1_3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 100,
+      "Position": [
+        -665.298,
+        203.676,
+        -884.665
+      ],
+      "Direction": [
+        0.0,
+        0.980333,
+        0.0,
+        0.197566
+      ],
+      "Filename": "by_hrusch_build1_3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 108,
+      "Position": [
+        -823.656,
+        203.974,
+        -824.737
+      ],
+      "Direction": [
+        0.0,
+        0.5535,
+        0.0,
+        0.8329
+      ],
+      "Filename": "by_hrusch_build1_3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 109,
+      "Position": [
+        -863.264,
+        203.974,
+        -808.081
+      ],
+      "Direction": [
+        0.0,
+        0.5535,
+        0.0,
+        0.8329
+      ],
+      "Filename": "by_hrusch_build1_3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 110,
+      "Position": [
+        -930.438,
+        203.891,
+        -779.6
+      ],
+      "Direction": [
+        0.0,
+        0.5535,
+        0.0,
+        0.8329
+      ],
+      "Filename": "by_hrusch_build1_3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 111,
+      "Position": [
+        -970.046,
+        203.89,
+        -762.944
+      ],
+      "Direction": [
+        0.0,
+        0.5535,
+        0.0,
+        0.8329
+      ],
+      "Filename": "by_hrusch_build1_3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 112,
+      "Position": [
+        -938.466,
+        203.857,
+        -687.976
+      ],
+      "Direction": [
+        0.0,
+        0.5535,
+        0.0,
+        0.8329
+      ],
+      "Filename": "by_hrusch_build1_3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 113,
+      "Position": [
+        -898.861,
+        203.857,
+        -704.632
+      ],
+      "Direction": [
+        0.0,
+        0.5535,
+        0.0,
+        0.8329
+      ],
+      "Filename": "by_hrusch_build1_3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 114,
+      "Position": [
+        -830.665,
+        203.831,
+        -733.242
+      ],
+      "Direction": [
+        0.0,
+        0.5535,
+        0.0,
+        0.8329
+      ],
+      "Filename": "by_hrusch_build1_3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 115,
+      "Position": [
+        -791.057,
+        203.831,
+        -749.896
+      ],
+      "Direction": [
+        0.0,
+        0.5535,
+        0.0,
+        0.8329
+      ],
+      "Filename": "by_hrusch_build1_3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 116,
+      "Position": [
+        -880.677,
+        203.884,
+        -756.293
+      ],
+      "Direction": [
+        0.0,
+        0.980333,
+        0.0,
+        0.197566
+      ],
+      "Filename": "by_hrusch_build1_3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 118,
+      "Position": [
+        -571.1,
+        203.303,
+        -861.346
+      ],
+      "Direction": [
+        0.0,
+        0.5535,
+        0.0,
+        0.8329
+      ],
+      "Filename": "ASR_gorod.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 121,
+      "Position": [
+        -301.698,
+        203.945,
+        -1010.41
+      ],
+      "Direction": [
+        0.0,
+        0.5535,
+        0.0,
+        0.8329
+      ],
+      "Filename": "ASR_doma.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 169,
+      "Position": [
+        -1000.32,
+        203.953,
+        -406.118
+      ],
+      "Direction": [
+        0.0,
+        -0.197575,
+        0.0,
+        0.980288
+      ],
+      "Filename": "stalinka_5.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 183,
+      "Position": [
+        -269.51,
+        203.925,
+        -1007.91
+      ],
+      "Direction": [
+        0.0,
+        0.9803,
+        0.0,
+        0.1976
+      ],
+      "Filename": "by_hrusch_build1_3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 184,
+      "Position": [
+        -252.863,
+        203.925,
+        -968.296
+      ],
+      "Direction": [
+        0.0,
+        0.9803,
+        0.0,
+        0.1976
+      ],
+      "Filename": "by_hrusch_build1_3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 185,
+      "Position": [
+        -208.779,
+        203.885,
+        -904.036
+      ],
+      "Direction": [
+        0.0,
+        0.980288,
+        0.0,
+        0.197575
+      ],
+      "Filename": "by_hrusch_build1_3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 186,
+      "Position": [
+        -246.253,
+        203.904,
+        -885.25
+      ],
+      "Direction": [
+        0.0,
+        0.980288,
+        0.0,
+        0.197575
+      ],
+      "Filename": "by_hrusch_build1_3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 187,
+      "Position": [
+        -149.781,
+        204.041,
+        -1010.33
+      ],
+      "Direction": [
+        0.0,
+        -0.1976,
+        0.0,
+        0.9803
+      ],
+      "Filename": "by_hrusch_build1_1.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 199,
+      "Position": [
+        -128.858,
+        204.041,
+        -960.549
+      ],
+      "Direction": [
+        0.0,
+        -0.1976,
+        0.0,
+        0.9803
+      ],
+      "Filename": "by_hrusch_build1_1.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 205,
+      "Position": [
+        -974.767,
+        210.042,
+        -906.575
+      ],
+      "Direction": [
+        0.0,
+        0.55349,
+        0.0,
+        0.832856
+      ],
+      "Filename": "rz_tk10.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 211,
+      "Position": [
+        -904.241,
+        210.042,
+        -1014.02
+      ],
+      "Direction": [
+        0.0,
+        0.55349,
+        0.0,
+        0.832856
+      ],
+      "Filename": "rz_tk7.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 214,
+      "Position": [
+        -698.914,
+        209.802,
+        -997.731
+      ],
+      "Direction": [
+        0.0,
+        0.980294,
+        0.0,
+        0.197542
+      ],
+      "Filename": "t_rfence250m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 215,
+      "Position": [
+        -929.102,
+        209.822,
+        -900.508
+      ],
+      "Direction": [
+        0.0,
+        0.955685,
+        0.0,
+        0.29438
+      ],
+      "Filename": "t_rfence50m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 216,
+      "Position": [
+        -998.966,
+        210.566,
+        -869.606
+      ],
+      "Direction": [
+        0.0,
+        0.9803,
+        0.0,
+        0.1975
+      ],
+      "Filename": "LHW_200x50ft_AsphaltBase.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 217,
+      "Position": [
+        -1027.28,
+        210.773,
+        -988.097
+      ],
+      "Direction": [
+        0.0,
+        0.9803,
+        0.0,
+        0.1975
+      ],
+      "Filename": "LHW_400x100ft_AsphaltBase.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 219,
+      "Position": [
+        -938.049,
+        210.042,
+        -991.697
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "uzot-post.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 226,
+      "Position": [
+        -948.773,
+        210.072,
+        -987.203
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "uzot-pipe20.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 227,
+      "Position": [
+        -959.689,
+        210.042,
+        -982.622
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "uzot-post.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 230,
+      "Position": [
+        -970.46,
+        210.072,
+        -978.085
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "uzot-pipe20.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 231,
+      "Position": [
+        -981.352,
+        210.042,
+        -973.506
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "uzot-post.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 234,
+      "Position": [
+        -992.271,
+        210.072,
+        -968.919
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "uzot-pipe20.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 235,
+      "Position": [
+        -1003.18,
+        210.042,
+        -964.337
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "uzot-post.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 236,
+      "Position": [
+        -1014.09,
+        210.072,
+        -959.779
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "uzot-pipe20.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 276,
+      "Position": [
+        -610.23,
+        203.601,
+        -1004.77
+      ],
+      "Direction": [
+        0.0,
+        0.55636,
+        0.0,
+        0.830939
+      ],
+      "Filename": "Topl_Line1_100m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 277,
+      "Position": [
+        -606.75,
+        203.361,
+        -990.859
+      ],
+      "Direction": [
+        0.0,
+        0.55636,
+        0.0,
+        0.83094
+      ],
+      "Filename": "Topl_Line1_100m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 278,
+      "Position": [
+        -699.549,
+        203.615,
+        -937.959
+      ],
+      "Direction": [
+        0.0,
+        0.55636,
+        0.0,
+        0.83094
+      ],
+      "Filename": "Topl_Line1_100m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 285,
+      "Position": [
+        -869.372,
+        209.982,
+        -941.196
+      ],
+      "Direction": [
+        0.0,
+        0.980294,
+        0.0,
+        0.197542
+      ],
+      "Filename": "tr_ware.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 286,
+      "Position": [
+        -777.349,
+        209.985,
+        -979.851
+      ],
+      "Direction": [
+        0.0,
+        0.980294,
+        0.0,
+        0.197542
+      ],
+      "Filename": "tr_ware.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 288,
+      "Position": [
+        -961.306,
+        210.277,
+        -883.473
+      ],
+      "Direction": [
+        0.0,
+        0.553523,
+        0.0,
+        0.83283
+      ],
+      "Filename": "NR_Emb2t250mStrt.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 289,
+      "Position": [
+        -1031.57,
+        210.667,
+        -799.533
+      ],
+      "Direction": [
+        -0.0292773,
+        0.859079,
+        -0.0494515,
+        0.508608
+      ],
+      "Filename": "NR_Emb1t_Start.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 290,
+      "Position": [
+        584.372,
+        202.699,
+        808.135
+      ],
+      "Direction": [
+        0.0,
+        -0.8122,
+        0.0,
+        0.5834
+      ],
+      "Filename": "by_19-store_build1_red.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 291,
+      "Position": [
+        496.484,
+        202.835,
+        805.091
+      ],
+      "Direction": [
+        0.0,
+        -0.8122,
+        0.0,
+        0.5834
+      ],
+      "Filename": "by_19-store_build1_red.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 292,
+      "Position": [
+        402.872,
+        201.822,
+        807.397
+      ],
+      "Direction": [
+        0.0,
+        -0.8122,
+        0.0,
+        0.5834
+      ],
+      "Filename": "by_19-store_build1_red.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 294,
+      "Position": [
+        103.018,
+        203.548,
+        913.642
+      ],
+      "Direction": [
+        0.0,
+        -0.259497,
+        0.0,
+        0.965756
+      ],
+      "Filename": "by_9-store_build_4.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 295,
+      "Position": [
+        121.385,
+        205.339,
+        895.954
+      ],
+      "Direction": [
+        0.0,
+        0.499401,
+        0.0,
+        0.866385
+      ],
+      "Filename": "by_9-store_build_4.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 296,
+      "Position": [
+        264.184,
+        205.13,
+        825.739
+      ],
+      "Direction": [
+        0.0,
+        -0.259497,
+        0.0,
+        0.965756
+      ],
+      "Filename": "by_9-store_build_4.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 298,
+      "Position": [
+        -163.385,
+        198.118,
+        947.751
+      ],
+      "Direction": [
+        0.0,
+        0.820621,
+        0.0,
+        0.571469
+      ],
+      "Filename": "Kran2.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 303,
+      "Position": [
+        -56.3965,
+        207.632,
+        848.651
+      ],
+      "Direction": [
+        0.0,
+        0.965756,
+        0.0,
+        0.259497
+      ],
+      "Filename": "by_9-store_build_4.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 306,
+      "Position": [
+        -40.9008,
+        204.898,
+        971.563
+      ],
+      "Direction": [
+        0.0,
+        -0.866386,
+        0.0,
+        0.499375
+      ],
+      "Filename": "9Panel4.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 307,
+      "Position": [
+        -57.8884,
+        204.898,
+        942.237
+      ],
+      "Direction": [
+        0.0,
+        -0.866386,
+        0.0,
+        0.499375
+      ],
+      "Filename": "9Panel4.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 308,
+      "Position": [
+        -77.0876,
+        204.898,
+        909.094
+      ],
+      "Direction": [
+        0.0,
+        -0.866386,
+        0.0,
+        0.499375
+      ],
+      "Filename": "9Panel4.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 309,
+      "Position": [
+        -98.1422,
+        204.898,
+        872.747
+      ],
+      "Direction": [
+        0.0,
+        -0.866386,
+        0.0,
+        0.499375
+      ],
+      "Filename": "9Panel4.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 311,
+      "Position": [
+        -125.935,
+        204.898,
+        824.768
+      ],
+      "Direction": [
+        0.0,
+        -0.866386,
+        0.0,
+        0.499375
+      ],
+      "Filename": "9Panel4.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 312,
+      "Position": [
+        -870.055,
+        210.042,
+        -1022.97
+      ],
+      "Direction": [
+        0.0,
+        0.55349,
+        0.0,
+        0.832856
+      ],
+      "Filename": "A1t20mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 315,
+      "Position": [
+        -1010.86,
+        203.808,
+        -784.808
+      ],
+      "Direction": [
+        0.0,
+        0.548872,
+        0.0,
+        0.835907
+      ],
+      "Filename": "A2t100mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 316,
+      "Position": [
+        -1001.68,
+        203.808,
+        -788.783
+      ],
+      "Direction": [
+        0.0,
+        0.548872,
+        0.0,
+        0.835907
+      ],
+      "Filename": "A2t10mStrt.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 318,
+      "Position": [
+        -856.583,
+        203.808,
+        -905.339
+      ],
+      "Direction": [
+        0.0,
+        0.39538,
+        0.0,
+        0.918518
+      ],
+      "Filename": "A2t100mStrt.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 319,
+      "Position": [
+        -927.938,
+        203.783,
+        -338.256
+      ],
+      "Direction": [
+        0.0,
+        0.708588,
+        0.0,
+        0.705616
+      ],
+      "Filename": "ASR_gorod.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 320,
+      "Position": [
+        -874.085,
+        211.101,
+        -937.077
+      ],
+      "Direction": [
+        0.0,
+        0.5535,
+        0.0,
+        0.8329
+      ],
+      "Filename": "AULS.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 321,
+      "Position": [
+        -1016.2,
+        210.65,
+        -971.932
+      ],
+      "Direction": [
+        0.0,
+        0.564642,
+        0.0,
+        0.825335
+      ],
+      "Filename": "tenew_UAZ-452.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 322,
+      "Position": [
+        -1003.37,
+        203.975,
+        -839.676
+      ],
+      "Direction": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "Filename": "Ikarus-256_red.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 332,
+      "Position": [
+        -859.4,
+        210.042,
+        -1022.06
+      ],
+      "Direction": [
+        0.0,
+        0.583781,
+        0.0,
+        0.811873
+      ],
+      "Filename": "KS_provod-45m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 333,
+      "Position": [
+        -902.118,
+        210.042,
+        -1007.71
+      ],
+      "Direction": [
+        0.0,
+        0.570829,
+        0.0,
+        0.821069
+      ],
+      "Filename": "KS_provod-podv-1x40m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 334,
+      "Position": [
+        -868.588,
+        210.045,
+        -1020.91
+      ],
+      "Direction": [
+        0.0,
+        0.5535,
+        0.0,
+        0.8329
+      ],
+      "Filename": "r_limitingcolumn.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 335,
+      "Position": [
+        -919.073,
+        210.047,
+        -999.626
+      ],
+      "Direction": [
+        0.0,
+        0.5535,
+        0.0,
+        0.8329
+      ],
+      "Filename": "r_limitingcolumn.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 338,
+      "Position": [
+        1000.55,
+        176.635,
+        705.514
+      ],
+      "Direction": [
+        0.0,
+        0.99875,
+        0.0,
+        0.0499792
+      ],
+      "Filename": "t_cityback1_3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 340,
+      "Position": [
+        536.373,
+        189.756,
+        672.105
+      ],
+      "Direction": [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "Filename": "t_cityback1_1.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 341,
+      "Position": [
+        19.6309,
+        173.074,
+        718.843
+      ],
+      "Direction": [
+        0.0,
+        0.992198,
+        0.0,
+        0.124675
+      ],
+      "Filename": "t_cityback1_1.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 342,
+      "Position": [
+        -410.971,
+        175.17,
+        896.0
+      ],
+      "Direction": [
+        0.0,
+        0.965744,
+        0.0,
+        0.259496
+      ],
+      "Filename": "t_cityback1_1.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 354,
+      "Position": [
+        -939.942,
+        210.042,
+        -926.727
+      ],
+      "Direction": [
+        0.0,
+        -0.197541,
+        0.0,
+        0.980295
+      ],
+      "Filename": "platf_fonar_9_2.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 357,
+      "Position": [
+        -896.69,
+        209.981,
+        -979.159
+      ],
+      "Direction": [
+        0.0,
+        -0.197541,
+        0.0,
+        0.980294
+      ],
+      "Filename": "platf_fonar_9.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 358,
+      "Position": [
+        -902.802,
+        209.981,
+        -993.13
+      ],
+      "Direction": [
+        0.0,
+        -0.1975,
+        0.0,
+        0.9803
+      ],
+      "Filename": "platf_fonar_9.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 361,
+      "Position": [
+        -1011.49,
+        210.042,
+        -971.145
+      ],
+      "Direction": [
+        0.0,
+        -0.197541,
+        0.0,
+        0.980295
+      ],
+      "Filename": "platf_fonar_9_2.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 363,
+      "Position": [
+        -933.207,
+        203.984,
+        -454.97
+      ],
+      "Direction": [
+        0.0,
+        0.980333,
+        0.0,
+        0.197566
+      ],
+      "Filename": "by_hrusch_build1_3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 364,
+      "Position": [
+        -949.863,
+        203.983,
+        -494.578
+      ],
+      "Direction": [
+        0.0,
+        0.980333,
+        0.0,
+        0.197566
+      ],
+      "Filename": "by_hrusch_build1_3.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 368,
+      "Position": [
+        -738.636,
+        176.56,
+        147.52
+      ],
+      "Direction": [
+        0.0,
+        -0.400901,
+        0.0,
+        0.916121
+      ],
+      "Filename": "t_cityback1_4.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 399,
+      "Position": [
+        -204.886,
+        203.927,
+        -1015.26
+      ],
+      "Direction": [
+        0.0,
+        0.553462,
+        0.0,
+        0.832874
+      ],
+      "Filename": "RKU01.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 400,
+      "Position": [
+        -193.265,
+        203.927,
+        -987.603
+      ],
+      "Direction": [
+        0.0,
+        0.553462,
+        0.0,
+        0.832874
+      ],
+      "Filename": "RKU01.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 401,
+      "Position": [
+        -181.645,
+        203.927,
+        -959.945
+      ],
+      "Direction": [
+        0.0,
+        0.553462,
+        0.0,
+        0.832874
+      ],
+      "Filename": "RKU01.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 402,
+      "Position": [
+        -170.024,
+        203.927,
+        -932.287
+      ],
+      "Direction": [
+        1.40753E-07,
+        0.553462,
+        -2.11811E-07,
+        0.832875
+      ],
+      "Filename": "RKU01.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 403,
+      "Position": [
+        -158.403,
+        203.927,
+        -904.629
+      ],
+      "Direction": [
+        0.0,
+        0.553461,
+        0.0,
+        0.832875
+      ],
+      "Filename": "RKU01.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 409,
+      "Position": [
+        -224.359,
+        203.927,
+        -1003.47
+      ],
+      "Direction": [
+        0.0,
+        -0.832874,
+        0.0,
+        0.553462
+      ],
+      "Filename": "RKU01.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 410,
+      "Position": [
+        -212.739,
+        203.927,
+        -975.815
+      ],
+      "Direction": [
+        0.0,
+        -0.832875,
+        0.0,
+        0.553461
+      ],
+      "Filename": "RKU01.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 411,
+      "Position": [
+        -201.118,
+        203.927,
+        -948.157
+      ],
+      "Direction": [
+        0.0,
+        -0.832874,
+        0.0,
+        0.553463
+      ],
+      "Filename": "RKU01.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 412,
+      "Position": [
+        -189.497,
+        203.927,
+        -920.499
+      ],
+      "Direction": [
+        2.11811E-07,
+        -0.832875,
+        1.40753E-07,
+        0.553462
+      ],
+      "Filename": "RKU01.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 413,
+      "Position": [
+        -177.876,
+        203.927,
+        -892.841
+      ],
+      "Direction": [
+        0.0,
+        -0.832874,
+        0.0,
+        0.553462
+      ],
+      "Filename": "RKU01.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 419,
+      "Position": [
+        -67.7138,
+        203.807,
+        -659.823
+      ],
+      "Direction": [
+        0.0,
+        0.980282,
+        0.0,
+        0.197604
+      ],
+      "Filename": "A2t250mStrt.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 425,
+      "Position": [
+        -230.51,
+        203.5,
+        -1009.87
+      ],
+      "Direction": [
+        0.0,
+        -0.196219,
+        0.0,
+        0.98056
+      ],
+      "Filename": "Topl_Line1_100m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 426,
+      "Position": [
+        -207.091,
+        203.416,
+        -1028.71
+      ],
+      "Direction": [
+        0.0,
+        -0.196219,
+        0.0,
+        0.98056
+      ],
+      "Filename": "Topl_Line1_100m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 427,
+      "Position": [
+        -196.151,
+        203.117,
+        -1034.35
+      ],
+      "Direction": [
+        0.0,
+        -0.196219,
+        0.0,
+        0.98056
+      ],
+      "Filename": "Topl_Line1_100m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 428,
+      "Position": [
+        -183.286,
+        203.42,
+        -1040.76
+      ],
+      "Direction": [
+        0.0,
+        -0.196219,
+        0.0,
+        0.98056
+      ],
+      "Filename": "Topl_Line1_100m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 429,
+      "Position": [
+        -189.322,
+        203.829,
+        -912.86
+      ],
+      "Direction": [
+        0.0,
+        -0.196219,
+        0.0,
+        0.98056
+      ],
+      "Filename": "Topl_Line1_100m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 430,
+      "Position": [
+        -165.903,
+        203.745,
+        -931.702
+      ],
+      "Direction": [
+        0.0,
+        -0.196219,
+        0.0,
+        0.98056
+      ],
+      "Filename": "Topl_Line1_100m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 431,
+      "Position": [
+        -154.963,
+        203.446,
+        -937.335
+      ],
+      "Direction": [
+        0.0,
+        -0.196219,
+        0.0,
+        0.98056
+      ],
+      "Filename": "Topl_Line1_100m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 432,
+      "Position": [
+        -142.098,
+        203.749,
+        -943.751
+      ],
+      "Direction": [
+        0.0,
+        -0.196219,
+        0.0,
+        0.98056
+      ],
+      "Filename": "Topl_Line1_100m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 433,
+      "Position": [
+        -148.728,
+        203.986,
+        -813.03
+      ],
+      "Direction": [
+        0.0,
+        -0.196219,
+        0.0,
+        0.98056
+      ],
+      "Filename": "Topl_Line1_100m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 434,
+      "Position": [
+        -125.309,
+        203.902,
+        -831.872
+      ],
+      "Direction": [
+        0.0,
+        -0.196219,
+        0.0,
+        0.98056
+      ],
+      "Filename": "Topl_Line1_100m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 435,
+      "Position": [
+        -114.369,
+        203.603,
+        -837.505
+      ],
+      "Direction": [
+        0.0,
+        -0.196219,
+        0.0,
+        0.98056
+      ],
+      "Filename": "Topl_Line1_100m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 436,
+      "Position": [
+        -101.504,
+        203.906,
+        -843.921
+      ],
+      "Direction": [
+        0.0,
+        -0.196219,
+        0.0,
+        0.98056
+      ],
+      "Filename": "Topl_Line1_100m.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 440,
+      "Position": [
+        -1003.8,
+        210.366,
+        -934.128
+      ],
+      "Direction": [
+        0.0,
+        0.553489,
+        0.0,
+        0.832857
+      ],
+      "Filename": "kuka1.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 441,
+      "Position": [
+        -988.653,
+        210.366,
+        -940.495
+      ],
+      "Direction": [
+        0.0,
+        0.553489,
+        0.0,
+        0.832857
+      ],
+      "Filename": "kuka1.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 442,
+      "Position": [
+        -942.237,
+        210.242,
+        -960.032
+      ],
+      "Direction": [
+        0.0,
+        0.553489,
+        0.0,
+        0.832857
+      ],
+      "Filename": "kuka1.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 443,
+      "Position": [
+        -919.249,
+        210.242,
+        -969.69
+      ],
+      "Direction": [
+        0.0,
+        0.553489,
+        0.0,
+        0.832857
+      ],
+      "Filename": "kuka1.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 444,
+      "Position": [
+        -895.983,
+        210.296,
+        -979.45
+      ],
+      "Direction": [
+        0.0,
+        0.553489,
+        0.0,
+        0.832857
+      ],
+      "Filename": "kuka1.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 445,
+      "Position": [
+        -872.996,
+        210.296,
+        -989.108
+      ],
+      "Direction": [
+        0.0,
+        0.553489,
+        0.0,
+        0.832857
+      ],
+      "Filename": "kuka1.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 446,
+      "Position": [
+        -945.297,
+        210.672,
+        -1007.76
+      ],
+      "Direction": [
+        0.0,
+        -0.832856,
+        0.0,
+        0.55349
+      ],
+      "Filename": "tsrSt_Masb.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 458,
+      "Position": [
+        -932.106,
+        210.042,
+        -994.204
+      ],
+      "Direction": [
+        0.0,
+        -0.8329,
+        0.0,
+        0.5535
+      ],
+      "Filename": "APK_Short_BU_II.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 480,
+      "Position": [
+        -919.718,
+        212.652,
+        -969.486
+      ],
+      "Direction": [
+        0.0,
+        -0.8329,
+        0.0,
+        0.5535
+      ],
+      "Filename": "Rupor.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 481,
+      "Position": [
+        -925.791,
+        212.652,
+        -983.472
+      ],
+      "Direction": [
+        0.0,
+        -0.8329,
+        0.0,
+        0.5535
+      ],
+      "Filename": "Rupor.ts_model"
+    },
+    {
+      "Type": "StaticObj",
+      "UID": 325,
+      "Position": [
+        -995.11,
+        203.929,
+        -842.437
+      ],
+      "Direction": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "Filename": "bkl_Liaz677m-3.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 124,
+      "Position": [
+        -996.912,
+        203.943,
+        -496.298
+      ],
+      "Direction": [
+        0.0,
+        -0.197575,
+        0.0,
+        0.980288
+      ],
+      "Filename": "Road4LStrt100m.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 126,
+      "Position": [
+        -958.176,
+        203.943,
+        -404.106
+      ],
+      "Direction": [
+        0.0,
+        -0.197575,
+        0.0,
+        0.980288
+      ],
+      "Filename": "Road4LStrt10m.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 170,
+      "Position": [
+        -996.213,
+        203.943,
+        -778.609
+      ],
+      "Direction": [
+        0.0,
+        0.553462,
+        0.0,
+        0.832874
+      ],
+      "Filename": "Road4LStrt100m.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 174,
+      "Position": [
+        -849.84,
+        203.973,
+        -893.562
+      ],
+      "Direction": [
+        0.0,
+        0.400426,
+        0.0,
+        0.916329
+      ],
+      "Filename": "Road4LStrt100m.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 175,
+      "Position": [
+        -827.824,
+        203.943,
+        -913.942
+      ],
+      "Direction": [
+        0.0,
+        0.400426,
+        0.0,
+        0.916329
+      ],
+      "Filename": "Road4LStrt30m.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 178,
+      "Position": [
+        -827.824,
+        203.943,
+        -913.942
+      ],
+      "Direction": [
+        0.0,
+        -0.916329,
+        0.0,
+        0.400427
+      ],
+      "Filename": "Road4LStrt5m.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 179,
+      "Position": [
+        -824.155,
+        203.943,
+        -917.338
+      ],
+      "Direction": [
+        0.0,
+        -0.916329,
+        0.0,
+        0.400427
+      ],
+      "Filename": "US1Rd4l250r20d.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 127,
+      "Position": [
+        -954.302,
+        203.943,
+        -394.886
+      ],
+      "Direction": [
+        0.0,
+        -0.197575,
+        0.0,
+        0.980288
+      ],
+      "Filename": "Road4LCross.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 128,
+      "Position": [
+        -946.555,
+        203.943,
+        -376.448
+      ],
+      "Direction": [
+        0.0,
+        -0.197575,
+        0.0,
+        0.980288
+      ],
+      "Filename": "Road4LStrt250m.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 129,
+      "Position": [
+        -849.715,
+        203.943,
+        -145.966
+      ],
+      "Direction": [
+        0.0,
+        -0.197575,
+        0.0,
+        0.980288
+      ],
+      "Filename": "Road4LStrt250m.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 181,
+      "Position": [
+        -751.166,
+        203.943,
+        -964.359
+      ],
+      "Direction": [
+        0.0,
+        -0.832874,
+        0.0,
+        0.553462
+      ],
+      "Filename": "Road4LStrt200m.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 366,
+      "Position": [
+        -959.648,
+        203.943,
+        -381.793
+      ],
+      "Direction": [
+        0.0,
+        0.553462,
+        0.0,
+        0.832875
+      ],
+      "Filename": "Road4LStrt200m.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 367,
+      "Position": [
+        -941.209,
+        203.943,
+        -389.541
+      ],
+      "Direction": [
+        0.0,
+        -0.832872,
+        0.0,
+        0.553465
+      ],
+      "Filename": "Road4LStrt200m.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 415,
+      "Position": [
+        -157.423,
+        203.927,
+        -893.261
+      ],
+      "Direction": [
+        0.0,
+        -0.197575,
+        0.0,
+        0.980288
+      ],
+      "Filename": "Road2LStrt250m.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 416,
+      "Position": [
+        -74.9043,
+        203.927,
+        -656.8
+      ],
+      "Direction": [
+        0.0,
+        0.980288,
+        0.0,
+        0.197575
+      ],
+      "Filename": "Road2LStrt250m.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 482,
+      "Position": [
+        -957.661,
+        203.943,
+        -798.927
+      ],
+      "Direction": [
+        0.0,
+        0.478766,
+        0.0,
+        0.877943
+      ],
+      "Filename": "hwy4l2wna250r10d.ts_model"
+    },
+    {
+      "Type": "TrackObj",
+      "UID": 483,
+      "Position": [
+        -923.224,
+        203.943,
+        -825.63
+      ],
+      "Direction": [
+        0.0,
+        0.400426,
+        0.0,
+        0.916329
+      ],
+      "Filename": "hwy4l2wna250r10d.ts_model"
+    }
+  ]
+}

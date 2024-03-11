@@ -8,6 +8,7 @@
 #include "render/mesh.hpp"
 #include "render/texture.hpp"
 #include "render/window.hpp"
+#include "render/sky.hpp"
 
 #define GLM_EULER_VEC3(x, y, z) glm::vec3(glm::radians(x), glm::radians(y), glm::radians(z))
 #define GLM_EULER(x, y, z) glm::quat(GLM_EULER_VEC3(x, y, z))
@@ -34,11 +35,18 @@ public:
 	virtual IShader* GetShader(const std::string& name) = 0;
 	virtual IShader* CreateShader(const std::string& name) = 0;
 
+	virtual ITexture* GetGrayTexture() = 0;
+
 	virtual void SetCamera(ICamera* camera) = 0;
 	virtual ICamera* GetCamera() = 0;
 
+	virtual void SetSky(ISky* sky) = 0;
+	virtual ISky* GetSky() = 0;
+
 	virtual int GetTotalVideoMemory() = 0;
 	virtual int GetAvailableVideoMemory() = 0;
+
+	virtual int GetTrianglesDrawnCount() = 0;
 
 	virtual IRenderFrame* GetRenderFrame() = 0;
 

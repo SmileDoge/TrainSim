@@ -5,7 +5,7 @@
 
 #include "stb_image.h"
 
-CWindow::CWindow(GLFWwindow* window) : window(window)
+CWindow::CWindow(GLFWwindow* window) : window(window), vsync_state(false), type(WINDOW_TYPE_WINDOWED)
 {
 
 }
@@ -73,7 +73,7 @@ void CWindow::SetType(WindowType type)
 
 		break;
 	case WINDOW_TYPE_FULLSCREEN:
-		glfwSetWindowAttrib(window, GLFW_DECORATED, GLFW_TRUE);
+		glfwSetWindowAttrib(window, GLFW_DECORATED, GLFW_FALSE);
 		glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
 
 		break;
@@ -85,6 +85,18 @@ void CWindow::SetType(WindowType type)
 WindowType CWindow::GetType()
 {
 	return type;
+}
+
+bool CWindow::IsVSyncEnabled()
+{
+	return vsync_state;
+}
+
+void CWindow::SetVSync(bool state)
+{
+	glfwSwapInterval(state ? 1 : 0);
+
+	vsync_state = state;
 }
 
 void CWindow::SetIcon(void* pixels, int width, int height)

@@ -27,13 +27,3 @@ private:
 extern IEngine* g_Engine;
 extern TrainSimGame* g_Game;
 extern ILogModule* g_Log;
-
-class TestComponent : public IComponent
-{
-public:
-    virtual void Update();
-
-    void SetIndex(int index);
-private:
-    int index;
-};

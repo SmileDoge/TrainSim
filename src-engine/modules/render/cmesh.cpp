@@ -28,10 +28,13 @@ void CMesh::Render()
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 		glDrawElements(GL_TRIANGLES, indices_num, GL_UNSIGNED_SHORT, 0);
 
+		g_Render->AddTriangleCount(indices_num);
 	}
 	else
 	{
 		glDrawArrays(GL_TRIANGLES, 0, vertices_num);
+
+		g_Render->AddTriangleCount(vertices_num);
 	}
 }
 

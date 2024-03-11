@@ -106,6 +106,8 @@ TSResult CEngine::Initialize()
 
     IRenderModule* render = GetModule<IRenderModule>();
 
+    ((CRenderModule*)render)->InitializeSky();
+
     int render_major, render_minor;
 
     render->GetVersion(render_major, render_minor);
@@ -190,11 +192,10 @@ void CEngine::Update()
     for (auto& [name, module] : modules)
         module->Update();
 
-    world->LateUpdateEntities();
-    game->LateUpdate();
-
     g_Render->UpdateRender();
 
+    world->LateUpdateEntities();
+    game->LateUpdate();
 }
 
 void CEngine::GetBuildInfo(char*& date, char*& time, long& cppVersion, char*& compiler)

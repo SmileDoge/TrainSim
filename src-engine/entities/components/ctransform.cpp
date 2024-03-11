@@ -101,7 +101,7 @@ glm::mat4 CTransform::GetMatrix(ICamera* camera)
     int dz = position.TileZ - camera->GetTileZ();
 
     matrix[3].x += dx * 2048;
-    matrix[3].z -= dz * 2048;
+    matrix[3].z += dz * 2048;
 
     return matrix * glm::mat4_cast(rotation);
 }

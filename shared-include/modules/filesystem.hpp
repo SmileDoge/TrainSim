@@ -218,7 +218,7 @@ public:
 	{
 		auto file_type = GetFileType(filename);
 
-		auto data_directory = GetGameDirectory();
+		auto data_directory = GetDataDirectory();
 
 		std::string result_path = "";
 

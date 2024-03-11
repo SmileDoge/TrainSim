@@ -37,6 +37,7 @@ private:
 	int options;
 
 	bool is_one_bit_alpha;
+	bool is_blended;
 };
 
 DEFINE_MATERIAL_FACTORY(MSTSStandard, "msts_standard_shader")

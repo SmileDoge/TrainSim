@@ -1,10 +1,11 @@
 #include "mstsstandard.hpp"
 
 #include "modules/crendermodule.hpp"
+#include "cengine.hpp"
 
 #include "glad/glad.h"
 
-MSTSStandardMaterial::MSTSStandardMaterial() : albedo_texture(NULL)
+MSTSStandardMaterial::MSTSStandardMaterial() : albedo_texture(NULL), is_blended(false)
 {
 }
 
@@ -52,6 +53,11 @@ void MSTSStandardMaterial::SetInt(MaterialStandardParam param, int val)
 {
 	if (param == MATERIAL_MSTS_OPTIONS)
 		options = val;
+
+	bool alphaTestRequested = (options & MSTS_MATERIAL_ALPHA_TEST) != 0;
+	bool alphaBlendRequested = (options & MSTS_MATERIAL_ALPHA_BLENDING_MASK) != 0;
+
+	is_blended = alphaBlendRequested && (!is_one_bit_alpha || (is_one_bit_alpha && !alphaTestRequested));
 }
 
 void MSTSStandardMaterial::PreRender(IMaterial* prev_material)
@@ -60,11 +66,12 @@ void MSTSStandardMaterial::PreRender(IMaterial* prev_material)
 
 	float alpha_test = 0.f;
 
-	glEnable(GL_BLEND);
 
 	if (IsBlended())
 	{
-		if (prev_material == NULL && (options & MSTS_MATERIAL_ALPHA_BLENDING_MASK) != MSTS_MATERIAL_ALPHA_BLENDING_ADD)
+		glEnable(GL_BLEND);
+
+		/*if (prev_material == NULL && (options & MSTS_MATERIAL_ALPHA_BLENDING_MASK) != MSTS_MATERIAL_ALPHA_BLENDING_ADD)
 		{
 			alpha_test = 250.f / 255.f;
 
@@ -73,7 +80,7 @@ void MSTSStandardMaterial::PreRender(IMaterial* prev_material)
 			glDepthFunc(GL_LEQUAL);
 			glDepthMask(GL_TRUE);
 		}
-		else
+		else*/
 		{
 			alpha_test = 10.f / 255.f;
 
@@ -82,17 +89,20 @@ void MSTSStandardMaterial::PreRender(IMaterial* prev_material)
 			int destinationBlend = GL_ONE;
 			int depthFunction = GL_LEQUAL;
 
+			int depthMask = GL_FALSE;
 			
 			if ((options & MSTS_MATERIAL_ALPHA_BLENDING_MASK) == MSTS_MATERIAL_ALPHA_BLENDING_BLEND)
 			{
 				destinationBlend = GL_ONE_MINUS_SRC_ALPHA;
 				depthFunction = GL_LESS;
+
+				depthMask = GL_TRUE;
 			}
 
-			glBlendFuncSeparate(GL_SRC_ALPHA, destinationBlend, GL_ZERO, GL_ONE);
+			glBlendFuncSeparate(GL_SRC_ALPHA, destinationBlend, GL_ONE, GL_ZERO);
 
 			glDepthFunc(depthFunction);
-			glDepthMask(GL_FALSE);
+			glDepthMask(depthMask);
 		}
 	}
 	else
@@ -129,9 +139,12 @@ void MSTSStandardMaterial::Render(std::vector<RenderItem>& items, glm::mat4x4& m
 
 	shader->SetVec3("viewPos", g_Render->GetCamera()->GetLocation());
 
-	shader->SetVec3("ambient", glm::vec3(0.4f, 0.4f, 0.4f));
-	shader->SetVec3("specular", glm::vec3(0.5f, 0.5f, 0.5f));
 	shader->SetFloat("shininess", 32.0f);
+
+	shader->SetVec3("sunDirection", g_Engine->GetWorld()->GetSunDirection());
+	shader->SetVec3("sunColor", g_Engine->GetWorld()->GetSunColor());
+
+	shader->SetVec3("worldAmbient", g_Engine->GetWorld()->GetAmbientColor());
 
 	if (light)
 	{
@@ -170,10 +183,11 @@ void MSTSStandardMaterial::PostRender()
 
 bool MSTSStandardMaterial::IsBlended()
 {
-	bool alphaTestRequested = (options & MSTS_MATERIAL_ALPHA_TEST) != 0;
-	bool alphaBlendRequested = (options & MSTS_MATERIAL_ALPHA_BLENDING_MASK) != 0;
+	return is_blended;
+	//bool alphaTestRequested = (options & MSTS_MATERIAL_ALPHA_TEST) != 0;
+	//bool alphaBlendRequested = (options & MSTS_MATERIAL_ALPHA_BLENDING_MASK) != 0;
 
-	return alphaBlendRequested && (!is_one_bit_alpha || (is_one_bit_alpha && !alphaTestRequested));
+	//return alphaBlendRequested && (!is_one_bit_alpha || (is_one_bit_alpha && !alphaTestRequested));
 }
 
 

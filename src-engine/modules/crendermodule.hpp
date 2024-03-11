@@ -35,11 +35,18 @@ public:
     virtual IShader* GetShader(const std::string& name);
     virtual IShader* CreateShader(const std::string& name);
 
+    virtual ITexture* GetGrayTexture();
+
     virtual void SetCamera(ICamera* camera);
     virtual ICamera* GetCamera();
 
+    virtual void SetSky(ISky* sky);
+    virtual ISky* GetSky();
+
     virtual int GetTotalVideoMemory();
     virtual int GetAvailableVideoMemory();
+
+    virtual int GetTrianglesDrawnCount();
 
     virtual IRenderFrame* GetRenderFrame();
 
@@ -49,23 +56,33 @@ public:
     GLFWwindow* GetGLFWWindow() { return Window; };
 
     void UpdateSize(int width, int height);
+
+    void InitializeSky();
+    
+    void AddTriangleCount(int count) { triangles_drawn_count += count; };
 private:
     void DetectVersion();
 
     int ver_major, ver_minor;
+
+    int triangles_drawn_count;
 
     GLFWwindow* Window;
     CWindow* cWindow;
 
     ICamera* camera;
 
-    IMaterialManager* materialmanager;
-    IMeshManager* meshmanager;
-    ITextureManager* texturemanager;
+    IMaterialManager* material_manager;
+    IMeshManager* mesh_manager;
+    ITextureManager* texture_manager;
+
+    ISky* sky;
 
     std::map<std::string, IShader*> shaders;
 
-    CRenderFrame renderframe;
+    CRenderFrame render_frame;
+
+    ITexture* gray_texture;
 };
 
 extern CRenderModule* g_Render;
