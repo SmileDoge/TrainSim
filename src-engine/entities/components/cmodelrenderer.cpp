@@ -25,13 +25,18 @@ void CModelRenderer::Update()
 {
     if (model == NULL) return;
 
-    auto& base_matrix = GetEntity()->GetTransform()->GetMatrix();
+    auto camera = g_Render->GetCamera();
 
     auto& data = model->GetData();
 
     auto& matrices = data.matrices;
 
+    if (!camera->InFOV(GetEntity()->GetTransform()->GetRelativeToCamera(), 100))
+        return;
+
     auto camera_distance = WorldLocation::GetDistanceSquared(g_Render->GetCamera()->GetWorldLocation(), GetEntity()->GetTransform()->GetWorldPosition().WLocation());
+
+    auto& base_matrix = GetEntity()->GetTransform()->GetMatrix();
 
     for (auto& lod : data.lods)
     {

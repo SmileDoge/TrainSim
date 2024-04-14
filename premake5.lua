@@ -17,6 +17,7 @@ workspace "TrainSim"
         "GLM_FORCE_DEFAULT_ALIGNED_GENTYPES",
         "GLM_FORCE_LEFT_HANDED",
         "GLM_FORCE_AVX",
+        "CURL_STATICLIB"
     }
 
     disablewarnings { "4267", "4244", "4305", "4005", "5082" }
@@ -45,6 +46,8 @@ workspace "TrainSim"
             "external/imgui-master/backends",
             "external/ultralight/include",
             "external/json",
+            "external/spsc_queue/include"
+            -- "external/curl/include",
         }
 
         files {
@@ -55,6 +58,11 @@ workspace "TrainSim"
             "src-engine/**.hpp", 
             "src-engine/**.cpp",
             "src-engine/**.c"
+        }
+
+        nuget { 
+            "curl-vc140-static-64:7.52.1",
+            "openssl-vc140-static-64:1.1.0"
         }
 
         links { "glfw3" }
@@ -71,11 +79,35 @@ workspace "TrainSim"
             targetdir "out/x86_64/%{cfg.buildcfg}"
             includedirs { "external/glfw-3.3.8.bin.WIN64/include" }
 
-            links { "AppCore", "Ultralight", "UltralightCore", "WebCore" }
+            links { 
+                "AppCore", 
+                "Ultralight", 
+                "UltralightCore", 
+                "WebCore",
+
+                -- "libbrotlicommon",
+                -- "libbrotlidec",
+                -- "libcrypto",
+                -- "libcurl",
+                -- "libnghttp2",
+                -- "libnghttp3",
+                -- "libngtcp2",
+                -- "libngtcp2_crypto_quictls",
+                -- "libpsl",
+                -- "libssh2",
+                -- "libssl",
+                -- "libz",
+                -- "libzstd",
+
+                "wldap32",
+                "crypt32",
+                "Ws2_32",
+            }
 
             libdirs { 
                 "external/glfw-3.3.8.bin.WIN64/lib-" .. string.gsub(_ACTION, "vs", "vc"),
-                "external/ultralight/lib"
+                "external/ultralight/lib",
+                -- "external/curl/lib"
             }
             
     project "TrainSimGame"

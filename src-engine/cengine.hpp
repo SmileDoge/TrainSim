@@ -52,6 +52,8 @@ public:
     virtual float GetDeltaTime();
     virtual double GetCurTime();
     virtual double GetSysTime();
+
+    virtual int GetCurrentThreadID();
 private:
     std::map<std::string, IModule*> modules;
 

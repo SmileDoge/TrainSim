@@ -47,6 +47,8 @@ public:
 	virtual void SetSize(float left, float right, float bottom, float top);
 	virtual void GetSize(float& left, float& right, float& bottom, float& top);
 
+	virtual bool InFOV(glm::vec3 center, float radius);
+
 	virtual glm::mat4& GetViewMatrix();
 	virtual glm::mat4& GetProjectionMatrix();
 
@@ -55,6 +57,7 @@ public:
 private:
 	void UpdateViewMatrix();
 	void UpdateProjMatrix();
+	void UpdateFrustum();
 
 	void UpdateTransform();
 
@@ -68,6 +71,9 @@ private:
 	glm::quat rotation;
 
 	glm::vec3 front, right, up;
+
+	glm::vec3 frustum_left, frustum_right;
+	glm::vec3 frustum_right_projected;
 
 	CameraType type;
 

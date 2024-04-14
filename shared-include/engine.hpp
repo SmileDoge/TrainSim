@@ -62,6 +62,8 @@ public:
     virtual double GetCurTime() = 0;
     virtual double GetSysTime() = 0;
 
+    virtual int GetCurrentThreadID() = 0;
+
     template<class T>
     T* GetModule();
 };

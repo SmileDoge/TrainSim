@@ -10,6 +10,8 @@ enum TSResult {
 	TS_INVALID_ARGS,
 	TS_INVALID_OPERATION,
 	TS_OUT_OF_MEMORY,
+
+	TS_ALREADY_USED,
 };
 
 typedef struct TSVersion_t

@@ -10,6 +10,7 @@
 #include "modules/filesystem.hpp"
 #include "modules/componentfactory.hpp"
 #include "modules/resourcemanager.hpp"
+#include "modules/networkmanager.hpp"
 
 #include "modules/render/renderframe.hpp"
 
@@ -77,81 +78,11 @@ void TrainSimGame::PostStart()
     render->GetWindow()->SetType(WINDOW_TYPE_WINDOWED);
     render->GetWindow()->SetVSync(false);
 
-    /*
-    float vertices[] = {
-        // координаты        // нормали           // текстурные координаты
-       -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
-        0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 0.0f,
-        0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
-        0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
-       -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 1.0f,
-       -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
-
-       -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
-        0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
-        0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
-       -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 1.0f,
-       -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
-
-       -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
-       -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
-       -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-       -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-       -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
-       -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
-
-        0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
-        0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-        0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
-
-       -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 1.0f,
-        0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
-        0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
-       -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 0.0f,
-       -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
-
-       -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f,
-        0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 1.0f,
-        0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
-       -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 0.0f,
-       -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
-    };
-
-    IFileSystem* filesystem = engine->GetModule<IFileSystem>();
-
-    auto vertexShader = filesystem->ReadFileString("data/shaders/testshader.vs");
-    auto fragmentShader = filesystem->ReadFileString("data/shaders/testshader.fs");
-
-    IShader* shader = render->CreateShader("exampleshader");
-    shader->SetVertexShader(vertexShader.c_str());
-    shader->SetFragmentShader(fragmentShader.c_str());
-    shader->Compile();
-
-    IMesh* mesh = render->GetMeshManager()->CreateMesh();
-    mesh->SetData(vertices, 36, NULL, 0);
-
-    mesh->SetName("examplemesh");
-
-    IMaterial* material = render->GetMaterialManager()->CreateMaterial("examplematerial");
-    material->SetShader(shader);
-
-    entity = world->CreateEntity();
-
-    entity->SetName("Test Entity");
-    */
-
     ICamera* camera = render->GetCamera();
 
     int main_x = -2973;
     int main_z = 15038;
 
-    //camera->Move(glm::vec3(0.0f, 0.0f, 0.0f));
     camera->Move(glm::vec3(893, 224, -896));
     camera->SetTileX(main_x);
     camera->SetTileZ(main_z);
@@ -167,8 +98,46 @@ void TrainSimGame::PostStart()
     engine->SetFPS(fps);
 
     auto resourcefactory = engine->GetModule<IResourceManager>();
-    
-    
+
+    auto networkmanager = engine->GetModule<INetworkManager>();
+
+    auto authserver = networkmanager->GetAuthServer();
+
+    authserver->Login("Smile");
+
+    std::string token;
+
+    auto res = authserver->GetConnectToken(token);
+
+    g_Log->LogWarn("AuthServer GetToken: %d [%s]", res, token.c_str());
+
+    VerifyConnectTokenResponse response;
+
+    //auto res = authserver->VerifyConnectToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiU21pbGUiLCJpYXQiOjE3MTMwOTcxNjQsImV4cCI6MTcxMzA5NzE3OX0.MV3VJWxrHz134W1UeAaHTXRq0SaNJvj_VC4V58d9P8Y", response);
+    res = authserver->VerifyConnectToken(token, response);
+
+    g_Log->LogWarn("AuthServer VerifyToken: %d - Nickname: %s", res, response.nickname.c_str());
+
+    /*
+    g_Log->LogInfo("PostStart Thread ID - %d", engine->GetCurrentThreadID());
+
+    auto request = engine->GetModule<INetworkManager>()->CreateHTTPRequest();
+
+    auto json = nlohmann::json::object();
+
+    json["nickname"] = "Smile";
+
+    request->SetRequestJson(json);
+    request->SetURL("http://127.0.0.1:1337/get-connect-token");
+    request->Execute(EXECUTE_MODE_SYNC);
+
+    auto response_json = request->GetBody();
+
+    g_Log->LogInfo(response_json);
+
+    delete request;
+    */
+    /*
     auto start_time = engine->GetSysTime();
 
     auto model_load_options = ModelResourceLoadOptions();
@@ -195,7 +164,7 @@ void TrainSimGame::PostStart()
     train_er9t->SetName("ER9T");
     train_er9t->CreateComponent<IModelRenderer>()->SetModel(er9t_674_m);
     train_er9t->GetTransform()->SetLocation(glm::vec3(8.0f, 0.0f, 0.0f));
-    
+    */
     
     /*
     auto model_load_options = ModelResourceLoadOptions();
@@ -226,8 +195,8 @@ void TrainSimGame::PostStart()
     std::string route_path = "data/routes/Novokuznetsk";
 
     std::vector<std::string> world_tiles = {
-        "/world/w-2972+15038.ts_world",
-        "/world/w-2973+15038.ts_world",
+        //"/world/w-2972+15038.ts_world",
+        //"/world/w-2973+15038.ts_world",
     };
 
 

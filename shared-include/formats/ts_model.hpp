@@ -60,6 +60,7 @@ struct TSModel_Primitive
 struct TSModel_Lod
 {
 	float distance;
+	float sphere_radius;
 	std::vector<TSModel_Primitive> primitives;
 	std::vector<int> hierarchy;
 };

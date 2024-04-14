@@ -53,6 +53,8 @@ public:
 	virtual void SetSize(float left, float right, float bottom, float top) = 0;
 	virtual void GetSize(float& left, float& right, float& bottom, float& top) = 0;
 
+	virtual bool InFOV(glm::vec3 center, float radius) = 0;
+
 	virtual glm::mat4& GetViewMatrix() = 0;
 	virtual glm::mat4& GetProjectionMatrix() = 0;
 

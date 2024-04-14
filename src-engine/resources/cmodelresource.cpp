@@ -97,26 +97,17 @@ TSResult CTSModelResource::LoadFromStream(IFileStream* stream, ModelResourceLoad
 
 	for (int iMat = 0; iMat < matrices_count; iMat++)
 	{
+		/*
 		glm::vec4 row1 = ReadVector4(stream);
 		glm::vec4 row2 = ReadVector4(stream);
 		glm::vec4 row3 = ReadVector4(stream);
 		glm::vec4 row4 = ReadVector4(stream);
 
-		/*
-		float m00, m01, m02, m03;
-		float m10, m11, m12, m13;
-		float m20, m21, m22, m23;
-		float m30, m31, m32, m33;
-
-		m00 = stream->ReadFloat(); m01 = stream->ReadFloat(); m02 = stream->ReadFloat(); m03 = stream->ReadFloat();
-		m10 = stream->ReadFloat(); m11 = stream->ReadFloat(); m12 = stream->ReadFloat(); m13 = stream->ReadFloat();
-		m20 = stream->ReadFloat(); m21 = stream->ReadFloat(); m22 = stream->ReadFloat(); m23 = stream->ReadFloat();
-		m30 = stream->ReadFloat(); m31 = stream->ReadFloat(); m32 = stream->ReadFloat(); m33 = stream->ReadFloat();
-
-		glm::vec4 row1 = glm::vec4
-		*/
-
 		glm::mat4 mat(row1, row2, row3, row4);
+		*/
+		glm::mat4 mat(1.0f);
+
+		stream->ReadBytes((char*)&mat[0][0], 64);
 
 		model.matrices.push_back(mat);
 	}
@@ -133,12 +124,13 @@ TSResult CTSModelResource::LoadFromStream(IFileStream* stream, ModelResourceLoad
 		TSModel_Lod lod = TSModel_Lod();
 
 		lod.distance = stream->ReadFloat();
+		//lod.sphere_radius = stream->ReadFloat();
 
 		int subobjects_count = stream->ReadInt32();
 
 		for (int iSubObj = 0; iSubObj < subobjects_count; iSubObj++)
 		{
-			int vertices_count = stream->ReadInt32(); // vertix size, not float
+			int vertices_count = stream->ReadInt32(); // vertex size, not float
 
 			float* vertices = new float[vertices_count * (3 + 3 + 2)];
 
@@ -163,11 +155,7 @@ TSResult CTSModelResource::LoadFromStream(IFileStream* stream, ModelResourceLoad
 				auto texture_name = stream->ReadString(stream->ReadUInt16());
 				auto material_name = stream->ReadString(stream->ReadUInt16());
 
-
 				int mat_options = stream->ReadInt32();
-
-				if ((mat_options & MSTS_MATERIAL_ALPHA_BLENDING_ADD) != 0)
-					g_Log->LogInfo("Model %s - Texture %s - Blending Add - Options %d", stream->GetPath(), texture_name, mat_options);
 
 				primitive.mesh = g_Render->GetMeshManager()->CreateMesh();
 

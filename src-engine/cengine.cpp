@@ -5,6 +5,7 @@
 #include "modules/cpluginmanager.hpp"
 #include "modules/cfilesystem.hpp"
 #include "modules/cresourcemanager.hpp"
+#include "modules/cnetworkmanager.hpp"
 #include <iostream>
 
 #include "register_components.hpp"
@@ -99,6 +100,7 @@ TSResult CEngine::Initialize()
 
     AddModule("ComponentFactory", new CComponentFactory());
     AddModule("ResourceManager", new CResourceManager());
+    AddModule("NetworkManager", new CNetworkManager());
 
     AddModule("RenderModule", new CRenderModule());
 
@@ -122,6 +124,28 @@ TSResult CEngine::Initialize()
     game->PostStart();
 
     g_Log->LogDebug("Game Initialized!");
+
+    /*
+    auto curl = curl_easy_init();
+
+    curl_easy_setopt(curl, CURLOPT_URL, "http://127.0.0.1:7777");
+
+    std::string data;
+
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &data);
+
+    CURLcode status = curl_easy_perform(curl);
+
+    long code;
+
+    curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &code);
+
+    g_Log->LogInfo("127.0.0.1:7777 = %d", code);
+    g_Log->LogString(ILogType::INFO, data);
+    
+    curl_easy_cleanup(curl);
+    */
 
     return TS_OK;
 }
@@ -186,11 +210,12 @@ void CEngine::Update()
     game->ProcessInput();
 
     game->EarlyUpdate();
-    world->UpdateEntities();
-    game->Update();
 
     for (auto& [name, module] : modules)
         module->Update();
+
+    world->UpdateEntities();
+    game->Update();
 
     g_Render->UpdateRender();
 
@@ -290,5 +315,10 @@ double CEngine::GetCurTime()
 double CEngine::GetSysTime()
 {
     return glfwGetTime();
+}
+
+int CEngine::GetCurrentThreadID()
+{
+    return GetCurrentThreadId();
 }
 
