@@ -2,11 +2,18 @@
 
 #include "modules/networkmanager.hpp"
 
+#include "network/cnetworkpacket.hpp"
+
 #include "network/web/chttprequest.hpp"
 
 #include <thread>
+#include <atomic>
 
 #include "rigtorp/SPSCQueue.h"
+
+class CNetworkServer;
+class CNetworkClient;
+class CAuthServer;
 
 class CNetworkManager : public INetworkManager
 {
@@ -16,6 +23,7 @@ public:
 
 	virtual TSResult InitializeClient();
 	virtual TSResult InitializeServer();
+	virtual TSResult InitializeSelfHost();
 
 	virtual TSResult Shutdown();
 
@@ -26,6 +34,9 @@ public:
 
 	virtual IHTTPRequest* CreateHTTPRequest();
 
+	virtual INetworkPacket* CreatePacket(NetworkPacketID id);
+	virtual INetworkPacketManager* GetPacketManager();
+
 	virtual IAuthServer* GetAuthServer();
 
 	virtual int GetLastError();
@@ -33,6 +44,7 @@ public:
 	virtual std::string GetLastErrorString(int error);
 
 	virtual std::string GetIPByHostname(const std::string& hostname);
+	virtual NetworkIPAddress GetNetworkAddressByHostname(const std::string& hostname);
 
 	virtual void Update();
 
@@ -44,15 +56,18 @@ private:
 
 	rigtorp::SPSCQueue<CHTTPRequest*> requests_to_thread, requests_from_thread;
 	std::thread request_handler;
+	std::atomic<bool> request_handler_enable;
 
 	NetworkState state;
 
 	bool initialized;
 
-	INetworkServer* server;
-	INetworkClient* client;
+	CNetworkServer* server;
+	CNetworkClient* client;
 
-	IAuthServer* auth_server;
+	CAuthServer* auth_server;
+
+	CNetworkPacketManager* packet_manager;
 };
 
 extern CNetworkManager* g_NetworkManager;

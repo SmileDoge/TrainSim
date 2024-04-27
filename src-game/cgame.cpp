@@ -104,20 +104,46 @@ void TrainSimGame::PostStart()
     auto authserver = networkmanager->GetAuthServer();
 
     authserver->Login("Smile");
+    
+    networkmanager->InitializeSelfHost();
+
+    auto server = networkmanager->GetNetworkServer();
+
+    server->GetSocket()->Bind(23000);
+
+    auto client = networkmanager->GetNetworkClient();
+
+    client->Connect("127.0.0.1", 23000);
+    
+    
+    /*
+    auto server = networkmanager->GetNetworkServer();
+
+    char buffer[256]{0};
+
+    NetworkIPAddress sender;
+
+    server->GetSocket()->ReceiveBytes(buffer, 256, sender);
+
+    g_Log->LogInfo("Received from %d.%d.%d.%d:%d", sender.address.octets.first, sender.address.octets.second, sender.address.octets.third, sender.address.octets.fourth, sender.port);
+
+    g_Log->LogInfo("Received text \"%s\"", buffer);
+    */
+    /*
 
     std::string token;
 
     auto res = authserver->GetConnectToken(token);
 
     g_Log->LogWarn("AuthServer GetToken: %d [%s]", res, token.c_str());
-
+    */
+    /*
     VerifyConnectTokenResponse response;
 
-    //auto res = authserver->VerifyConnectToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiU21pbGUiLCJpYXQiOjE3MTMwOTcxNjQsImV4cCI6MTcxMzA5NzE3OX0.MV3VJWxrHz134W1UeAaHTXRq0SaNJvj_VC4V58d9P8Y", response);
     res = authserver->VerifyConnectToken(token, response);
 
     g_Log->LogWarn("AuthServer VerifyToken: %d - Nickname: %s", res, response.nickname.c_str());
-
+    */
     /*
     g_Log->LogInfo("PostStart Thread ID - %d", engine->GetCurrentThreadID());
 

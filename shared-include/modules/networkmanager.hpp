@@ -6,6 +6,7 @@
 
 #include "network/server/networkserver.hpp"
 #include "network/client/networkclient.hpp"
+#include "network/networkpacket.hpp"
 
 #include "network/web/httprequest.hpp"
 
@@ -30,6 +31,7 @@ public:
 
 	virtual TSResult InitializeClient() = 0;
 	virtual TSResult InitializeServer() = 0;
+	virtual TSResult InitializeSelfHost() = 0;
 
 	virtual TSResult Shutdown() = 0;
 
@@ -40,6 +42,9 @@ public:
 
 	virtual IHTTPRequest* CreateHTTPRequest() = 0;
 
+	virtual INetworkPacket* CreatePacket(NetworkPacketID id) = 0;
+	virtual INetworkPacketManager* GetPacketManager() = 0;
+
 	virtual IAuthServer* GetAuthServer() = 0;
 
 	virtual int GetLastError() = 0;
@@ -47,4 +52,5 @@ public:
 	virtual std::string GetLastErrorString(int error) = 0;
 
 	virtual std::string GetIPByHostname(const std::string& hostname) = 0;
+	virtual NetworkIPAddress GetNetworkAddressByHostname(const std::string& hostname) = 0;
 };

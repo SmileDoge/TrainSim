@@ -46,7 +46,8 @@ workspace "TrainSim"
             "external/imgui-master/backends",
             "external/ultralight/include",
             "external/json",
-            "external/spsc_queue/include"
+            "external/spsc_queue/include",
+            "external/mpmc_queue/include"
             -- "external/curl/include",
         }
 

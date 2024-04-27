@@ -106,9 +106,9 @@ TSResult CEngine::Initialize()
 
     RegisterComponents();
 
-    IRenderModule* render = GetModule<IRenderModule>();
+    CRenderModule* render = GetModule<CRenderModule>();
 
-    ((CRenderModule*)render)->InitializeSky();
+    render->InitializeSky();
 
     int render_major, render_minor;
 
@@ -125,28 +125,6 @@ TSResult CEngine::Initialize()
 
     g_Log->LogDebug("Game Initialized!");
 
-    /*
-    auto curl = curl_easy_init();
-
-    curl_easy_setopt(curl, CURLOPT_URL, "http://127.0.0.1:7777");
-
-    std::string data;
-
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
-    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &data);
-
-    CURLcode status = curl_easy_perform(curl);
-
-    long code;
-
-    curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &code);
-
-    g_Log->LogInfo("127.0.0.1:7777 = %d", code);
-    g_Log->LogString(ILogType::INFO, data);
-    
-    curl_easy_cleanup(curl);
-    */
-
     return TS_OK;
 }
 
@@ -155,7 +133,9 @@ CEngine::~CEngine()
     delete world;
 
     for (auto& [name, module] : modules)
+    {
         module->PreDeinit();
+    }
 
     if (game != NULL)
     {
@@ -164,7 +144,9 @@ CEngine::~CEngine()
     }
 
     for (auto& [name, module] : modules)
+    {
         delete module;
+    }
 
     modules.clear();
 }

@@ -147,6 +147,4 @@ void CWindow::LoadIcon(const std::string& path)
 	}
 
 	stbi_image_free(pixels);
-
-	return;
 }
