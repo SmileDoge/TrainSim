@@ -23,10 +23,14 @@ public:
     virtual void SetAmbientColor(glm::vec3 color);
     virtual glm::vec3& GetAmbientColor();
 
+    void DeleteEntities();
+
     void UpdateEntities();
     void LateUpdateEntities();
 private:
+
     std::vector<IEntity*> entities;
+    std::vector<IEntity*> entities_to_delete;
 
     glm::vec3 sun_direction, sun_color;
 

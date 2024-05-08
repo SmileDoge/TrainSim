@@ -32,12 +32,16 @@ CRenderModule::CRenderModule() : render_frame(), shaders(), ver_major(0), ver_mi
 
 	glfwInit();
     glfwWindowHint(GLFW_SAMPLES, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     //glfwWindowHint(GLFW_DECORATED, FALSE);
 
+
     Window = glfwCreateWindow(800, 600, "TrainSimEngine", NULL, NULL);
+    
+    const char* desc;
+    int err = glfwGetError(&desc);
+
+    g_Log->LogInfo("glfwGetError - %s (%d)", desc, err);
 
     cWindow = new CWindow(Window);
     

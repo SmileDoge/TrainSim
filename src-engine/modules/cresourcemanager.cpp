@@ -31,7 +31,11 @@ TSResult CResourceManager::LoadResourceInternal(const std::string& path, Resourc
 	IFileStream* stream = g_FileSystem->OpenFile(path, "rb");
 		
 	if (stream == NULL)
+	{
+		g_Log->LogError("LoadResourceInternal | Error! [File not found]\n\tPath: %s", path.c_str());
+
 		return TS_NOT_FOUND;
+	}
 
 	IResourceFactory* factory = GetFactory(stream);
 
@@ -39,27 +43,90 @@ TSResult CResourceManager::LoadResourceInternal(const std::string& path, Resourc
 	{
 		delete stream;
 
-		g_Log->LogError("ResourceFactory not found for [%s]", path);
+		g_Log->LogError("LoadResourceInternal | Error! [Resource factory not found]\n\tPath: %s", path.c_str());
 
 		return TS_INVALID_OPERATION;
 	}
 
 	stream->Seek(6); // TS****
 
-	TSResult res = factory->CreateResourceFromStream(stream, resource, options);
+	TSResult res = TS_ERROR;
+
+	try
+	{
+		res = factory->CreateResourceFromStream(stream, resource, options);
+	}
+	catch (std::exception& err)
+	{
+		g_Log->LogError("LoadResourceInternal | Error! [CreateResource Exception]\n\tFile: %s\n\tError: %s", stream->GetPath().c_str(), err.what());
+
+#ifdef _DEBUG
+		throw err;
+#endif
+	}
+
 
 	if (res == TS_OK)
 	{
-		resource->SetFlag(RESOURCE_FLAG_DEFAULT);
+		ResourceFlag flag = RESOURCE_FLAG_DEFAULT;
+
+		if ((load_flag & RESOURCE_LOAD_FLAG_STATIC) != 0)
+			flag = flag | RESOURCE_FLAG_STATIC;
+
+		resource->SetFlag(flag);
 		resource->SetType(factory->GetResourceType());
 		resource->SetPath(path);
+		resource->SetRefCount(0);
 
 		resources[path] = resource;
+	}
+	else
+	{
+		g_Log->LogError("CreateResourceFromStream return %d", res);
 	}
 
 	delete stream;
 
 	return res;
+}
+
+void CResourceManager::IncrementRefResource(IResource* resource)
+{
+	if ((resource->GetFlag() & RESOURCE_FLAG_STATIC) != 0)
+		return;
+
+	resource->SetRefCount(resource->GetRefCount() + 1);
+}
+
+void CResourceManager::DecrementRefResource(IResource* resource)
+{
+	if ((resource->GetFlag() & RESOURCE_FLAG_STATIC) != 0)
+		return;
+
+	int ref_count = resource->GetRefCount();
+
+	ref_count--;
+
+	if (ref_count <= 0)
+	{
+		resources.erase(resource->GetPath());
+
+		delete resource;
+
+		return;
+	}
+
+	resource->SetRefCount(ref_count);
+}
+
+TSResult CResourceManager::UnloadResource(IResource* resource)
+{
+	if ((resource->GetFlag() & RESOURCE_FLAG_STATIC) != 0)
+		return TS_ALREADY_USED;
+
+	resources.erase(resource->GetPath());
+
+	delete resource;
 }
 
 void CResourceManager::RegisterResourceFactory(IResourceFactory* factory)
@@ -71,6 +138,11 @@ void CResourceManager::RegisterResourceFactory(IResourceFactory* factory)
 
 	type_map[header] = type;
 	factories[type] = factory;
+}
+
+std::map<std::string, IResource*>& CResourceManager::GetLoadedResources()
+{
+	return resources;
 }
 
 IResourceFactory* CResourceManager::GetFactory(IFileStream* stream)

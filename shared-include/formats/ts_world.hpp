@@ -56,10 +56,10 @@ struct TSWorld
 			obj.Position.y =  obj_json["Position"].at(1).get<float>();
 			obj.Position.z =  obj_json["Position"].at(2).get<float>();
 
-			obj.Direction.x = -obj_json["Direction"].at(0).get<float>();
-			obj.Direction.y = -obj_json["Direction"].at(1).get<float>();
-			obj.Direction.z = -obj_json["Direction"].at(2).get<float>();
-			obj.Direction.w = obj_json["Direction"].at(3).get<float>();
+			obj.Direction.x = obj_json["Direction"].at(0).get<float>();
+			obj.Direction.y = obj_json["Direction"].at(1).get<float>();
+			obj.Direction.z = obj_json["Direction"].at(2).get<float>();
+			obj.Direction.w = -obj_json["Direction"].at(3).get<float>();
 
 			world.Objects.push_back(obj);
 		}

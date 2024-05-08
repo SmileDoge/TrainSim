@@ -26,16 +26,6 @@ void CRenderFrame::SetFullBright(bool state)
 
 void CRenderFrame::AddRenderItem(IMesh* mesh, IMaterial* material, glm::mat4x4& transform)
 {
-	/*
-	if (mesh == NULL) return;
-	if (material == NULL) return;
-
-	if (material->IsBlended())
-		items[NULL].emplace_back(mesh, material, transform);
-	else
-		items[material].emplace_back(mesh, material, transform);
-		*/
-
 	AddRenderItem(mesh, material, transform, 0);
 }
 
@@ -55,25 +45,6 @@ void CRenderFrame::AddRenderItem(IMesh* mesh, IMaterial* material, glm::mat4x4& 
 	{
 		items[material].emplace_back(mesh, material, transform, sort_index);
 	}
-
-	//if (material->IsBlended())
-	//	items[NULL].emplace_back(mesh, material, transform, sort_index);
-	//else
-	//	items[material].emplace_back(mesh, material, transform, sort_index);
-}
-
-#include "modules/clogmodule.hpp"
-
-void CRenderFrame::AddRenderItem(RenderItem& item)
-{
-	g_Log->LogError("Deprecated AddRenderItem(RenderItem& item)! ! ! ! !");
-
-	/*
-	if (item.Material->IsBlended())
-		items[NULL].push_back(item);
-	else
-		items[item.Material].push_back(item);
-	*/
 }
 
 void CRenderFrame::AddLight(ILight* light)
@@ -162,8 +133,6 @@ void CRenderFrame::RenderOpaque()
 
 void CRenderFrame::RenderTransparent()
 {
-	IMaterial* prev_material = NULL;
-
 	auto& view = g_Render->GetCamera()->GetViewMatrix();
 	auto& proj = g_Render->GetCamera()->GetProjectionMatrix();
 
@@ -171,6 +140,7 @@ void CRenderFrame::RenderTransparent()
 	{
 		if (material != NULL) continue;
 
+		IMaterial* prev_material = NULL;
 		for (auto& item : items)
 		{
 			auto real_material = item.Material;

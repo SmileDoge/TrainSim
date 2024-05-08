@@ -32,7 +32,14 @@ public:
 	virtual TSResult PrecacheResource(const std::string& path, ResourceLoadFlag load_flag) = 0;
 	virtual TSResult LoadResourceInternal(const std::string& path, ResourceLoadFlag load_flag, IResource*& resource, ResourceLoadOptions* options) = 0;
 
+	virtual void IncrementRefResource(IResource* resource) = 0;
+	virtual void DecrementRefResource(IResource* resource) = 0;
+
+	virtual TSResult UnloadResource(IResource* resource) = 0;
+
 	virtual void RegisterResourceFactory(IResourceFactory* factory) = 0;
+
+	virtual std::map<std::string, IResource*>& GetLoadedResources() = 0;
 
 	template<class T>
 	T* LoadResource(const std::string& path, ResourceLoadFlag load_flag, ResourceLoadOptions* options);
@@ -45,11 +52,6 @@ T* IResourceManager::LoadResource(const std::string& path, ResourceLoadFlag load
 	IResource* resource = NULL;
 
 	TSResult res = LoadResourceInternal(path, load_flag, resource, options);
-
-	if (res != TS_OK)
-	{
-		g_Log->LogError("IResourceManager::LoadResource internal_load != TS_OK");
-	}
 
 	return (T*)(void*)resource;
 }

@@ -71,7 +71,7 @@ void MSTSStandardMaterial::PreRender(IMaterial* prev_material)
 	{
 		glEnable(GL_BLEND);
 
-		/*if (prev_material == NULL && (options & MSTS_MATERIAL_ALPHA_BLENDING_MASK) != MSTS_MATERIAL_ALPHA_BLENDING_ADD)
+		if (prev_material == NULL && (options & MSTS_MATERIAL_ALPHA_BLENDING_MASK) != MSTS_MATERIAL_ALPHA_BLENDING_ADD)
 		{
 			alpha_test = 250.f / 255.f;
 
@@ -80,7 +80,7 @@ void MSTSStandardMaterial::PreRender(IMaterial* prev_material)
 			glDepthFunc(GL_LEQUAL);
 			glDepthMask(GL_TRUE);
 		}
-		else*/
+		else
 		{
 			alpha_test = 10.f / 255.f;
 
@@ -184,10 +184,6 @@ void MSTSStandardMaterial::PostRender()
 bool MSTSStandardMaterial::IsBlended()
 {
 	return is_blended;
-	//bool alphaTestRequested = (options & MSTS_MATERIAL_ALPHA_TEST) != 0;
-	//bool alphaBlendRequested = (options & MSTS_MATERIAL_ALPHA_BLENDING_MASK) != 0;
-
-	//return alphaBlendRequested && (!is_one_bit_alpha || (is_one_bit_alpha && !alphaTestRequested));
 }
 
 

@@ -12,8 +12,15 @@ public:
 
     virtual void Update();
 
+    virtual void AnimateMatrix(int matrix, float key);
+
     virtual void SetModel(TSModelResource* model);
     virtual TSModelResource* GetModel();
 private:
+
+    void AnimateOneMatrix(int matrix, float key);
+
     TSModelResource* model;
+
+    glm::mat4* animated_matrices;
 };

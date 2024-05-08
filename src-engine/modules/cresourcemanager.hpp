@@ -15,7 +15,14 @@ public:
 	virtual TSResult PrecacheResource(const std::string& path, ResourceLoadFlag load_flag);
 	virtual TSResult LoadResourceInternal(const std::string& path, ResourceLoadFlag load_flag, IResource*& resource, ResourceLoadOptions* options);
 
+	virtual void IncrementRefResource(IResource* resource);
+	virtual void DecrementRefResource(IResource* resource);
+
+	virtual TSResult UnloadResource(IResource* resource);
+
 	virtual void RegisterResourceFactory(IResourceFactory* factory);
+
+	virtual std::map<std::string, IResource*>& GetLoadedResources();
 
 private:
 	IResourceFactory* GetFactory(IFileStream* stream);

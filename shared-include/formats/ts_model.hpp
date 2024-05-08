@@ -1,53 +1,9 @@
 #pragma once
 
-/*
-#include "global.hpp"
-
-#include <string>
-#include <vector>
-
-#include "glm/mat4x4.hpp"
-#include "glm/vec3.hpp"
-#include "glm/vec2.hpp"
-
-struct TSModel_Vertex
-{
-	glm::highp_vec3 position;
-	glm::highp_vec3 normal;
-	glm::highp_vec2 texcoord;
-};
-
-struct TSModel_Primitive
-{
-	int iHierarchy;
-	std::vector<USHORT> triangles;
-	std::string material;
-	int options;
-};
-
-struct TSModel_SubObject
-{
-	std::vector<TSModel_Primitive> primitives;
-	std::vector<TSModel_Vertex> vertices;
-};
-
-struct TSModel_Lod
-{
-	float distance;
-	std::vector<TSModel_SubObject> subobjects;
-	std::vector<int> hierarchy;
-};
-
-struct TSModel
-{
-	std::vector<TSModel_Lod> lods;
-	std::vector<glm::mat4> matrices;
-	std::vector<std::string> matrices_name;
-};
-*/
-
 #include "modules/render/mesh.hpp"
 #include "modules/render/material.hpp"
+
+#define TS_MODEL_VERSION 1
 
 struct TSModel_Primitive
 {
@@ -65,9 +21,42 @@ struct TSModel_Lod
 	std::vector<int> hierarchy;
 };
 
+enum TSKeyPositionType
+{
+	TS_KEY_POSITION_LINEAR_POS,
+	TS_KEY_POSITION_SLERP_ROT,
+	TS_KEY_POSITION_TCB_KEY,
+};
+
+struct TSKeyPosition
+{
+	TSKeyPositionType type;
+	int frame;
+	float x, y, z, w;
+};
+
+struct TSController
+{
+	std::vector<TSKeyPosition> key_positions;
+};
+
+struct TSAnimNode
+{
+	std::string name;
+	std::vector<TSController> controllers;
+};
+
+struct TSAnimation
+{
+	int frame_count;
+	int frame_rate;
+	std::vector<TSAnimNode> anim_nodes;
+};
+
 struct TSModel
 {
 	std::vector<TSModel_Lod> lods;
 	std::vector<glm::mat4> matrices;
 	std::vector<std::string> matrices_name;
+	std::vector<TSAnimation> animations;
 };

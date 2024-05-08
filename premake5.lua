@@ -22,6 +22,10 @@ workspace "TrainSim"
 
     disablewarnings { "4267", "4244", "4305", "4005", "5082" }
 
+    filter {"system:windows"}
+        buildoptions { "/utf-8" }
+        flags { "MultiProcessorCompile" }
+
     filter {"configurations:Debug"}
         defines { "DEBUG", "_DEBUG" }
         symbols "On"
@@ -165,6 +169,7 @@ workspace "TrainSim"
             "external/ultralight/include",
             "external/glm-include",
             "external/json",
+            "external/portable-file-dialogs"
         }
 
         files {
@@ -194,3 +199,39 @@ workspace "TrainSim"
                 "external/glfw-3.3.8.bin.WIN64/lib-" .. string.gsub(_ACTION, "vs", "vc"),
                 "external/ultralight/lib"
             }
+
+    project "TrainSimExampleTrain"
+        kind "SharedLib"
+        
+        includedirs {
+            "src-example-train",
+            "shared-include",
+            "external/stb_image",
+            "external/imgui-master",
+            "external/imgui-master/backends",
+            "external/glm-include",
+            "external/json",
+        }
+
+        files {
+            "external/imgui-master/cpp/**.cpp",
+            "shared-include/**.h",
+            "shared-include/**.hpp",
+            "src-example-train/**.h", 
+            "src-example-train/**.hpp", 
+            "src-example-train/**.cpp" 
+        }
+
+        links { "glfw3", "TrainSimEngine" }
+
+        filter { "architecture:x86" }
+            targetdir "out/x86/%{cfg.buildcfg}"
+            debugdir "out/x86/%{cfg.buildcfg}"
+            includedirs { "external/glfw-3.3.8.bin.WIN32/include" }
+            libdirs { "external/glfw-3.3.8.bin.WIN32/lib-" .. string.gsub(_ACTION, "vs", "vc") }
+
+        filter { "architecture:x86_64" }
+            targetdir "out/x86_64/%{cfg.buildcfg}"
+            debugdir "out/x86_64/%{cfg.buildcfg}"
+            includedirs { "external/glfw-3.3.8.bin.WIN64/include" }
+            libdirs { "external/glfw-3.3.8.bin.WIN64/lib-" .. string.gsub(_ACTION, "vs", "vc") }

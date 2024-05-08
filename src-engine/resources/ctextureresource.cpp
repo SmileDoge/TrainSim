@@ -3,6 +3,8 @@
 #include "modules/clogmodule.hpp"
 #include "modules/crendermodule.hpp"
 
+#include "modules/render/ctexture.hpp"
+
 #include "global.hpp"
 
 #include <string>
@@ -38,6 +40,7 @@ CTSTextureResource::CTSTextureResource()
 
 CTSTextureResource::~CTSTextureResource()
 {
+	g_TextureManager->DeleteTexture(texture);
 }
 
 ITexture* CTSTextureResource::GetData()

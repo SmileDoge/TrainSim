@@ -29,6 +29,14 @@ void CWorld::LateUpdateEntities()
             entity->LateUpdate();
 }
 
+void CWorld::DeleteEntities()
+{
+    for (auto& entity : entities_to_delete)
+        delete entity;
+
+    entities_to_delete.clear();
+}
+
 IEntity* CWorld::CreateEntity()
 {
     CEntity* entity = new CEntity();
@@ -51,7 +59,7 @@ void CWorld::DeleteEntity(IEntity* entity)
     for (auto& children : entity->GetChildrens())
         children->SetParent(NULL);
 
-    delete ((CEntity*)entity);
+    entities_to_delete.push_back(entity);
 }
 
 void CWorld::DeleteEntityWithChildrens(IEntity* entity)
@@ -67,7 +75,7 @@ void CWorld::DeleteEntityWithChildrens(IEntity* entity)
     for (auto& val : entity->GetChildrens())
         DeleteEntityWithChildrens(val);
 
-    delete ((CEntity*)entity);
+    entities_to_delete.push_back(entity);
 }
 
 std::vector<IEntity*>& CWorld::GetEntities()

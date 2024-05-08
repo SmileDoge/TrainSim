@@ -171,7 +171,11 @@ public:
 
 	static std::string GetFullPath(const std::string& path)
 	{
-		std::stringstream ss(path);
+		std::string new_path = path;
+
+		std::replace(new_path.begin(), new_path.end(), '\\', '/');
+
+		std::stringstream ss(new_path);
 		std::string token;
 		std::vector<std::string> directories;
 

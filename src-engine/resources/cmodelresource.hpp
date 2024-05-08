@@ -4,6 +4,8 @@
 
 #include "resources/modelresource.hpp"
 
+#include "resources/textureresource.hpp"
+
 class ModelResourceFactory : public IResourceFactory
 {
 public:
@@ -26,6 +28,8 @@ public:
 
 	TSResult LoadFromStream(IFileStream* stream, ModelResourceLoadOptions* options);
 private:
+
+	std::vector<TSTextureResource*> textures;
 
 	TSModel model;
 };

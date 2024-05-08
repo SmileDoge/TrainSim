@@ -19,6 +19,8 @@
 #include "entities/components/lightcomponent.hpp"
 #include "entities/components/modelrenderer.hpp"
 
+#include "trains/trainmanager.hpp"
+
 #include "resources/modelresource.hpp"
 
 #include "formats/ts_world.hpp"
@@ -56,7 +58,7 @@ void TrainSimGame::Start()
 }
 
 IEntity* entity = NULL;
-IEntity* train_2es4k = NULL;
+IEntity* train = NULL;
 ILightComponent* light = NULL;
 ITexture* texture = NULL;
 
@@ -99,6 +101,7 @@ void TrainSimGame::PostStart()
 
     auto resourcefactory = engine->GetModule<IResourceManager>();
 
+    /*
     auto networkmanager = engine->GetModule<INetworkManager>();
 
     auto authserver = networkmanager->GetAuthServer();
@@ -116,7 +119,6 @@ void TrainSimGame::PostStart()
     client->Connect("127.0.0.1", 23000);
     
     
-    /*
     auto server = networkmanager->GetNetworkServer();
 
     char buffer[256]{0};
@@ -128,21 +130,6 @@ void TrainSimGame::PostStart()
     g_Log->LogInfo("Received from %d.%d.%d.%d:%d", sender.address.octets.first, sender.address.octets.second, sender.address.octets.third, sender.address.octets.fourth, sender.port);
 
     g_Log->LogInfo("Received text \"%s\"", buffer);
-    */
-    /*
-
-    std::string token;
-
-    auto res = authserver->GetConnectToken(token);
-
-    g_Log->LogWarn("AuthServer GetToken: %d [%s]", res, token.c_str());
-    */
-    /*
-    VerifyConnectTokenResponse response;
-
-    res = authserver->VerifyConnectToken(token, response);
-
-    g_Log->LogWarn("AuthServer VerifyToken: %d - Nickname: %s", res, response.nickname.c_str());
     */
     /*
     g_Log->LogInfo("PostStart Thread ID - %d", engine->GetCurrentThreadID());
@@ -163,36 +150,57 @@ void TrainSimGame::PostStart()
 
     delete request;
     */
-    /*
+    
     auto start_time = engine->GetSysTime();
 
     auto model_load_options = ModelResourceLoadOptions();
 
-    auto es4k = resourcefactory->LoadResource<TSModelResource>("data/trains/mdd_2ES4k-084/mdd_2es4ka.ts_model", RESOURCE_LOAD_FLAG_DEFAULT, &model_load_options);
-    auto chs4 = resourcefactory->LoadResource<TSModelResource>("data/trains/zdsLoco_chs4z-080/zdsLoco_chs4z-080.ts_model", RESOURCE_LOAD_FLAG_DEFAULT, &model_load_options);
-    auto er9t_674_m = resourcefactory->LoadResource<TSModelResource>("data/trains/zdsEMU_ER9T-674/zdsEMU_ER9T_G.ts_model", RESOURCE_LOAD_FLAG_DEFAULT, &model_load_options);
-    
+    //auto es4k = resourcefactory->LoadResource<TSModelResource>("data/trains/mdd_2ES4k-084/mdd_2es4ka.ts_model", RESOURCE_LOAD_FLAG_DEFAULT, &model_load_options);
+    //auto chs4 = resourcefactory->LoadResource<TSModelResource>("data/trains/zdsLoco_chs4z-080/zdsLoco_chs4z-080.ts_model", RESOURCE_LOAD_FLAG_DEFAULT, &model_load_options);
+    //auto er9t_674_m = resourcefactory->LoadResource<TSModelResource>("data/trains/zdsEMU_ER9T-674/zdsEMU_ER9T_G.ts_model", RESOURCE_LOAD_FLAG_DEFAULT, &model_load_options);
+    //auto vl80s = resourcefactory->LoadResource<TSModelResource>("data/trains/mdd_VL80s-1538/vl80s-1538a.ts_model", RESOURCE_LOAD_FLAG_DEFAULT, &model_load_options);
+    auto vl80s_cab = resourcefactory->LoadResource<TSModelResource>("data/trains/mdd_VL80-Alias/CABS/CabS.ts_model", RESOURCE_LOAD_FLAG_DEFAULT, &model_load_options);
+    //auto vl80s_cab = resourcefactory->LoadResource<TSModelResource>("data/trains/mdd_2ES4k-084/mdd_2es4ka.ts_model", RESOURCE_LOAD_FLAG_DEFAULT, &model_load_options);
+
     auto end_time = engine->GetSysTime();
 
     g_Log->LogWarn("Resources Loaded in %lf sec", (end_time - start_time));
+    
+    
+    train = world->CreateEntity();
+    train->SetName("vl80s_cab");
+    train->CreateComponent<IModelRenderer>()->SetModel(vl80s_cab);
+    train->GetTransform()->SetLocation(glm::vec3(4.0f, 0.0f, 0.0f));
+
+    ITrainManager* trainmanager = engine->GetModule<ITrainManager>();
+
+    TrainDLLInfo dll_info;
+
+    TSResult res = trainmanager->LoadControllerDLL("TrainSimExampleTrain.dll", dll_info);
+
+    g_Log->LogDebug("LoadControllerDLL ExampleTrain.dll - %d", res);
+    g_Log->LogDebug("DLL Name %s | Version %d.%d.%d", dll_info.dll_name.c_str(), dll_info.version.major, dll_info.version.minor, dll_info.version.patch);
+
+    ITrainController* controller = NULL;
+
+    trainmanager->CreateController(dll_info.dll_name, controller);
+
+    if (controller != NULL)
+        delete controller;
+
+    /*
+    IEntity* train_er9t = world->CreateEntity();
+    train_er9t->SetName("ER9T");
+    train_er9t->CreateComponent<IModelRenderer>()->SetModel(vl80s);
+    train_er9t->GetTransform()->SetLocation(glm::vec3(8.0f, 0.0f, 0.0f));
     
     train_2es4k = world->CreateEntity();
     train_2es4k->SetName("2ES4K");
     train_2es4k->CreateComponent<IModelRenderer>()->SetModel(es4k);
     train_2es4k->GetTransform()->SetRotation(GLM_EULER(0.f, 0.f, 0.f));
-
-    IEntity* train_chs4 = world->CreateEntity();
-    train_chs4->SetName("CHS4");
-    train_chs4->CreateComponent<IModelRenderer>()->SetModel(chs4);
-    train_chs4->GetTransform()->SetLocation(glm::vec3(4.0f, 0.0f, 0.0f));
-
-    IEntity* train_er9t = world->CreateEntity();
-    train_er9t->SetName("ER9T");
-    train_er9t->CreateComponent<IModelRenderer>()->SetModel(er9t_674_m);
-    train_er9t->GetTransform()->SetLocation(glm::vec3(8.0f, 0.0f, 0.0f));
     */
-    
     /*
+    
     auto model_load_options = ModelResourceLoadOptions();
 
     auto er9t_704_m = resourcefactory->LoadResource<TSModelResource>("data/trains/zdsEMU_ER9T-704/zdsEMU_ER9T_G.ts_model", RESOURCE_LOAD_FLAG_DEFAULT, &model_load_options);
@@ -205,15 +213,6 @@ void TrainSimGame::PostStart()
     er9t_704->SetName("er9t_704");
     er9t_704->CreateComponent<IModelRenderer>()->SetModel(er9t_704_m);
     er9t_704->GetTransform()->SetLocation(glm::vec3(4, 0, 0));
-    */
-    //train_2es4k->GetTransform()->SetTileX(0);
-
-    /*
-    IEntity* train_chs4 = world->CreateEntity();
-    train_chs4->SetName("CHS4");
-    train_chs4->CreateComponent<IModelRenderer>()->SetModel(chs4);
-    train_chs4->GetTransform()->SetTileX(1);
-    train_chs4->GetTransform()->SetLocation(glm::vec3(0.0f, 0.0f, 0.0f));
     */
 
     IFileSystem* filesystem = engine->GetModule<IFileSystem>();
@@ -509,6 +508,11 @@ void TrainSimGame::ProcessInput()
         g_Log->LogError("lel");
     }
 
+    if (ImGui::Button("Teleport to (0,0,0)"))
+    {
+        render->GetCamera()->Move(-render->GetCamera()->GetLocation());
+    }
+
     ImGui::End();
 
     ImGui::Begin("Graphics");
@@ -576,6 +580,59 @@ void TrainSimGame::Update()
     engine->GetWorld()->SetSunDirection(sunDir);
 
     ImGui::End();
+    /*
+    ImGui::Begin("Current loaded resources");
+
+    ImGui::Text("русский текст");
+
+    if (ImGui::Button("Delete train"))
+        engine->GetWorld()->DeleteEntity(train);
+
+    if (ImGui::Button("Delete all trains"))
+        for (auto& ent : engine->GetWorld()->GetEntities())
+            if (ent->GetComponent<IModelRenderer>())
+                engine->GetWorld()->DeleteEntity(ent);
+
+    IResourceManager* resourcemanager = engine->GetModule<IResourceManager>();
+
+    ImGui::BeginChild("Resources");
+
+    for (auto& [path, res] : resourcemanager->GetLoadedResources())
+    {
+        ImGui::Text("Resource: %s [Ref Count %d]", path.c_str(), res->GetRefCount());
+    }
+
+    ImGui::EndChild();
+
+    ImGui::End();
+    */
+    ImGui::Begin("Animation");
+
+    /*
+    static float anim_key = 0.0f;
+
+    ImGui::SliderFloat("Animation Key", &anim_key, 0.0f, 5.0f);
+
+
+    for (int i = 0; i < model_render->GetModel()->GetData().matrices.size(); i++)
+        model_render->AnimateMatrix(i, anim_key);
+    */
+
+    IModelRenderer* model_render = train->GetComponent<IModelRenderer>();
+
+    static std::map<int, float> anim_matrix;
+
+    auto& data = model_render->GetModel()->GetData();
+
+    for (int i = 0; i < data.matrices.size(); i++)
+    {
+        ImGui::SliderFloat(data.matrices_name[i].c_str(), &anim_matrix[i], 0.f, 10.f);
+
+        if (anim_matrix[i] > 0.01f)
+            model_render->AnimateMatrix(i, anim_matrix[i]);
+    }
+
+    ImGui::End();
 
     /*
     //ImGui::Begin("cinnamoroll");
@@ -640,16 +697,20 @@ void TrainSimGame::Update()
 
     ImGui::End();
 
+    */
     /*
     ImGui::Begin("RenderFrame");
 
-    auto render = engine->GetModule<IRenderModule>();
-
-    auto items = render->GetRenderFrame()->GetItems();
+    auto& items = render->GetRenderFrame()->GetItems();
 
     for (auto& [material, list] : items)
     {
-        ImGui::Text("Material: %s (%p)", material->GetName().c_str(), material);
+        IMaterial* real_material = material;
+
+        if (material == NULL)
+            real_material = list[0].Material;
+
+        ImGui::Text("Material: %s (%p)", real_material->GetName().c_str(), real_material);
         
         for (auto& item : list)
         {
@@ -658,8 +719,9 @@ void TrainSimGame::Update()
     }
 
     ImGui::End();
-    
     */
+    
+    
     //g_Log->LogInfo("delta_time: %f, fps: %f", engine->GetDeltaTime(), 1/engine->GetDeltaTime());
 }
 

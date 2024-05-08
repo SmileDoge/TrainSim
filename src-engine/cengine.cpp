@@ -6,6 +6,7 @@
 #include "modules/cfilesystem.hpp"
 #include "modules/cresourcemanager.hpp"
 #include "modules/cnetworkmanager.hpp"
+#include "trains/ctrainmanager.hpp"
 #include <iostream>
 
 #include "register_components.hpp"
@@ -94,6 +95,7 @@ TSResult CEngine::Initialize()
 
     SetUnhandledExceptionFilter((LPTOP_LEVEL_EXCEPTION_FILTER)SignalHandler);
 
+    AddModule("TrainManager", new CTrainManager());
     AddModule("PluginManager", new CPluginManager());
 
     world = new CWorld();
@@ -130,12 +132,12 @@ TSResult CEngine::Initialize()
 
 CEngine::~CEngine()
 {
-    delete world;
-
     for (auto& [name, module] : modules)
     {
         module->PreDeinit();
     }
+
+    delete world;
 
     if (game != NULL)
     {
@@ -145,8 +147,12 @@ CEngine::~CEngine()
 
     for (auto& [name, module] : modules)
     {
+        if (name == "LogModule") continue;
+        g_Log->LogInfo("~" + name);
         delete module;
     }
+
+    delete modules["LogModule"];
 
     modules.clear();
 }
@@ -195,6 +201,8 @@ void CEngine::Update()
 
     for (auto& [name, module] : modules)
         module->Update();
+
+    world->DeleteEntities();
 
     world->UpdateEntities();
     game->Update();
